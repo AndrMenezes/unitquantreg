@@ -1,0 +1,198 @@
+#' @name voung.test
+#'
+#' @title Voung test
+#'
+#' @description Performs Voung test between two fitted objects of class
+#' \code{\link[unitquantreg]{unitquantreg}}
+#'
+#'
+#' @param object1,object2 objects of class \code{\link[unitquantreg]{unitquantreg}}
+#' containing the fitted models.
+#' @param alternative indicates the alternative hypothesis and must be one
+#' of \code{"two.sided"} (default), \code{"less"}, or \code{"greater"}. You can
+#' specify just the initial letter of the value, but the argument name must be
+#' given in full. See ‘Details’ for the meanings of the possible values.
+#'
+#'
+#' @details The statistic of Vuong likelihood ratio test for compare two
+#' non-nested regression models is defined by
+#' \deqn{T = \frac{1}{\widehat{\omega}^2\,\sqrt{n}}\,\sum_{i=1}^{n}\,
+#' \log\frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{
+#' g(y_i \mid \bm{x}_i,\widehat{\bm{\gamma}})}}
+#' where
+#' \deqn{\widehat{\omega}^2 = \frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}\right)^2 - \left[\frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{ g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}\right)\right]^2}
+#' is an estimator for the variance of
+#' \eqn{\frac{1}{\sqrt{n}}\,\displaystyle\sum_{i=1}^{n}\,\log\frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}},
+#' \eqn{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})} and
+#' \eqn{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}
+#' are the corresponding rival densities evaluated at the maximum likelihood estimates.
+#'
+#' When \eqn{n \rightarrow \infty} we have that \eqn{T \rightarrow N(0, 1)} in distribution.
+#' Therefore, at \eqn{\alpha\%} level of significance  the null hypothesis of
+#' the equivalence of the competing models is rejected if \eqn{|T| > z_{\alpha/2}},
+#' where \eqn{z_{\alpha/2}} is the \eqn{\alpha/2} quantile of standard normal distribution.
+#'
+#' In practical terms, \eqn{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}
+#' is better (worse) than \eqn{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}
+#' if \eqn{T>z_{\alpha/2}} (or \eqn{T< -z_{\alpha/2}}).
+#'
+#'
+#' @return A list with class \code{"htest"} containing the following
+#' components:
+#' \item{statistic}{the value of the test statistic.}
+#' \item{p.value}{the p-value of the test.}
+#' \item{alternative}{a character string describing the alternative hypothesis.}
+#' \item{method}{a character string with the method used.}
+#' \item{data.name}{a character string ginven the name of families models under comparison.}
+#'
+#' @author
+#' André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+#'
+#' Josmar Mazucheli \email{jmazucheli@gmail.com}
+#'
+#' @references
+#' Vuong, Q. (1989). Likelihood ratio tests for model selection and
+#' non-nested hypotheses. \emph{Econometrica}, \bold{57}(2), 307--333.
+#'
+#' @examples
+#' data(water, package = "unitquantreg")
+#'
+#' fit_uweibull <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+#' tau = 0.5, data = water, family = "uweibull")
+#' fit_kum <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+#' tau = 0.5, data = water, family = "kum")
+#'
+#' ans <- voung.test(object1 = fit_uweibull, object2 = fit_kum)
+#' ans
+#' str(ans)
+#'
+#'
+#' @importFrom stats var pnorm
+#'
+#' @rdname voung.test
+#' @export
+
+voung.test <- function(object1, object2, alternative = c("two.sided", "less", "greater")) {
+
+  alternative <- match.arg(alternative)
+
+  y <- object1$y
+  n <- length(y)
+
+  # Fitted parms
+  mu_1 <- object1$fitted.values$mu
+  mu_2 <- object2$fitted.values$mu
+  theta_1 <- object1$fitted.values$theta
+  theta_2 <- object2$fitted.values$theta
+
+  # Quantile
+  tau_1 <- object1$tau
+  tau_2 <- object2$tau
+  if (tau_1 != tau_2)
+    warning("Comparison is done between fitted models for different quantiles!")
+
+  # Get pdf of models
+  dfun_1 <- match.fun(paste0("d", .get_abbrev(object1$family, fname = FALSE)))
+  parms_1 <- list(x = y, mu = mu_1, theta = theta_1, tau = tau_1, log = TRUE)
+  dfun_2 <- match.fun(paste0("d", .get_abbrev(object2$family, fname = FALSE)))
+  parms_2 <- list(x = y, mu = mu_2, theta = theta_2, tau = tau_2, log = TRUE)
+
+  # Compute log-pdfs
+  ll_1 <- do.call(dfun_1, parms_1)
+  ll_2 <- do.call(dfun_2, parms_2)
+
+  # Compute Voung statistics
+  om2 <- (n - 1) / n * var(ll_1 - ll_2)
+  lr <- sum(ll_1 - ll_2)
+  Tstat <- (1/sqrt(n)) * lr/sqrt(om2)
+  names(Tstat) <- "T_LR"
+
+  # Compute p-value according to hypothesis
+  pvalue <- switch (alternative,
+    "two.sided" = 2 * pnorm(abs(Tstat), lower.tail = FALSE),
+    "greater" = pnorm(abs(Tstat), lower.tail = FALSE),
+    "less" = pnorm(abs(Tstat), lower.tail = TRUE)
+  )
+  # pvalue  <- pnorm(q = abs(Tstat), lower.tail = F)
+
+  # Output
+  method <- paste0("Vuong likelihood ratio test for non-nested models (",
+                   object1$family, " versus ", object2$family, ")")
+  out <- list(statistic = Tstat, p.value = pvalue,
+              method = method,
+              data.name = paste0(object1$family, " versus ", object2$family))
+  class(out) <- "htest"
+  out
+}
+
+#' @name pairwise.voung.test
+#'
+#' @title Pairwise Voung test
+#'
+#' @description Calculate pairwise comparisons between fitted models performing
+#' Voung test for objects of class \code{\link[unitquantreg]{unitquantreg}}.
+#'
+#' @param ... \code{\link[unitquantreg]{unitquantreg}} objects separated by commas.
+#' @param lt a list with one or more \code{\link[unitquantreg]{unitquantreg}} objects.
+#' @param p.adjust.method a character string specifying the method for multiple
+#' testing adjustment; almost always one of
+#' \code{p.adjust.methods}. Can be abbreviated.
+#' @param alternative indicates the alternative hypothesis and must be one
+#' of \code{"two.sided"} (default), \code{"less"}, or \code{"greater"}.
+#' Can be abbreviated.
+#'
+#'
+#' @return Object of class \code{"pairwise.htest"}
+#'
+#' @seealso \code{\link{voung.test}}, \code{\link{p.adjust}}
+#'
+#' @examples
+#' data(water, package = "unitquantreg")
+#'
+#' models  <- c("johnsonsb", "kum", "leeg", "ubs", "uburrxii", "uchen", "ughne", "ughnx",
+#' "ugompertz", "ulogistic", "uweibull")
+#' fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi + incpc +
+#' region + log(pop),tau = 0.5, data = water, family = M))
+#'
+#' ans <- pairwise.voung.test(lt = fits)
+#' ans
+#'
+#'
+#' @importFrom stats pairwise.table p.adjust.methods
+#'
+#'
+#' @rdname pairwise.voung.test
+#' @export
+#'
+
+
+pairwise.voung.test <- function(..., lt, p.adjust.method = p.adjust.methods,
+                                alternative = c("two.sided", "less", "greater")) {
+
+  if (is.null(lt)) lt <-  list(...)
+
+  p.adjust.method <- match.arg(p.adjust.method)
+  alternative <- match.arg(alternative)
+
+  families <- sapply(lt, "[[", "family")
+  nfam <- length(families)
+
+  compare.levels <- function(i, j) {
+    xi <- lt[[as.integer(i)]]
+    xj <- lt[[as.integer(j)]]
+    voung.test(object1 = xi, object2 = xj, alternative = alternative)$p.value
+  }
+  pval <- pairwise.table(compare.levels = compare.levels,
+                         level.names = seq_along(families),
+                         p.adjust.method = p.adjust.method)
+  colnames(pval) <- families[1L:(nfam - 1)]
+  rownames(pval) <- families[2L:nfam]
+
+  # Output
+  method <- "Vuong likelihood ratio test for non-nested models"
+  dname <- deparse(lt[[1]]$call)
+  out <- list(method = method, data.name = dname, p.value = pval,
+              p.adjust.method = p.adjust.method)
+  class(out) <- "pairwise.htest"
+  out
+}

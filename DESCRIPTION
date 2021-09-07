@@ -1,0 +1,27 @@
+Package: unitquantreg
+Title: Parametric quantile regression models for bounded data
+Version: 0.1.0
+Authors@R: c(person(given = "André F. B.", family = "Menezes", role = c("aut", "cre"), email = "andrefelipemaringa@gmail.com", comment = c(ORCID = "0000-0002-3320-9834")),
+    person(given = "Josmar", family = "Mazucheli", role = c("aut"), email = "jmazucheli@gmail.com", comment = c(ORCID = "0000-0001-6740-0445")))
+Author: André F. B. Menezes [aut, cre] and Josmar Mazucheli [aut]
+Maintainer: André F. B. Menezes <andrefelipemaringa@gmail.com> and 
+    Josmar Mazucheli <jmazucheli@gmail.com> 
+Description: Estimation and inference methods on parametric quantile regression models for bounded data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+ByteCompile: yes
+LazyData: true
+LinkingTo: Rcpp
+Imports: Rcpp, optimx, stats, quantreg, Formula, MASS, numDeriv
+Suggests:
+    testthat (>= 3.0.0),
+    rmarkdown,
+    knitr,
+    lmtest
+Depends: 
+    R (>= 3.5.0)
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+NeedsCompilation: yes
+URL: https://github.com/AndrMenezes/unitquantreg
+BugReports: https://github.com/AndrMenezes/unitquantreg/issues

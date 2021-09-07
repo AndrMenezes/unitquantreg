@@ -1,0 +1,48 @@
+lt_families <- list(
+  "unit-Weibull" = "uweibull",
+  "Kumaraswamy" = "kum",
+  "unit-Logistic" = "ulogistic",
+  "unit-Birnbaum-Saunders" = "ubs",
+  "log-extended Exponential-Geometric" = "leeg",
+  "unit-Chen" = "uchen",
+  "unit-Generalized Half-Normal-E" = "ughne",
+  "unit-Generalized Half-Normal-X" = "ughnx",
+  "unit-Gompertz" = "ugompertz",
+  "Johnson-SB" = "johnsonsb",
+  "unit-Burr-XII" = "uburrxii")
+
+test_that("plot method for unitquantreg(s) class works", {
+
+  set.seed(6669)
+  n <- 200
+  betas <- c(1, 2)
+  X <- cbind(1, x1 = runif(n))
+  eta <- drop(X %*% betas)
+  mu <- exp(eta) / (1 + exp(eta))
+  theta <- 2.0
+  data_simulated <- data.frame(x1 = X[, 2])
+  data_simulated$y <- ruweibull(n, mu = mu, theta = theta, tau = 0.5)
+
+  # For one quantile (tau)
+  fit <- unitquantreg(formula = y ~ x1 | x1, tau = 0.5, data = data_simulated,
+                      family = "uweibull")
+  plot(fit, which = 1)
+  plot(fit, which = 2)
+  plot(fit, which = 3)
+  plot(fit, which = 4)
+  par(mfrow = c(2, 2))
+  plot(fit)
+
+  # For several quantiles (taus)
+  fits <- unitquantreg(formula = y ~ x1 | x1, tau = 1:49 / 50, data = data_simulated,
+                       family = "uweibull")
+  plot(fits, which = "coef")
+  plot(fits, which = "coef", parm = "x1")
+  plot(fits, which = "coef", parm = "x1", mean_effect = FALSE)
+
+  plot(fits, which = "conddist", at_obs = list(x1 = c(0.2, 0.4, 0.6, 0.7)),
+       dist_type = "cdf")
+  plot(fits, which = "conddist", at_obs = list(x1 = c(0.2, 0.4, 0.6, 0.7)),
+       dist_type = "density")
+
+})
