@@ -40,8 +40,8 @@ print.unitquantreg <- function(x, digits = max(4, getOption("digits") - 3), ...)
     print.default(.FF(x$coefficients$theta, Digits = digits), print.gap = 2,
                   quote = FALSE)
     cat("\n")
-
   } else {
+    names(x$coefficients$theta) <- gsub("(theta)_", "", names(x$coefficients$theta), fixed = TRUE)
     cat("Theta coefficients (shape model with ", x$link$theta$name, " link):", "\n", sep = "")
     print.default(.FF(x$coefficients$theta, Digits = digits), print.gap = 2, quote = FALSE)
     cat("\n")
@@ -105,14 +105,14 @@ print.summary.unitquantreg <- function(x, digits = max(4, getOption("digits") - 
   cat("\n")
 
   if (x$theta_const) {
-    id <- 1:p + q
     cat("Model with constant shape:", "\n", sep = "")
-    printCoefmat(x$coeftable[id[length(id)], , drop = FALSE], digits = digits, has.Pvalue = TRUE)
+    printCoefmat(x$coeftable[-(1:p), , drop = FALSE], digits = digits, has.Pvalue = TRUE)
     cat("\n")
   } else {
+    rownames(x$coeftable)[-(1:p)] <- gsub("(theta)_", "", rownames(x$coeftable)[-(1:p)], fixed = TRUE)
     cat("Theta coefficients (shape model with ", x$link$theta$name, " link):", "\n",
         sep = "")
-    printCoefmat(x$coeftable[1:p + q, , drop = FALSE], digits = digits,
+    printCoefmat(x$coeftable[-(1:p), , drop = FALSE], digits = digits,
                  has.Pvalue = TRUE)
     cat("\n")
   }
