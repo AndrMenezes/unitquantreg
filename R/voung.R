@@ -190,7 +190,7 @@ pairwise.voung.test <- function(..., lt, p.adjust.method = p.adjust.methods,
 
   # Output
   method <- "Vuong likelihood ratio test for non-nested models"
-  dname <- deparse(lt[[1]]$call)
+  dname <- deparse1(lt[[1L]]$call, collapse = "\n", width.cutoff = 60L)
   out <- list(method = method, data.name = dname, p.value = pval,
               p.adjust.method = p.adjust.method)
   class(out) <- "pairwise.htest"

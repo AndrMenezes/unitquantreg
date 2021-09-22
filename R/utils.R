@@ -101,7 +101,7 @@
 #' @importFrom grDevices n2mfrow gray
 #' @importFrom stats predict coef confint
 
-.plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95, mean_effect = TRUE,
+.plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95, mean_effect = FALSE,
                        mfrow = NULL, mar = NULL, ylim = NULL, main = NULL,
                        col = gray(c(0, 0.75)), border = NULL, cex = 1, pch = 20,
                        type = "b", xlab = bquote("Quantile level ("~tau~")"),
@@ -201,9 +201,8 @@
   cond_foo <- if (type == "cdf") match.fun(paste0("p", distr_name)) else match.fun(paste0("d", distr_name))
 
   # Create the data.frame with observed value of covariates
-  at_obs <- list(x1 = c(0.3, 0.4, 0.6, 0.8))
   if (!is.null(at_obs)) {
-    newdata <- as.data.frame(at_obs)
+    newdata <- expand.grid(at_obs)
     newdata$avg <- FALSE
   } else newdata <- data.frame()
   if (at_avg) {
@@ -217,7 +216,7 @@
 
   # Create identifier (id) for each value of covariate
   for (nm in covariates_names) {
-    newdata[[paste0("id_", nm)]] <- paste0(nm, "=", round(newdata[[nm]], 4))
+    newdata[[paste0("id_", nm)]] <- paste0(nm, "=", round(newdata[[nm]], 2))
   }
   id_nm <- colnames(newdata)
   id_nm <- id_nm[grep(pattern = "id_", id_nm)]
@@ -254,7 +253,7 @@
   df_parms <- cbind(df_mu, theta = df_theta[, "theta"])
 
   # Compute cdf or pdf
-  lt_out <- lapply(split(df_parms, df_parms$x1), function(z) {
+  lt_out <- lapply(split(df_parms, df_parms$id), function(z) {
     z$predict <- sapply(seq_along(z$tau), function(i) {
       cond_foo(z$tau[i], mu = z$mu[i], theta = z$theta[i], tau = z$tau[i])
     })
