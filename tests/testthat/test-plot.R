@@ -45,4 +45,18 @@ test_that("plot method for unitquantreg(s) class works", {
   plot(fits, which = "conddist", at_obs = list(x1 = c(0.2, 0.4, 0.6, 0.7)),
        dist_type = "density")
 
+  data(water)
+  fits <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+                       data = water, tau = 1:49/50,
+                       family = "uweibull", link = "logit",
+                       link.theta = "log")
+  plot(fits, which = "conddist",
+       at_obs = list(mhdi = c(0.5, 0.7), incpc = mean(water$incpc),
+                     region = c(1, 0), pop = mean(water$pop)),
+       at_avg = FALSE, dist_type = "density")
+  plot(fits, which = "conddist",
+       at_obs = list(mhdi = c(0.5, 0.7), incpc = mean(water$incpc),
+                     region = c(1, 0), pop = mean(water$pop)),
+       at_avg = FALSE, dist_type = "cdf")
+
 })
