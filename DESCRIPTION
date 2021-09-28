@@ -25,3 +25,4 @@ RoxygenNote: 7.1.1
 NeedsCompilation: yes
 URL: https://github.com/AndrMenezes/unitquantreg
 BugReports: https://github.com/AndrMenezes/unitquantreg/issues
+VignetteBuilder: knitr

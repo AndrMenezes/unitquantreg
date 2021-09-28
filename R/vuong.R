@@ -1,8 +1,8 @@
-#' @name voung.test
+#' @name vuong.test
 #'
-#' @title Voung test
+#' @title Vuong test
 #'
-#' @description Performs Voung test between two fitted objects of class
+#' @description Performs Vuong test between two fitted objects of class
 #' \code{\link[unitquantreg]{unitquantreg}}
 #'
 #'
@@ -62,17 +62,17 @@
 #' fit_kum <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
 #' tau = 0.5, data = water, family = "kum")
 #'
-#' ans <- voung.test(object1 = fit_uweibull, object2 = fit_kum)
+#' ans <- vuong.test(object1 = fit_uweibull, object2 = fit_kum)
 #' ans
 #' str(ans)
 #'
 #'
 #' @importFrom stats var pnorm
 #'
-#' @rdname voung.test
+#' @rdname vuong.test
 #' @export
 
-voung.test <- function(object1, object2, alternative = c("two.sided", "less", "greater")) {
+vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "greater")) {
 
   alternative <- match.arg(alternative)
 
@@ -101,7 +101,7 @@ voung.test <- function(object1, object2, alternative = c("two.sided", "less", "g
   ll_1 <- do.call(dfun_1, parms_1)
   ll_2 <- do.call(dfun_2, parms_2)
 
-  # Compute Voung statistics
+  # Compute vuong statistics
   om2 <- (n - 1) / n * var(ll_1 - ll_2)
   lr <- sum(ll_1 - ll_2)
   Tstat <- (1/sqrt(n)) * lr/sqrt(om2)
@@ -125,12 +125,12 @@ voung.test <- function(object1, object2, alternative = c("two.sided", "less", "g
   out
 }
 
-#' @name pairwise.voung.test
+#' @name pairwise.vuong.test
 #'
-#' @title Pairwise Voung test
+#' @title Pairwise vuong test
 #'
 #' @description Calculate pairwise comparisons between fitted models performing
-#' Voung test for objects of class \code{\link[unitquantreg]{unitquantreg}}.
+#' vuong test for objects of class \code{\link[unitquantreg]{unitquantreg}}.
 #'
 #' @param ... \code{\link[unitquantreg]{unitquantreg}} objects separated by commas.
 #' @param lt a list with one or more \code{\link[unitquantreg]{unitquantreg}} objects.
@@ -144,7 +144,7 @@ voung.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 #'
 #' @return Object of class \code{"pairwise.htest"}
 #'
-#' @seealso \code{\link{voung.test}}, \code{\link{p.adjust}}
+#' @seealso \code{\link{vuong.test}}, \code{\link{p.adjust}}
 #'
 #' @examples
 #' data(water, package = "unitquantreg")
@@ -154,19 +154,19 @@ voung.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 #' fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi + incpc +
 #' region + log(pop),tau = 0.5, data = water, family = M))
 #'
-#' ans <- pairwise.voung.test(lt = fits)
+#' ans <- pairwise.vuong.test(lt = fits)
 #' ans
 #'
 #'
 #' @importFrom stats pairwise.table p.adjust.methods
 #'
 #'
-#' @rdname pairwise.voung.test
+#' @rdname pairwise.vuong.test
 #' @export
 #'
 
 
-pairwise.voung.test <- function(..., lt, p.adjust.method = p.adjust.methods,
+pairwise.vuong.test <- function(..., lt, p.adjust.method = p.adjust.methods,
                                 alternative = c("two.sided", "less", "greater")) {
 
   if (is.null(lt)) lt <-  list(...)
@@ -180,7 +180,7 @@ pairwise.voung.test <- function(..., lt, p.adjust.method = p.adjust.methods,
   compare.levels <- function(i, j) {
     xi <- lt[[as.integer(i)]]
     xj <- lt[[as.integer(j)]]
-    voung.test(object1 = xi, object2 = xj, alternative = alternative)$p.value
+    vuong.test(object1 = xi, object2 = xj, alternative = alternative)$p.value
   }
   pval <- pairwise.table(compare.levels = compare.levels,
                          level.names = seq_along(families),

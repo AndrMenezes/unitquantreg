@@ -18,6 +18,6 @@ test_that("multiplication works", {
                  tau = 0.5, data = water, family = fam)
   })
 
-  ans <- pairwise.voung.test(lt = lt_fits)
+  ans <- pairwise.vuong.test(lt = lt_fits)
   ans
 })
