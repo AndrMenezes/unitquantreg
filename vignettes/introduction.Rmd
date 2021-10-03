@@ -52,7 +52,7 @@ refs <- c("[Mazucheli, et al. (2018)](http://japs.isoss.net/13(2)1%2011046.pdf)"
 tab <- data.frame(fam_name, abbrev_name, refs)
 knitr::kable(tab[order(tab$abbrev_name), ], col.names = c("Family", "Abbreviation", "Reference"),
              caption = "Available families of distributions their abbreviations and reference.",
-             label = "distributions")
+             label = "distributions", row.names = FALSE)
 ```
 
 The [`dpqr`]'s functions of the distributions are vectorized and implemented in `C++`.

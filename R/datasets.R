@@ -19,9 +19,9 @@
 #' \item \code{ipaq}: Factor variable indicating the sedentary, insufficiently active or active.
 #' }
 #'
-#' @author André Felipe Menezes \email{andrefelipemaringa@gmail.com}
-#' @author Josmar Mazucheli \email{jmazucheli@gmail.com}
-#' @author Bruna Alves \email{pg402900@uem.br}
+#' @author André Felipe Menezes
+#' @author Josmar Mazucheli
+#' @author Bruna Alves
 #'
 #' @usage data(bodyfat, package = "unitquantreg")
 #'
@@ -54,7 +54,7 @@
 #' \item \code{pop}: total population.
 #' }
 #'
-#' @author André Felipe Menezes \email{andrefelipemaringa@gmail.com}
+#' @author André Felipe Menezes
 #'
 #' @usage data(water, package = "unitquantreg")
 #'

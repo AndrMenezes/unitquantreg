@@ -29,9 +29,9 @@
 #'
 #'
 #' @author
-#' André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+#' André F. B. Menezes
 #'
-#' Josmar Mazucheli \email{jmazucheli@gmail.com}
+#' Josmar Mazucheli
 #'
 #' @references
 #' Akaike, H. (1974). A new look at the statistical model identification. \emph{IEEE Transaction on Automatic Control}, \bold{19}(6), 716--723.

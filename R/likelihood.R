@@ -1,3 +1,4 @@
+#' @noMd
 #' @title Log-likelihood, score vector and hessian matrix.
 #'
 #' @description Internal functions using in \code{\link[unitquantreg]{unitquantreg.fit}}
