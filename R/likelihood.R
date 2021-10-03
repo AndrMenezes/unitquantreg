@@ -42,7 +42,7 @@ loglike_unitquantreg <- function(par, tau, family, linkobj, linkobj.theta, X, Z,
   # Compute the minus of log-likelihood
   ll <- do.call(llfun, parms)
 
-  return(ll)
+  ll
 }
 
 #' @noMd

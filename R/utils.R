@@ -10,7 +10,8 @@
                "ughnx", "unitghnx",
                "ugompertz", "unitgompertz",
                "uburrxii", "unitburrxii",
-               "johnsonsb", "johnson")
+               "jsb", "johnsonsb",
+               "ashw", "arcsechwei")
 
 # Get family names --------------------------------------------------------
 
@@ -46,8 +47,11 @@
   else if (family %in% c("uburrxii", "unitburrxii")) {
     "unit-Burr-XII"
   }
-  else if (family %in% c("johnsonsb", "johnson")) {
+  else if (family %in% c("johnsonsb", "jsb")) {
     "Johnson-SB"
+  }
+  else if (family %in% c("ashw", "arcsechwei")) {
+    "arc-secant hyperbolic Weibull"
   }
   else {
     NULL
@@ -70,7 +74,8 @@
                  "unit-Generalized Half-Normal-X" = "ughnx",
                  "unit-Gompertz" = "ugompertz",
                  "unit-Burr-XII" = "uburrxii",
-                 "Johnson-SB" = "johnsonsb"
+                 "Johnson-SB" = "johnsonsb",
+                 "arc-secant hyperbolic Weibull" = "ashw"
                  )
   out
 }
@@ -84,15 +89,16 @@
 
 .FF <- function(x,Digits=4,Width=4){(formatC(x,digits=Digits,width=Width,format="f"))}
 
-# Estimate the shape parameter solving a non-linear equation --------------
-.est_theta <- function(y) {
-  g_phi <- function(phi, y) {
+# TODO: get initial guess for the shape parameter.
+.est_theta <- function(y, family) {
+  g_theta <- function(phi, y) {
     n <- length(y)
     n / phi + sum(log(-log(y))) - n / sum((-log(y))^phi) * sum((-log(y))^phi * log(-log(y)))
   }
-  out <- tryCatch(stats::uniroot(g_phi, interval = c(1e-04, 100),
+  out <- tryCatch(stats::uniroot(g_theta, interval = c(1e-04, 100),
                   y = y)[["root"]], error = function(e) NULL)
   ifelse(is.null(out), 1.5, out)
+
 }
 
 
@@ -101,10 +107,10 @@
 #' @importFrom grDevices n2mfrow gray
 #' @importFrom stats predict coef confint
 
-.plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95, mean_effect = FALSE,
-                       mfrow = NULL, mar = NULL, ylim = NULL, main = NULL,
-                       col = gray(c(0, 0.75)), border = NULL, cex = 1, pch = 20,
-                       type = "b", xlab = bquote("Quantile level ("~tau~")"),
+.plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95,
+                       mean_effect = FALSE, mfrow = NULL, mar = NULL, ylim = NULL,
+                       main = NULL, col = gray(c(0, 0.75)), border = NULL, cex = 1,
+                       pch = 20, type = "b", xlab = bquote("Quantile level ("*tau*")"),
                        ylab = "Estimate effect", ...) {
 
   # Get point and interval estimates
@@ -119,14 +125,15 @@
   mat_cfs <- do.call("rbind", lt_cfs)
 
   if (mean_effect) {
+    cf_mean <- tapply(mat_cfs[, "coef"], rownames(mat_cfs), mean)
     mat_mean_effect <- matrix(c(
-      "coef" = tapply(mat_cfs[, "coef"], rownames(mat_cfs), mean),
-      "lower_bound" = tapply(mat_cfs[, "lower_bound"], rownames(mat_cfs), mean),
-      "upper_bound" = tapply(
-          mat_cfs[, "upper_bound"], rownames(mat_cfs), mean)),
+      cf_mean,
+      tapply(mat_cfs[, "lower_bound"], rownames(mat_cfs), mean),
+      tapply(mat_cfs[, "upper_bound"], rownames(mat_cfs), mean)),
       ncol = 3
     )
-    rownames(mat_mean_effect) <- unique(rownames(mat_cfs))
+    rownames(mat_mean_effect) <- names(cf_mean)
+    colnames(mat_mean_effect) <- c("coef", "lower_bound", "upper_bound")
   }
 
   # Get parameters names

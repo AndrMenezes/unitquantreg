@@ -256,7 +256,6 @@ model.frame.unitquantreg <- function(formula, ...) {
   else formula$model
 
 }
-# model.frame(object)
 
 #' @rdname methods-unitquantreg
 #' @export
@@ -294,7 +293,17 @@ update.unitquantreg <- function (object, formula., ..., evaluate = TRUE)
 }
 
 
-# Methofd unitquantregs (tau vectorized) ----------------------------------
+# Simulate --------------------------------------------------------------------------
+
+# simulate.uniquantreg <- function(object, nsim = 1, seed = NULL) {
+#   val <- object$family$simulate(object, nsim)
+#   dim(val) <- c(length(object$y), nsim)
+#   val <- as.data.frame(val)
+#   names(val) <- paste("sim", seq_len(nsim), sep="_")
+#   val
+# }
+
+# Methods unitquantregs (tau vectorized) ----------------------------------
 
 #' @rdname methods-unitquantreg
 #' @export
@@ -349,3 +358,4 @@ summary.unitquantregs <- function(object, digits = max(3, getOption("digits") - 
   names(out) <- .FF(sapply(object, "[[", "tau"), Digits = digits)
   out
 }
+

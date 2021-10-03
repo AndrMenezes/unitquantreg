@@ -168,10 +168,10 @@ plot.unitquantreg <- function(x, which = 1L:4L,
 #' @export
 #'
 plot.unitquantregs <- function(x, which = c("coef", "conddist"), output_df = FALSE,
-                               parm = NULL, level = 0.95, mean_effect = TRUE,
+                               parm = NULL, level = 0.95, mean_effect = FALSE,
                                mfrow = NULL, mar = NULL, ylim = NULL, main = NULL,
                                col = gray(c(0, 0.75)), border = NULL, cex = 1, pch = 20,
-                               type = "b", xlab = bquote("Quantile level ("~tau~")"),
+                               type = "b", xlab = bquote("Quantile level ("*tau*")"),
                                ylab = "Estimate effect", dist_type = c("density", "cdf"),
                                at_avg = TRUE, at_obs = NULL, legend_position = "topleft", ...) {
   if (which == "coef") {
