@@ -41,9 +41,9 @@
 #' \deqn{Q(\tau;\alpha, \theta)= sech\left \{ \left [ -\alpha^{-1} \log(\tau)\right ]^{\frac{1}{\theta}} \right \}}
 #'
 #' Reparameterization
-#' \deqn{\alpha = g^{-1}(\mu) = -\frac{\log(\tau)}arcsech(\mu)^\theta}}
+#' \deqn{\alpha = g^{-1}(\mu) = -\frac{\log(\tau)}{arcsech(\mu)^\theta}}
 #'
-#' where \eqn{\theta >0} is the shape parameter and \eqn{arcsech(y)= \log\left [ \left ( 1+\sqrt{1-y^2} \right )/y \right ]}.
+#' where \eqn{\theta >0} is the shape parameter and \eqn{arcsech(y)= \log\left[\left( 1+\sqrt{1-y^2} \right)/y \right]}.
 #'
 #' @examples
 #' set.seed(6969)

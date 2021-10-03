@@ -32,9 +32,10 @@ and the paper reference.
 fam_name <- c("unit-Weibull", "Kumaraswamy", "unit-Logistic", "unit-Chen",
               "unit-Birnbaum-Saunders", "log-extended Exponential-Geometric",
               "unit-Generalized Half-Normal-E", "unit-Generalized Half-Normal-X",
-              "unit-Gompertz", "unit-Burr-XII", "Johnson-SB")
+              "unit-Gompertz", "unit-Burr-XII", "Johnson-SB",
+              "arc-secant hyperbolic Weibull")
 abbrev_name <- c("uweibull", "kum", "ulogistic", "uchen", "ubs", "leeg", "ughne",
-                 "ughnx", "ugompertz", "uburrxii", "johnsonsb")
+                 "ughnx", "ugompertz", "uburrxii", "johnsonsb", "ashw")
 refs <- c("[Mazucheli, et al. (2018)](http://japs.isoss.net/13(2)1%2011046.pdf)",
           "[Kumaraswamy, (1980)](https://www.sciencedirect.com/science/article/abs/pii/0022169480900360)",
           "[Tadikamalla and Johnson (1982)](https://www.jstor.org/stable/2335422)",
@@ -45,7 +46,8 @@ refs <- c("[Mazucheli, et al. (2018)](http://japs.isoss.net/13(2)1%2011046.pdf)"
           "New propose",
           "[Mazucheli et al. (2019)](https://rivista-statistica.unibo.it/article/view/8497)",
           "[Korkmaz and Chesneau (2021)](https://link.springer.com/article/10.1007/s40314-021-01418-5)",
-          "[Johnson (1949)](https://www.jstor.org/stable/2332539)"
+          "[Johnson (1949)](https://www.jstor.org/stable/2332539)",
+          "[Korkmaz et al. (2021)](https://www.tandfonline.com/doi/full/10.1080/02664763.2021.1981834)"
           )
 tab <- data.frame(fam_name, abbrev_name, refs)
 knitr::kable(tab, col.names = c("Family", "Abbreviation", "Reference"),
@@ -187,7 +189,8 @@ lt_families <- list("unit-Weibull" = "uweibull",
                     "unit-Generalized Half-Normal-X" = "ughnx",
                     "unit-Gompertz" = "ugompertz",
                     "Johnson-SB" = "johnsonsb",
-                    "unit-Burr-XII" = "uburrxii")
+                    "unit-Burr-XII" = "uburrxii",
+                    "arc-secant hyperbolic Weibull" = "ashw")
 lt_fits <- lapply(lt_families, function(fam) {
   unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop), data = water,
                tau = 0.5, family = fam, link = "logit", link.theta = "log")
@@ -317,7 +320,7 @@ system.time(
                                  data = water, tau = 1:49/50,
                                  family = "uweibull", link = "logit",
                                  link.theta = "log"))
-plot(fits_uweibull, which = "coef", mean_effect = FALSE)
+plot(fits_uweibull, which = "coef")
 ```
 
 

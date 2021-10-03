@@ -44,7 +44,19 @@ Density function, distribution function, quantile function and random number gen
 for the arcsecant hyperbolic Weibull distribution reparametrized in terms of the \eqn{\tau}-th quantile, \eqn{\tau \in (0, 1)}.
 }
 \details{
+Probability density function
+\deqn{f(y;\alpha, \theta)=\frac{\alpha \theta}{y\sqrt{1-y^2}} arcsech(y)^{\theta-1}\exp\left [ -\alpha arcsech(y)^\theta \right ]}
 
+Cumulative distribution function
+\deqn{F(y;\alpha, \theta)=\exp\left [ -\alpha arcsech(y)^\theta \right ]}
+
+Quantile function
+\deqn{Q(\tau;\alpha, \theta)= sech\left \{ \left [ -\alpha^{-1} \log(\tau)\right ]^{\frac{1}{\theta}} \right \}}
+
+Reparameterization
+\deqn{\alpha = g^{-1}(\mu) = -\frac{\log(\tau)}{arcsech(\mu)^\theta}}
+
+where \eqn{\theta >0} is the shape parameter and \eqn{arcsech(y)= \log\left[\left( 1+\sqrt{1-y^2} \right)/y \right]}.
 }
 \examples{
 set.seed(6969)

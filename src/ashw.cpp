@@ -205,9 +205,9 @@ NumericMatrix cpp_hessianashw(int n,
     double t82 = -t63 * mu[i] * t21 + t58 * t18 * t21 * t71 * t50 - t45 * t26 * t56 - t58 * t18 * t55 * t78;
     double t84 = t71 * t71;
     double t91 = t78 * t78;
-    H(0,0) = -t16 * t18 * t21 - t27 * t29 * t1 * t21 * t7 - t27 * t17 * t21 + t37 * t38 * t40 + t45 * t46 * t36 * t52 - t45 * t16 * t56 - t58 * t38 * t55 * t7 - t45 * theta[i] * t63 * t55 + t45 * t37 * t52;
-    H(0,1) = t82;
-    H(1,1) = -0.1e1 / t46 + t45 * t84 * t50 - 0.2e1 * t45 * t71 * t50 * t78 + t45 * t50 * t91;
+    H(i,0) = -t16 * t18 * t21 - t27 * t29 * t1 * t21 * t7 - t27 * t17 * t21 + t37 * t38 * t40 + t45 * t46 * t36 * t52 - t45 * t16 * t56 - t58 * t38 * t55 * t7 - t45 * theta[i] * t63 * t55 + t45 * t37 * t52;
+    H(i,1) = t82;
+    H(i,2) = -0.1e1 / t46 + t45 * t84 * t50 - 0.2e1 * t45 * t71 * t50 * t78 + t45 * t50 * t91;
   }
   return(H);
 }

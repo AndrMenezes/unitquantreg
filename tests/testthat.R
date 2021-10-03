@@ -12,8 +12,8 @@ lt_families <- list(
   "unit-Generalized Half-Normal-X" = "ughnx",
   "unit-Gompertz" = "ugompertz",
   "Johnson-SB" = "johnsonsb",
-  "unit-Burr-XII" = "uburrxii"
-  #,"arc-secant hyperbolic Weibull" = "ashw"
+  "unit-Burr-XII" = "uburrxii",
+  "arc-secant hyperbolic Weibull" = "ashw"
   )
 
 test_check("unitquantreg")

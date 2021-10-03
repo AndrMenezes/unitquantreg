@@ -30,8 +30,8 @@ test_that("analitical and numerical gradient works in water data", {
   })
   df_res_parms <- do.call("rbind", lapply(lt_fits, "[[", "df_se"))
   npar <- 6
-  expect_equal(ncol(df_res_parms), 6)
-  expect_equal(nrow(df_res_parms), 11 * npar)
+  expect_equal(ncol(df_res_parms), npar)
+  expect_equal(nrow(df_res_parms), length(lt_families) * npar)
 
 })
 
@@ -66,7 +66,7 @@ test_that("analitical and numerical gradient works in bodyfat data", {
   df_res_parms <- do.call("rbind", lapply(lt_fits, "[[", "df_se"))
   npar <- 6
   expect_equal(ncol(df_res_parms), 6)
-  expect_equal(nrow(df_res_parms), 11 * npar)
+  expect_equal(nrow(df_res_parms), length(lt_families) * npar)
 
 })
 

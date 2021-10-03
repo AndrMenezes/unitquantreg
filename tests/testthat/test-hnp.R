@@ -26,10 +26,10 @@ test_that("hnp method works for all distribution families in simulated data", {
   # par(mfrow = c(2, 6))
   set.seed(6969)
   system.time(
-  out_hnp <- invisible(lapply(seq_along(lt_fits), function(i) {
-    cat(lt_families[[i]], '\n')
-    hnp(lt_fits[[i]], main = names(lt_fits)[i], plot = FALSE, nsim = 10)
-  }))
+    out_hnp <- invisible(lapply(seq_along(lt_fits), function(i) {
+      cat(lt_families[[i]], '\n')
+      hnp(lt_fits[[i]], main = names(lt_fits)[i], plot = FALSE, nsim = 10)
+    }))
   )
   expect_equal(length(out_hnp), length(lt_families))
 
@@ -39,7 +39,7 @@ test_that("hnp method works for all distribution families in simulated data", {
   # }))
 
   # Theta varying
-
+  set.seed(6969)
   Z <- cbind(1, z1 = rexp(n))
   gammas <- c(1, 0.5)
   theta <- exp(c(Z %*% gammas))
