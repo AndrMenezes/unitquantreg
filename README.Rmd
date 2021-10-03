@@ -41,7 +41,7 @@ are computed using the analytical  hessian matrix, both are implemented in effic
 
 You can install the development version from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("AndrMenezes/unitquantreg")
 ```
@@ -61,7 +61,9 @@ lt_families <- list("unit-Weibull" = "uweibull",
                     "unit-Generalized Half-Normal-X" = "ughnx",
                     "unit-Gompertz" = "ugompertz",
                     "Johnson-SB" = "johnsonsb",
-                    "unit-Burr-XII" = "uburrxii")
+                    "unit-Burr-XII" = "uburrxii",
+                    "arc-secant hyperbolic Weibull" = "ashw",
+                    "unit-Gumbel" = "ugumbel")
 ```
 
 
@@ -84,12 +86,12 @@ You can use the `likelihood_stats` to get likelihood-base statistics:
 likelihood_stats(lt = lt_fits)
 ```
 
-It is also possible to perform pairwise [Voung test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test) to model selection of nonnested models.
+It is also possible to perform pairwise [Vuong test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test) to model selection of nonnested models.
 
 ```{r}
 # Select just a few model to not mess the output
 lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Weibull")]
-pairwise.voung.test(lt = lt_chosen)
+pairwise.vuong.test(lt = lt_chosen)
 ```
 
 

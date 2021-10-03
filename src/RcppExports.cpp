@@ -980,6 +980,103 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_dugumbel
+NumericVector cpp_dugumbel(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_dugumbel(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dugumbel(x, mu, theta, tau, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_pugumbel
+NumericVector cpp_pugumbel(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool lowertail, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_pugumbel(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP lowertailSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type lowertail(lowertailSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pugumbel(x, mu, theta, tau, lowertail, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_qugumbel
+NumericVector cpp_qugumbel(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool lowertail, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_qugumbel(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP lowertailSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type lowertail(lowertailSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qugumbel(x, mu, theta, tau, lowertail, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_loglikeugumbel
+double cpp_loglikeugumbel(NumericVector x, NumericVector lnx, int n, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_loglikeugumbel(SEXP xSEXP, SEXP lnxSEXP, SEXP nSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type lnx(lnxSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_loglikeugumbel(x, lnx, n, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_gradientugumbel
+NumericMatrix cpp_gradientugumbel(int n, NumericVector x, NumericMatrix U, NumericVector dmu_deta, NumericVector dtheta_dzeta, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_gradientugumbel(SEXP nSEXP, SEXP xSEXP, SEXP USEXP, SEXP dmu_detaSEXP, SEXP dtheta_dzetaSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type U(USEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dmu_deta(dmu_detaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dtheta_dzeta(dtheta_dzetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_gradientugumbel(n, x, U, dmu_deta, dtheta_dzeta, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_hessianugumbel
+NumericMatrix cpp_hessianugumbel(int n, NumericVector x, NumericMatrix H, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_hessianugumbel(SEXP nSEXP, SEXP xSEXP, SEXP HSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type H(HSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_hessianugumbel(n, x, H, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_dulogistic
 NumericVector cpp_dulogistic(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool logprob);
 RcppExport SEXP _unitquantreg_cpp_dulogistic(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP logprobSEXP) {
@@ -1236,6 +1333,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_unitquantreg_cpp_loglikeugompertz", (DL_FUNC) &_unitquantreg_cpp_loglikeugompertz, 6},
     {"_unitquantreg_cpp_gradientugompertz", (DL_FUNC) &_unitquantreg_cpp_gradientugompertz, 8},
     {"_unitquantreg_cpp_hessianugompertz", (DL_FUNC) &_unitquantreg_cpp_hessianugompertz, 6},
+    {"_unitquantreg_cpp_dugumbel", (DL_FUNC) &_unitquantreg_cpp_dugumbel, 5},
+    {"_unitquantreg_cpp_pugumbel", (DL_FUNC) &_unitquantreg_cpp_pugumbel, 6},
+    {"_unitquantreg_cpp_qugumbel", (DL_FUNC) &_unitquantreg_cpp_qugumbel, 6},
+    {"_unitquantreg_cpp_loglikeugumbel", (DL_FUNC) &_unitquantreg_cpp_loglikeugumbel, 6},
+    {"_unitquantreg_cpp_gradientugumbel", (DL_FUNC) &_unitquantreg_cpp_gradientugumbel, 8},
+    {"_unitquantreg_cpp_hessianugumbel", (DL_FUNC) &_unitquantreg_cpp_hessianugumbel, 6},
     {"_unitquantreg_cpp_dulogistic", (DL_FUNC) &_unitquantreg_cpp_dulogistic, 5},
     {"_unitquantreg_cpp_pulogistic", (DL_FUNC) &_unitquantreg_cpp_pulogistic, 6},
     {"_unitquantreg_cpp_qulogistic", (DL_FUNC) &_unitquantreg_cpp_qulogistic, 6},

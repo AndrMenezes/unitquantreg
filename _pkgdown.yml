@@ -10,7 +10,7 @@ authors:
     href: https://scholar.google.com/citations?hl=en&user=JAGnl3sAAAAJ&view_op=list_works&sortby=pubdate
 
 figures:
-  fig.ext: svg
+  fig.ext: png
 
 reference:
 - title: Families of distributions
@@ -26,6 +26,7 @@ reference:
   - ughne
   - ughnx
   - ugompertz
+  - ugumbel
   - ulogistic
   - uweibull
 

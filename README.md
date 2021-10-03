@@ -50,7 +50,9 @@ lt_families <- list("unit-Weibull" = "uweibull",
                     "unit-Generalized Half-Normal-X" = "ughnx",
                     "unit-Gompertz" = "ugompertz",
                     "Johnson-SB" = "johnsonsb",
-                    "unit-Burr-XII" = "uburrxii")
+                    "unit-Burr-XII" = "uburrxii",
+                    "arc-secant hyperbolic Weibull" = "ashw",
+                    "unit-Gumbel" = "ugumbel")
 ```
 
 The workhorse function is `unitquantreg`, which follows same interface
@@ -77,6 +79,8 @@ t(sapply(lt_fits, coef))
 #> unit-Gompertz                        -6.260194 11.719934  4.103341e-04
 #> Johnson-SB                           -5.993763 11.803290  1.144566e-03
 #> unit-Burr-XII                        -5.811837 11.043123  3.777215e-04
+#> arc-secant hyperbolic Weibull        -7.363838 12.705584  7.957473e-05
+#> unit-Gumbel                          -9.338592 14.990026 -5.503130e-04
 #>                                         region    log(pop)  log(theta)
 #> unit-Weibull                       -0.26990871  0.10546762  0.17249694
 #> Kumaraswamy                        -0.07860323 -0.04727081  1.75778137
@@ -89,6 +93,8 @@ t(sapply(lt_fits, coef))
 #> unit-Gompertz                      -0.23932329  0.09146941 -5.42477111
 #> Johnson-SB                         -0.19500756  0.01823070  0.01748328
 #> unit-Burr-XII                      -0.19140000  0.07565710  0.28322367
+#> arc-secant hyperbolic Weibull      -0.38168564  0.14972053  0.72098495
+#> unit-Gumbel                        -0.62080389  0.25058612 -0.26073820
 ```
 
 You can use the `likelihood_stats` to get likelihood-base statistics:
@@ -107,25 +113,28 @@ likelihood_stats(lt = lt_fits)
 #> unit-Weibull                       -7994.077   -7982.077 -7945.188 -7968.903
 #> unit-Birnbaum-Saunders             -7955.990   -7943.990 -7907.101 -7930.817
 #> unit-Gompertz                      -7808.838   -7796.838 -7759.949 -7783.664
+#> arc-secant hyperbolic Weibull      -7679.482   -7667.482 -7630.593 -7654.308
 #> log-extended Exponential-Geometric -7677.034   -7665.034 -7628.145 -7651.860
 #> unit-Generalized Half-Normal-E     -7496.966   -7484.966 -7448.077 -7471.792
 #> Kumaraswamy                        -7188.498   -7176.498 -7139.609 -7163.324
 #> unit-Chen                          -7016.542   -7004.542 -6967.653 -6991.368
 #> unit-Generalized Half-Normal-X     -6965.962   -6953.962 -6917.073 -6940.789
+#> unit-Gumbel                        -6531.775   -6519.775 -6482.886 -6506.602
 ```
 
-It is also possible to perform pairwise [Voung
+It is also possible to perform pairwise [Vuong
 test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test) to model
 selection of nonnested models.
 
 ``` r
 # Select just a few model to not mess the output
 lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Weibull")]
-pairwise.voung.test(lt = lt_chosen)
+pairwise.vuong.test(lt = lt_chosen)
 #> 
 #>  Pairwise comparisons using Vuong likelihood ratio test for non-nested models 
 #> 
-#> data:  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),      data = water, tau = 0.5, family = fam, link = "logit", link.theta = "log") 
+#> data:  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop), 
+#>     data = water, tau = 0.5, family = fam, link = "logit", link.theta = "log") 
 #> 
 #>               unit-Logistic Johnson-SB unit-Burr-XII
 #> Johnson-SB    0.00031       -          -            
@@ -145,8 +154,8 @@ methods(class = "unitquantreg")
 #> see '?methods' for accessing help and source code
 ```
 
-It is also possible to fit the model for several quantiles like `rq`
-function from
+It is also possible to fit the model for several quantiles values like
+`rq` function from
 [**quantreg**](https://cran.r-project.org/web/packages/quantreg/index.html)
 package.
 

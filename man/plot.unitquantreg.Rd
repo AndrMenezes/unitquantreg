@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot.unitquantreg}
 \alias{plot.unitquantreg}
-\title{Plot method for \code{unitquantreg} and \code{unitquantregs} objects}
+\title{Plot method for \code{unitquantreg} objects}
 \usage{
 \method{plot}{unitquantreg}(
   x,

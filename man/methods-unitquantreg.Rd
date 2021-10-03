@@ -15,7 +15,7 @@
 \alias{update.unitquantreg}
 \alias{print.unitquantregs}
 \alias{summary.unitquantregs}
-\title{Methods for \code{unitquantreg} objects}
+\title{Methods for \code{unitquantreg} and \code{unitquantregs} objects}
 \usage{
 \method{print}{unitquantreg}(x, digits = max(4, getOption("digits") - 3), ...)
 
@@ -66,8 +66,8 @@
 }
 \description{
 Methods for extracting information from fitted unit quantile regression
-objects of class \code{\link{unitquantreg}}.
+objects of class \code{unitquantreg} and \code{unitquantregs}.
 }
 \author{
-André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+André F. B. Menezes
 }

@@ -127,8 +127,11 @@ by maximum likelihood using the log-likelihood function, the score vector
 and the hessian matrix implemented in \code{C++}.
 }
 \details{
-This function uses maximum likelihood method to make inference for parametric quantile
-regression models for bounded phenomena
+The parameter estimation and inference are performed under the frequentist paradigm.
+The \code{\link[optimx]{optimx}} R package is use, since allows different optimization
+technique to maximize the log-likelihood function.  The analytical score function are
+use in the maximization and the standard errors are computed using the
+analytical hessian matrix, both are implemented in efficient away using \code{C++}.
 }
 \author{
 André F. B. Menezes

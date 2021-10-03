@@ -32,18 +32,18 @@
 #'
 #' @details
 #' Probability density function
-#' \deqn{f(y;\alpha, \theta)=\frac{\alpha \theta}{y\sqrt{1-y^2}} arcsech(y)^{\theta-1}\exp\left [ -\alpha arcsech(y)^\theta \right ]}
+#' \deqn{f(y;\alpha, \theta)=\frac{\alpha \theta}{y\sqrt{1-y^2}} \mathrm{arcsech}(y)^{\theta-1}\exp\left [ -\alpha \mathrm{arcsech}(y)^\theta \right ]}
 #'
 #' Cumulative distribution function
-#' \deqn{F(y;\alpha, \theta)=\exp\left [ -\alpha arcsech(y)^\theta \right ]}
+#' \deqn{F(y;\alpha, \theta)=\exp\left [ -\alpha \mathrm{arcsech}(y)^\theta \right ]}
 #'
 #' Quantile function
-#' \deqn{Q(\tau;\alpha, \theta)= sech\left \{ \left [ -\alpha^{-1} \log(\tau)\right ]^{\frac{1}{\theta}} \right \}}
+#' \deqn{Q(\tau;\alpha, \theta)= \mathrm{sech}\left \{ \left [ -\alpha^{-1} \log(\tau)\right ]^{\frac{1}{\theta}} \right \}}
 #'
 #' Reparameterization
-#' \deqn{\alpha = g^{-1}(\mu) = -\frac{\log(\tau)}{arcsech(\mu)^\theta}}
+#' \deqn{\alpha = g^{-1}(\mu) = -\frac{\log(\tau)}{\mathrm{arcsech}(\mu)^\theta}}
 #'
-#' where \eqn{\theta >0} is the shape parameter and \eqn{arcsech(y)= \log\left[\left( 1+\sqrt{1-y^2} \right)/y \right]}.
+#' where \eqn{\theta >0} is the shape parameter and \eqn{\mathrm{arcsech}(y)= \log\left[\left( 1+\sqrt{1-y^2} \right)/y \right]}.
 #'
 #' @examples
 #' set.seed(6969)
@@ -56,7 +56,7 @@
 #' lines(S, pashw(q = S, mu = 0.5, theta = 2.5, tau = 0.5), col = 2)
 #' plot(quantile(x, probs = S), type = "l")
 #' lines(qashw(p = S, mu = 0.5, theta = 2.5, tau = 0.5), col = 2)
-##################################################
+
 #' @rdname ashw
 #' @export
 #

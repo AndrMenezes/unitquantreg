@@ -13,7 +13,8 @@ lt_families <- list(
   "unit-Gompertz" = "ugompertz",
   "Johnson-SB" = "johnsonsb",
   "unit-Burr-XII" = "uburrxii",
-  "arc-secant hyperbolic Weibull" = "ashw"
+  "arc-secant hyperbolic Weibull" = "ashw",
+  "unit-Gumbel" = "ugumbel"
   )
 
 test_check("unitquantreg")

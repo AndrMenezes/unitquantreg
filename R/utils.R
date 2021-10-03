@@ -11,7 +11,8 @@
                "ugompertz", "unitgompertz",
                "uburrxii", "unitburrxii",
                "jsb", "johnsonsb",
-               "ashw", "arcsechwei")
+               "ashw", "arcsechwei",
+               "ugumbel", "unitgumbel")
 
 # Get family names --------------------------------------------------------
 
@@ -53,6 +54,9 @@
   else if (family %in% c("ashw", "arcsechwei")) {
     "arc-secant hyperbolic Weibull"
   }
+  else if (family %in% c("ugumbel", "unitgumbel")) {
+    "unit-Gumbel"
+  }
   else {
     NULL
   }
@@ -75,7 +79,8 @@
                  "unit-Gompertz" = "ugompertz",
                  "unit-Burr-XII" = "uburrxii",
                  "Johnson-SB" = "johnsonsb",
-                 "arc-secant hyperbolic Weibull" = "ashw"
+                 "arc-secant hyperbolic Weibull" = "ashw",
+                 "unit-Gumbel" = "ugumbel"
                  )
   out
 }

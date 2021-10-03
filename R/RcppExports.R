@@ -241,6 +241,30 @@ cpp_hessianugompertz <- function(n, x, H, mu, theta, tau) {
     .Call('_unitquantreg_cpp_hessianugompertz', PACKAGE = 'unitquantreg', n, x, H, mu, theta, tau)
 }
 
+cpp_dugumbel <- function(x, mu, theta, tau, logprob = FALSE) {
+    .Call('_unitquantreg_cpp_dugumbel', PACKAGE = 'unitquantreg', x, mu, theta, tau, logprob)
+}
+
+cpp_pugumbel <- function(x, mu, theta, tau, lowertail = TRUE, logprob = FALSE) {
+    .Call('_unitquantreg_cpp_pugumbel', PACKAGE = 'unitquantreg', x, mu, theta, tau, lowertail, logprob)
+}
+
+cpp_qugumbel <- function(x, mu, theta, tau, lowertail = TRUE, logprob = FALSE) {
+    .Call('_unitquantreg_cpp_qugumbel', PACKAGE = 'unitquantreg', x, mu, theta, tau, lowertail, logprob)
+}
+
+cpp_loglikeugumbel <- function(x, lnx, n, mu, theta, tau) {
+    .Call('_unitquantreg_cpp_loglikeugumbel', PACKAGE = 'unitquantreg', x, lnx, n, mu, theta, tau)
+}
+
+cpp_gradientugumbel <- function(n, x, U, dmu_deta, dtheta_dzeta, mu, theta, tau) {
+    .Call('_unitquantreg_cpp_gradientugumbel', PACKAGE = 'unitquantreg', n, x, U, dmu_deta, dtheta_dzeta, mu, theta, tau)
+}
+
+cpp_hessianugumbel <- function(n, x, H, mu, theta, tau) {
+    .Call('_unitquantreg_cpp_hessianugumbel', PACKAGE = 'unitquantreg', n, x, H, mu, theta, tau)
+}
+
 cpp_dulogistic <- function(x, mu, theta, tau, logprob = FALSE) {
     .Call('_unitquantreg_cpp_dulogistic', PACKAGE = 'unitquantreg', x, mu, theta, tau, logprob)
 }
