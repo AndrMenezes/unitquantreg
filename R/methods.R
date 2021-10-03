@@ -1,11 +1,11 @@
 #' @name methods-unitquantreg
 #'
-#' @title Methods for \code{unitquantreg} objects
+#' @title Methods for \code{unitquantreg} and \code{unitquantregs} objects
 #'
 #' @description Methods for extracting information from fitted unit quantile regression
-#' objects of class \code{\link{unitquantreg}}.
+#' objects of class \code{unitquantreg} and \code{unitquantregs}.
 #'
-#' @author André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+#' @author André F. B. Menezes
 #'
 #' @param object,x fitted model object of class \code{\link{unitquantreg}}.
 #' @param digits  minimal number of _significant_ digits.

@@ -1,0 +1,55 @@
+url: https://andrmenezes.github.io/unitquantreg
+
+development:
+  mode: auto
+
+authors:
+  André F. B. Menezes:
+    href: https://andrmenezes.github.io
+  Josmar Mazucheli:
+    href: https://scholar.google.com/citations?hl=en&user=JAGnl3sAAAAJ&view_op=list_works&sortby=pubdate
+
+figures:
+  fig.ext: svg
+
+reference:
+- title: Families of distributions
+  desc: The `dpqr` functions of available bounded distributions.
+  contents:
+  - ashw
+  - johnsonsb
+  - kum
+  - leeg
+  - ubs
+  - uburrxii
+  - uchen
+  - ughne
+  - ughnx
+  - ugompertz
+  - ulogistic
+  - uweibull
+
+- title: Fitting parametric unit quantile regression models
+  contents:
+  - unitquantreg
+  - unitquantreg.control
+
+- title: S3 methods for unitquantreg(s) objects
+  contents:
+  - ends_with(".unitquantreg")
+  - plot.unitquantregs
+
+
+- title: Likelihood based statistics
+  contents:
+  - likelihood_stats
+
+- title: Vuong likelihood ratio test
+  contents:
+  - vuong.test
+  - pairwise.vuong.test
+
+- title: Datasets
+  contents:
+  - bodyfat
+  - water

@@ -1,4 +1,4 @@
-#' @title Plot method for \code{unitquantreg} and \code{unitquantregs} objects
+#' @title Plot method for \code{unitquantreg} objects
 #'
 #' @description Provide diagnostic plots to check model assumptions for fitted model
 #' of class \code{unitquantreg}.

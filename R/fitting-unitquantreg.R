@@ -130,8 +130,12 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #'
 #'
 #' @details
-#' This function uses maximum likelihood method to make inference for parametric quantile
-#' regression models for bounded phenomena
+#' The parameter estimation and inference are performed under the frequentist paradigm.
+#' The \code{\link[optimx]{optimx}} R package is use, since allows different optimization
+#' technique to maximize the log-likelihood function.  The analytical score function are
+#' use in the maximization and the standard errors are computed using the
+#' analytical hessian matrix, both are implemented in efficient away using \code{C++}.
+#'
 #'
 #' @return \code{\link{unitquantreg}} can return an object of
 #' class \code{unitquantreg} if \code{tau} is one quantile, i.e., a list with

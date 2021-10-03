@@ -49,13 +49,13 @@
 #' set.seed(6969)
 #' x <- rashw(n = 1000, mu = 0.5, theta = 2.5, tau = 0.5)
 #' R <- range(x)
-#' S <- seq(from = R[1], to = R[2], by = 0.01)
+#' S <- seq(from = R[1L], to = R[2L], by = 0.01)
 #' hist(x, prob = TRUE, main = 'arcsecant hyperbolic Weibull')
-#' lines(S, dashw(x = S, mu = 0.5, theta = 0.5, tau = 0.5), col = 2)
+#' lines(S, dashw(x = S, mu = 0.5, theta = 2.5, tau = 0.5), col = 2)
 #' plot(ecdf(x))
-#' lines(S, pashw(q = S, mu = 0.5, theta = 0.75, tau = 0.5), col = 2)
+#' lines(S, pashw(q = S, mu = 0.5, theta = 2.5, tau = 0.5), col = 2)
 #' plot(quantile(x, probs = S), type = "l")
-#' lines(qashw(p = S, mu = 0.5, theta = 0.75, tau = 0.5), col = 2)
+#' lines(qashw(p = S, mu = 0.5, theta = 2.5, tau = 0.5), col = 2)
 ##################################################
 #' @rdname ashw
 #' @export

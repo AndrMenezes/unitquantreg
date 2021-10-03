@@ -30,8 +30,8 @@
 #'    \code{TRUE} compute the absolute values of the residuals and arrange them in order;}
 #'    \item{repeat steps (1) and (2) \code{nsim} number of times;}
 #'    \item{consider the \eqn{n} sets of the \code{nsim} ordered statistics
-#'    of the residuals, then for each set compute the quantile \eqn{\code{level}/2},
-#'    the median and the quantile \eqn{1 - \code{level}/2};}
+#'    of the residuals, then for each set compute the quantile \code{level}/2,
+#'    the median and the quantile 1 - \code{level}/2;}
 #'    \item{plot these values and the ordered residuals of the original sample set
 #'    versus the expected order statistics of a (half)-normal distribution,
 #'    which is approximated as}

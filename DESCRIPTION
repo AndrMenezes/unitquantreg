@@ -23,6 +23,6 @@ Depends:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-URL: https://github.com/AndrMenezes/unitquantreg
+URL: https://andrmenezes.github.io/unitquantreg, https://github.com/AndrMenezes/unitquantreg
 BugReports: https://github.com/AndrMenezes/unitquantreg/issues
 VignetteBuilder: knitr
