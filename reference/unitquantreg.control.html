@@ -274,7 +274,7 @@ procedure used by <code><a href='unitquantreg.html'>unitquantreg</a></code>.</p>
 #&gt; 
 #&gt; $xtimes
 #&gt; user.self 
-#&gt;      0.04 
+#&gt;     0.046 
 #&gt; 
 #&gt; Assemble the answers</div><div class='input'>
 <span class='co'># Fitting without using the analytical gradient</span>
@@ -326,7 +326,7 @@ procedure used by <code><a href='unitquantreg.html'>unitquantreg</a></code>.</p>
 #&gt; 
 #&gt; $xtimes
 #&gt; user.self 
-#&gt;     0.137 
+#&gt;     0.171 
 #&gt; 
 #&gt; Assemble the answers</div><div class='input'><span class='co'># Compare estimated coefficients</span>
 <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>gradient <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>fit_gradient</span><span class='op'>)</span>, no_gradient <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>fit_nogradient</span><span class='op'>)</span><span class='op'>)</span>

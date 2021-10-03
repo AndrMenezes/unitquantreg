@@ -282,8 +282,11 @@ class unitquantreg for each specified quantiles.
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function uses maximum likelihood method to make inference for parametric quantile
-regression models for bounded phenomena</p>
+    <p>The parameter estimation and inference are performed under the frequentist paradigm.
+The <code><a href='https://rdrr.io/pkg/optimx/man/optimx.html'>optimx</a></code> R package is use, since allows different optimization
+technique to maximize the log-likelihood function.  The analytical score function are
+use in the maximization and the standard errors are computed using the
+analytical hessian matrix, both are implemented in efficient away using <code>C++</code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>André F. B. Menezes</p>
