@@ -1,15 +1,3 @@
-lt_families <- list("unit-Weibull" = "uweibull",
-                    "Kumaraswamy" = "kum",
-                    "unit-Logistic" = "ulogistic",
-                    "unit-Birnbaum-Saunders" = "ubs",
-                    "log-extended Exponential-Geometric" = "leeg",
-                    "unit-Chen" = "uchen",
-                    "unit-Generalized Half-Normal-E" = "ughne",
-                    "unit-Generalized Half-Normal-X" = "ughnx",
-                    "unit-Gompertz" = "ugompertz",
-                    "Johnson-SB" = "johnsonsb",
-                    "unit-Burr-XII" = "uburrxii")
-
 test_that("analitical and numerical gradient works in water data", {
 
   data(water)

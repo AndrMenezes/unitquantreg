@@ -5,6 +5,108 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
+// cpp_dashw
+NumericVector cpp_dashw(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_dashw(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_dashw(x, mu, theta, tau, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_pashw
+NumericVector cpp_pashw(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool lowertail, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_pashw(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP lowertailSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type lowertail(lowertailSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_pashw(x, mu, theta, tau, lowertail, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_qashw
+NumericVector cpp_qashw(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool lowertail, const bool logprob);
+RcppExport SEXP _unitquantreg_cpp_qashw(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP lowertailSEXP, SEXP logprobSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< const double >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const bool >::type lowertail(lowertailSEXP);
+    Rcpp::traits::input_parameter< const bool >::type logprob(logprobSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_qashw(x, mu, theta, tau, lowertail, logprob));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_loglikeashw
+double cpp_loglikeashw(NumericVector x, NumericVector lnx, int n, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_loglikeashw(SEXP xSEXP, SEXP lnxSEXP, SEXP nSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type lnx(lnxSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_loglikeashw(x, lnx, n, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_gradientashw
+NumericMatrix cpp_gradientashw(int n, NumericVector x, NumericMatrix U, NumericVector dmu_deta, NumericVector dtheta_dzeta, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_gradientashw(SEXP nSEXP, SEXP xSEXP, SEXP USEXP, SEXP dmu_detaSEXP, SEXP dtheta_dzetaSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type U(USEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dmu_deta(dmu_detaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dtheta_dzeta(dtheta_dzetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_gradientashw(n, x, U, dmu_deta, dtheta_dzeta, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_hessianashw
+NumericMatrix cpp_hessianashw(int n, NumericVector x, NumericMatrix H, NumericVector mu, NumericVector theta, double tau);
+RcppExport SEXP _unitquantreg_cpp_hessianashw(SEXP nSEXP, SEXP xSEXP, SEXP HSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type H(HSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< double >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_hessianashw(n, x, H, mu, theta, tau));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_djohnsonsb
 NumericVector cpp_djohnsonsb(const NumericVector x, const NumericVector mu, const NumericVector theta, const double tau, const bool logprob);
 RcppExport SEXP _unitquantreg_cpp_djohnsonsb(SEXP xSEXP, SEXP muSEXP, SEXP thetaSEXP, SEXP tauSEXP, SEXP logprobSEXP) {
@@ -1074,6 +1176,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_unitquantreg_cpp_dashw", (DL_FUNC) &_unitquantreg_cpp_dashw, 5},
+    {"_unitquantreg_cpp_pashw", (DL_FUNC) &_unitquantreg_cpp_pashw, 6},
+    {"_unitquantreg_cpp_qashw", (DL_FUNC) &_unitquantreg_cpp_qashw, 6},
+    {"_unitquantreg_cpp_loglikeashw", (DL_FUNC) &_unitquantreg_cpp_loglikeashw, 6},
+    {"_unitquantreg_cpp_gradientashw", (DL_FUNC) &_unitquantreg_cpp_gradientashw, 8},
+    {"_unitquantreg_cpp_hessianashw", (DL_FUNC) &_unitquantreg_cpp_hessianashw, 6},
     {"_unitquantreg_cpp_djohnsonsb", (DL_FUNC) &_unitquantreg_cpp_djohnsonsb, 5},
     {"_unitquantreg_cpp_pjohnsonsb", (DL_FUNC) &_unitquantreg_cpp_pjohnsonsb, 6},
     {"_unitquantreg_cpp_qjohnsonsb", (DL_FUNC) &_unitquantreg_cpp_qjohnsonsb, 6},

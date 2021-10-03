@@ -2,8 +2,6 @@
 using namespace Rcpp;
 using namespace std;
 
-#define GETV(x, i) x[i % x.length()]
-
 // log-pdf leeg
 
 inline double logpdf_leeg(double x, double lnx, double mu, double theta, double tau)

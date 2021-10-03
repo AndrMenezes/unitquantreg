@@ -1,18 +1,5 @@
 test_that("unitquanreg fits with simulated data works", {
 
-  lt_families <- list(
-    "unit-Weibull" = "uweibull",
-    "Kumaraswamy" = "kum",
-    "unit-Logistic" = "ulogistic",
-    "unit-Birnbaum-Saunders" = "ubs",
-    "log-extended Exponential-Geometric" = "leeg",
-    "unit-Chen" = "uchen",
-    "unit-Generalized Half-Normal-E" = "ughne",
-    "unit-Generalized Half-Normal-X" = "ughnx",
-    "unit-Gompertz" = "ugompertz",
-    "Johnson-SB" = "johnsonsb",
-    "unit-Burr-XII" = "uburrxii")
-
   set.seed(6669)
   n <- 200
   betas <- c(1, 2)

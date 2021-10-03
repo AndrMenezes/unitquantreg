@@ -2,8 +2,6 @@
 using namespace Rcpp;
 using namespace std;
 
-#define GETV(x, i) x[i % x.length()]
-
 // log-pdf uchen
 
 inline double logpdf_uchen(double x, double lnx, double mu, double theta, double tau)

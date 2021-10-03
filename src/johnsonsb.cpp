@@ -2,8 +2,6 @@
 using namespace Rcpp;
 using namespace std;
 
-#define GETV(x, i) x[i % x.length()]
-
 // log-pdf johnsonsb
 
 inline double logpdf_johnsonsb(double x, double lnx, double mu, double theta, double tau)
