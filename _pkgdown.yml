@@ -1,5 +1,9 @@
 url: https://andrmenezes.github.io/unitquantreg
 
+template:
+  params:
+    ganalytics: UA-209203401-1
+
 development:
   mode: auto
 
