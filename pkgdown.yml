@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
-last_built: 2021-10-04T16:29Z
+last_built: 2021-10-08T00:37Z
 urls:
   reference: https://andrmenezes.github.io/unitquantreg/reference
   article: https://andrmenezes.github.io/unitquantreg/articles

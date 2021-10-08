@@ -87,7 +87,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>The <code>unitquantreg</code> R package: Structure and functionality</h1>
             
-            <h4 class="date">2021-10-04</h4>
+            <h4 class="date">2021-10-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/AndrMenezes/unitquantreg/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -374,7 +374,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
                                  family <span class="op">=</span> <span class="st">"ulogistic"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,
                                  link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;  12.476   0.004  12.481</span></code></pre></div>
+<span class="co">#&gt;  12.040   0.000  12.041</span></code></pre></div>
 <p>Now we can check the (Half)-Normal plots using the output of <code><a href="../reference/hnp.html">hnp()</a></code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
@@ -446,7 +446,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
                                  family <span class="op">=</span> <span class="st">"uweibull"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,
                                  link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;  13.885   0.000  13.886</span>
+<span class="co">#&gt;  13.565   0.000  13.566</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fits_uweibull</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/fits-uweibull-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method with argument <code>which = "conddist"</code> for <code>unitquantregs</code> objects it is possible to estimate and visualize the conditional distribution of a response variable at different values of covariates. For instance,</p>
