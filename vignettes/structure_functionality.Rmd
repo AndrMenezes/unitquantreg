@@ -1,0 +1,348 @@
+---
+title: "Structure and functionality"
+output: rmarkdown::html_vignette
+date: "Last compiled on `r format(Sys.time(), '%Y-%m-%d')`"
+author: "André Menezes"
+vignette: >
+  %\VignetteIndexEntry{Structure and functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center",
+  fig.width = 12,
+  fig.height = 6)
+```
+
+## Introduction
+
+The `unitquantreg` R package provide efficient tools for estimation and inference
+in parametric quantile regression models for bounded data.
+
+The current version of `unitquantreg` has 11 probability distributions available
+for user choice. The Table above lists the families of distributions,
+their abbreviations and the paper reference.
+
+```{r, echo=FALSE}
+fam_name <- c("unit-Weibull", "Kumaraswamy", "unit-Logistic", "unit-Chen",
+              "unit-Birnbaum-Saunders", "log-extended Exponential-Geometric",
+              "unit-Generalized Half-Normal-E", "unit-Generalized Half-Normal-X",
+              "unit-Gompertz", "unit-Burr-XII", "Johnson-SB",
+              "arc-secant hyperbolic Weibull", "unit-Gumbel")
+abbrev_name <- c("uweibull", "kum", "ulogistic", "uchen", "ubs", "leeg", "ughne",
+                 "ughnx", "ugompertz", "uburrxii", "johnsonsb", "ashw", "ugumbel")
+refs <- c("[Mazucheli, et al. (2018)](http://japs.isoss.net/13(2)1%2011046.pdf)",
+          "[Kumaraswamy, (1980)](https://www.sciencedirect.com/science/article/abs/pii/0022169480900360)",
+          "[Tadikamalla and Johnson (1982)](https://www.jstor.org/stable/2335422)",
+          "[Korkmaz, et al. (2020)](https://www.researchgate.net/publication/352373037_ON_THE_UNIT-CHEN_DISTRIBUTION_WITH_ASSOCIATED_QUANTILE_REGRESSION_AND_APPLICATIONS)",
+          "[Mazucheli, et al. (2021)](https://www.mdpi.com/2073-8994/13/4/682)",
+          "[Jodrá and Jiménez-Gamero (2020)](https://www.ine.pt/revstat/pdf/REVSTAT_v18-n4-2.pdf)",
+          "[Korkmaz MÇ (2020)](https://www.scientificbulletin.upb.ro/rev_docs_arhiva/full6b9_464742.pdf)",
+          "New",
+          "[Mazucheli et al. (2019)](https://rivista-statistica.unibo.it/article/view/8497)",
+          "[Korkmaz and Chesneau (2021)](https://link.springer.com/article/10.1007/s40314-021-01418-5)",
+          "[Johnson (1949)](https://www.jstor.org/stable/2332539)",
+          "[Korkmaz et al. (2021)](https://www.tandfonline.com/doi/full/10.1080/02664763.2021.1981834)",
+          "New")
+tab <- data.frame(fam_name, abbrev_name, refs)
+knitr::kable(tab[order(tab$abbrev_name), ], col.names = c("Family", "Abbreviation", "Reference"),
+             caption = "Available families of distributions their abbreviations and reference.",
+             label = "distributions", row.names = FALSE)
+```
+
+The [`dpqr`]'s functions of the distributions are vectorized and implemented in `C++`.
+The log likelihood, score and hessian functions are also implemented in `C++` in order
+to guarantee more computational efficiency.
+
+The parameter estimation and inference are performed under the frequentist paradigm.
+Maximization of the log-likelihood function is done by optimization techniques available
+in the `R` through the [`optimx`](https://cran.r-project.org/web/packages/optimx/index.html) 
+package, which is a general-purpose optimization wrapper function that allows the use of
+several `R` tools for optimization, including the existing `stats::optim()` function.
+To achieve quick and better convergence the analytical score function is use during the
+maximization. Also, standard errors of parameter estimates are computed using
+the analytical hessian matrix.
+
+## Structure
+
+The `unitquantreg` package is built around the `unitquantreg()` function which
+perform the fit of parametric quantile regression models via likelihood method.
+The `unitquantreg()` function has standard arguments as `stats::glm()` function,
+and they are as follows:
+
+```{r structure, echo=FALSE}
+library(unitquantreg)
+args(unitquantreg)
+```
+
+The `formula` argument use the concept of [`Formula`](https://cran.r-project.org/web/packages/Formula/index.html)
+package allows multiple parts on the right-hand side, which indicates regression structure
+for the quantile and shape parameter of the distribution. For instance,
+`formula = y ~ x1 | z1` means the following regression structure
+
+$$
+g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_0 + \gamma_1\,z_1
+$$
+where $\mu$ indicates the quantile of order $\tau$ and $\theta$ is the shape parameter.
+
+The `tau` argument indicates the quantile(s) to be estimated, being possible to specify a
+vector of quantiles. `family` argument specify the distribution family using the
+abbreviation of `dpqr` functions, listed in Table above.
+
+The `control` argument controls the fitting process through the `unitquantreg.control()`
+function which returned a `list` and the default values are:
+```{r}
+unlist(unitquantreg.control())
+```
+
+The two most important arguments are `hessian` and `gradient` which tell the `optimx::optimx()`
+whether it should use the numerical hessian matrix and the analytical score vector,
+respectively. That is, if `hessian = TRUE`, then the standard errors are computed using
+the numerical hessian matrix. For detailed description of other arguments see the package
+documentation.
+
+### Object-oriented programming 
+
+The `unitquanreg()` function returns an object of class `unitquanreg` if the
+argument `tau` is scalar or `unitquanregs` if `tau` is a vector.
+The currently methods implemented for `unitquantreg` objects are:
+```{r methods-unitquantreg}
+methods(class = "unitquantreg")
+```
+
+And for the `unitquantregs` objects are
+```{r methods-unitquantregs}
+methods(class = "unitquantregs")
+```
+
+It is important to mention that the `unitquantregs` objects consists of a list
+with `unitquantreg` objects for according to the vector of `tau`.
+
+
+Furthermore, the package provide functions designated for model comparison
+between `uniquantreg` objects. Particularly,
+
+- `likelihood_stats()` function computes likelihood-based statistics (Neg2LogLike, AIC, BIC and HQIC),
+
+- `vuong.test()` function performs Vuong test between two fitted **non nested** models,
+
+- `pairwise.vuong.test()` function performs pairwise Vuong test with adjusted p-value according to `stats::p.adjust.methods`
+between fitted models 
+
+
+Finally, `uniquantreg` objects also permits use the inference methods functions 
+`lmtest::coeftest()`, `lmtest::coefci`, `lmtest::coefci`, `lmtest::waldtest` and `lmtest::lrtest`
+implemented in [`lmtest`](https://cran.r-project.org/web/packages/lmtest/index.html) to
+perform hypothesis test, confidence intervals for **nested models**.
+
+Next, a detailed account of the usage of all these functions is provided.
+
+## Functionality
+
+As in [Mazucheli et al. (2020)](https://www.tandfonline.com/doi/abs/10.1080/02664763.2019.1657813?journalCode=cjas20)
+consider the data set related to the access of people in
+households with piped water supply in the cities of Brazil from the Southeast and Northeast
+regions. The response variable `phpws` is the proportion of households with piped water
+supply. The covariates are:
+
+- `mhdi`: human development index.
+
+- `incpc`: per capita income.
+
+- `region`: 0 for southeast, 1 for northeast.
+
+- `pop`: population.
+
+```{r water-data}
+data(water)
+head(water)
+```
+
+Assuming the following regression structure for the parameters:
+$$
+\textrm{logit}(\mu_i) = \beta_0 + \beta_1 \texttt{mhdi}_{i1} + \beta_2 \texttt{incp}_{i2} +
+\beta_3 \texttt{region}_{i3} + \beta_4 \log\left(\texttt{pop}_{i4}\right),
+$$
+and
+$$
+\log(\theta_i) = \gamma_0.
+$$
+for $i = 1, \ldots, 3457$.
+
+### Model fitting
+
+For $\tau = 0.5$, that is, the median regression model we fitted for all families of distributions as follows:
+```{r fitting}
+lt_families <- list("unit-Weibull" = "uweibull",
+                    "Kumaraswamy" = "kum",
+                    "unit-Logistic" = "ulogistic",
+                    "unit-Birnbaum-Saunders" = "ubs",
+                    "log-extended Exponential-Geometric" = "leeg",
+                    "unit-Chen" = "uchen",
+                    "unit-Generalized Half-Normal-E" = "ughne",
+                    "unit-Generalized Half-Normal-X" = "ughnx",
+                    "unit-Gompertz" = "ugompertz",
+                    "Johnson-SB" = "johnsonsb",
+                    "unit-Burr-XII" = "uburrxii",
+                    "arc-secant hyperbolic Weibull" = "ashw",
+                    "unit-Gumbel" = "ugumbel")
+lt_fits <- lapply(lt_families, function(fam) {
+  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop), data = water,
+               tau = 0.5, family = fam, link = "logit", link.theta = "log")
+})
+t(sapply(lt_fits, coef))
+```
+
+### Model comparison
+
+Let's check the likelihood-based statistics of fit
+```{r like-stats}
+likelihood_stats(lt = lt_fits)
+```
+
+According to the statistics the unit-Logistic, Johnson-SB, unit-Burr-XII and unit-Weibull
+were the best models. Now, let's perform the pairwise [vuong test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test)
+to check if there is statistical significant difference between the four models.
+
+```{r, vuong-tests}
+lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Weibull")]
+pairwise.vuong.test(lt = lt_chosen)
+```
+
+The adjusted p-values of pairwise vuong tests shows that there is a large statistical 
+significance difference between the models. In particular, the pairwise comparison between
+unit-Logistic and the other models provide a smaller p-values, indicating that the
+unit-Logistic median regression model is the most suitable model for this data set
+comparing to the others families of distributions.
+
+### Diagnostic analysis
+
+It is possible to check model assumptions from diagnostic plots using the `plot()`
+function method for `unitquantreg` objects.
+The `residuals()` method provides `quantile`, `cox-snell`, `working` and `partial`
+residuals type. The randomzide quantile residuals is the default choice of `plot()`
+method.
+
+
+```{r plots-diagnostic, cache=TRUE}
+par(mfrow = c(2, 2))
+plot(lt_fits[["unit-Logistic"]])
+```
+
+Plots of the residuals against the fitted linear predictor and
+the residuals against indices of observations are the tools for diagnostic analysis to
+check the structural form of the model.
+Two features of the plots are important:
+
+- Trends: Any trends appearing in these plots indicate that the systematic component
+can be improved. This could mean changing the link function, adding extra explanatory
+variables, or transforming the explanatory variables.
+
+- Constant variation: If the random component is correct then the variance of the points
+is approximately constant.
+
+Working residuals versus linear predictor is used to check possible misspecification of
+link function and Half-normal plot of residuals to check distribution assumption.
+
+Another best practice in diagnostic analysis is to inspect the (Half)-Normal plots with
+simulated envelope for several quantile value. This is done to obtain a more robust 
+evaluation of the model assumptions.
+Thus, let's fit the unit-Logistic quantile regression model for various quantiles.
+
+```{r fits-ulogistic, cache=TRUE}
+system.time(
+  fits_ulogistic <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+                                 data = water, tau = 1:49/50,
+                                 family = "ulogistic", link = "logit",
+                                 link.theta = "log"))
+```
+
+Now we can check the (Half)-Normal plots using the output of `hnp()` method.
+```{r plots-hnp, cache=TRUE}
+library(ggplot2)
+get_data <- function(obj) {
+  tmp <- hnp(obj, halfnormal = FALSE, plot = FALSE, nsim = 10)
+  tmp <- as.data.frame(do.call("cbind", tmp))
+  tmp$tau <- as.character(obj$tau)
+  tmp
+}
+chosen_taus <- c("0.02", "0.5", "0.98")
+df_plot <- do.call("rbind", lapply(fits_ulogistic[chosen_taus], get_data))
+df_plot$tau <- paste0(expression(tau), " == ", df_plot$tau)
+
+ggplot(df_plot, aes(x=teo, y=obs)) +
+  facet_wrap(~tau, labeller = label_parsed) +
+  geom_point(shape = 3, size = 1.4) +
+  geom_line(aes(y = median), linetype = "dashed") +
+  geom_line(aes(y = lower), col = "#0080ff") +
+  geom_line(aes(y = upper), col = "#0080ff") +
+  theme_bw() +
+  labs(x = "Theoretical quantiles", y = "Randomized quantile residuals") +
+  scale_x_continuous(breaks = seq(-3, 3, by = 1)) +
+  scale_y_continuous(breaks = seq(-3, 3, by = 1)) +
+  theme_bw() +
+  theme(text = element_text(size = 16, family = "Palatino"), 
+        panel.grid.minor = element_blank())
+```
+
+
+### Inference results
+
+Inference results about the parameter estimates can be accessed through the
+`summary` method. For instance,
+
+```{r}
+summary(lt_fits[["unit-Logistic"]])
+```
+
+For `unitquantregs` objects the `plot` method provide a convenience to check the
+significance as well as the effect of estimate along the specify quantile value.
+
+```{r}
+plot(fits_ulogistic, which = "coef", mean_effect = FALSE)
+```
+
+Curiously, the unit-Logistic quantile regression models capture constant effect for all
+covariates along the different quantiles. In contrast, the unit-Weibull model
+(the fourth best model) found a decrease effect of `mhdi` covaraite on the response as
+the quantile increases and increase effects of `incpc` and `region` on the response
+variable as the quantile increases.
+
+```{r fits-uweibull, cache=TRUE}
+system.time(
+  fits_uweibull <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+                                 data = water, tau = 1:49/50,
+                                 family = "uweibull", link = "logit",
+                                 link.theta = "log"))
+plot(fits_uweibull, which = "coef")
+```
+
+
+Using the `plot()` method with argument `which = "conddist"` for `unitquantregs` objects
+it is possible to 
+estimate and visualize the conditional distribution of a response variable at
+different values of covariates. For instance,
+
+```{r plot-conddis}
+lt_data <- list(mhdi = c(0.5, 0.7), incpc = round(mean(water$incpc)),
+                region = c(1, 0), pop = round(mean(water$pop)))
+plot(fits_ulogistic, which = "conddist", at_obs = lt_data, at_avg = FALSE,
+     dist_type = "density")
+plot(fits_ulogistic, which = "conddist", at_obs = lt_data, at_avg = FALSE,
+     dist_type = "cdf")
+```
+
+
+## Session info
+
+```{r seesion-info}
+sessionInfo()
+```
+
+
+
+
