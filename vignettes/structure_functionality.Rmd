@@ -1,9 +1,10 @@
 ---
-title: "The `unitquantreg` R package: Structure and functionality"
+title: "Structure and functionality"
 output: rmarkdown::html_vignette
-date: "`r format(Sys.time(), '%Y-%m-%d')`"
+date: "Last compiled on `r format(Sys.time(), '%Y-%m-%d')`"
+author: "André Menezes"
 vignette: >
-  %\VignetteIndexEntry{The `unitquantreg` R package: Structure and functionality}
+  %\VignetteIndexEntry{Structure and functionality}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,18 +14,18 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center",
-  fig.width = 7,
-  fig.height = 4)
+  fig.width = 12,
+  fig.height = 6)
 ```
 
 ## Introduction
 
-The `unitquantreg` R package provide several efficient tools for estimation and inference
+The `unitquantreg` R package provide efficient tools for estimation and inference
 in parametric quantile regression models for bounded data.
 
 The current version of `unitquantreg` has 11 probability distributions available
-for user choice. Table above lists the families of distributions, their abbreviations
-and the paper reference.
+for user choice. The Table above lists the families of distributions,
+their abbreviations and the paper reference.
 
 ```{r, echo=FALSE}
 fam_name <- c("unit-Weibull", "Kumaraswamy", "unit-Logistic", "unit-Chen",
@@ -63,15 +64,15 @@ in the `R` through the [`optimx`](https://cran.r-project.org/web/packages/optimx
 package, which is a general-purpose optimization wrapper function that allows the use of
 several `R` tools for optimization, including the existing `stats::optim()` function.
 To achieve quick and better convergence the analytical score function is use during the
-maximization.
-Also, standard errors of parameter estimates are computed using the analytical hessian matrix.
+maximization. Also, standard errors of parameter estimates are computed using
+the analytical hessian matrix.
 
 ## Structure
 
-The `unitquantreg` package is built around the `unitquantreg()` function which perform
-the fit of parametric quantile regression models via likelihood method.
-The `unitquantreg()` function has standard arguments as `stats::glm()` function, and they are
-as follows:
+The `unitquantreg` package is built around the `unitquantreg()` function which
+perform the fit of parametric quantile regression models via likelihood method.
+The `unitquantreg()` function has standard arguments as `stats::glm()` function,
+and they are as follows:
 
 ```{r structure, echo=FALSE}
 library(unitquantreg)
@@ -104,12 +105,11 @@ respectively. That is, if `hessian = TRUE`, then the standard errors are compute
 the numerical hessian matrix. For detailed description of other arguments see the package
 documentation.
 
-
 ### Object-oriented programming 
 
-The `unitquanreg()` function returns an object of class `unitquanreg` if the argument `tau`
-is scalar or `unitquanregs` if `tau` it is a vector.
-The currently methods implemented for `unitquantreg` objects are
+The `unitquanreg()` function returns an object of class `unitquanreg` if the
+argument `tau` is scalar or `unitquanregs` if `tau` is a vector.
+The currently methods implemented for `unitquantreg` objects are:
 ```{r methods-unitquantreg}
 methods(class = "unitquantreg")
 ```
@@ -119,12 +119,12 @@ And for the `unitquantregs` objects are
 methods(class = "unitquantregs")
 ```
 
-It is important to mention that the `unitquantregs` objects consists of a list with
-`unitquantreg` objects for according to the vector of `tau`.
+It is important to mention that the `unitquantregs` objects consists of a list
+with `unitquantreg` objects for according to the vector of `tau`.
 
 
-Furthermore, the package provide functions designated for model comparison between
-`uniquantreg` objects. Particularly,
+Furthermore, the package provide functions designated for model comparison
+between `uniquantreg` objects. Particularly,
 
 - `likelihood_stats()` function computes likelihood-based statistics (Neg2LogLike, AIC, BIC and HQIC),
 
@@ -287,14 +287,13 @@ ggplot(df_plot, aes(x=teo, y=obs)) +
   theme_bw() +
   theme(text = element_text(size = 16, family = "Palatino"), 
         panel.grid.minor = element_blank())
-
 ```
 
 
 ### Inference results
 
-Inference results about the parameter estimates can be accessed thought the `summary`
-method. For instance,
+Inference results about the parameter estimates can be accessed through the
+`summary` method. For instance,
 
 ```{r}
 summary(lt_fits[["unit-Logistic"]])
@@ -325,8 +324,8 @@ plot(fits_uweibull, which = "coef")
 
 Using the `plot()` method with argument `which = "conddist"` for `unitquantregs` objects
 it is possible to 
-estimate and visualize the conditional distribution of a response variable at different values of
-covariates. For instance,
+estimate and visualize the conditional distribution of a response variable at
+different values of covariates. For instance,
 
 ```{r plot-conddis}
 lt_data <- list(mhdi = c(0.5, 0.7), incpc = round(mean(water$incpc)),

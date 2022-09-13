@@ -15,103 +15,52 @@ knitr::opts_chunk$set(
 )
 ```
 
-# unitquantreg: An R Package for Estimation and Inference on Parametric Quantile Regression Models for Bounded Data
+<img src="man/figures/unitquantreg_hex.png" align="right" height="150">
+
+## Welcome to `unitquantreg` R package
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/AndrMenezes/unitquantreg/branch/main/graph/badge.svg)](https://app.codecov.io/gh/AndrMenezes/unitquantreg?branch=main)
 <!-- badges: end -->
 
 The goal of `unitquantreg` is to provide tools for estimation and inference on
 parametric quantile regression models for bounded data.
 
-We developed routines with similar interface the `stats::glm` function,  which contains
-estimation, inference, residual analysis, prediction, model comparison.
+We developed routines with similar interface as `stats::glm` function,
+which contains estimation, inference, residual analysis, prediction, and
+model comparison.
 
-For more computation efficient the dpqr's, likelihoods, score and
-hessian functions are vectorized and coded in `C++`.
-
-The parameter estimation and inference are performed under the frequentist paradigm. 
-The [**optimx**](https://cran.r-project.org/web/packages/optimx/index.html) R package
-is use, since allows different optimization technique to maximize the log-likelihood function.
-The analytical  score function are use in the maximization and the standard errors
-are computed using the analytical  hessian matrix, both are implemented in efficient away using `C++`.
-
-
-
-## Installation
+For more computation efficient the [`dpqr`]'s, likelihood, score and
+hessian functions are vectorized and written in `C++`.
 
 You can install the development version from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("AndrMenezes/unitquantreg")
+if(!require(remotes)) install.packages('remotes')
+remotes::install_github("AndrMenezes/unitquantreg")
 ```
 
-## Example
+You can then load the package
 
-The distribution families available are:
-
-```{r}
-lt_families <- list("unit-Weibull" = "uweibull",
-                    "Kumaraswamy" = "kum",
-                    "unit-Logistic" = "ulogistic",
-                    "unit-Birnbaum-Saunders" = "ubs",
-                    "log-extended Exponential-Geometric" = "leeg",
-                    "unit-Chen" = "uchen",
-                    "unit-Generalized Half-Normal-E" = "ughne",
-                    "unit-Generalized Half-Normal-X" = "ughnx",
-                    "unit-Gompertz" = "ugompertz",
-                    "Johnson-SB" = "johnsonsb",
-                    "unit-Burr-XII" = "uburrxii",
-                    "arc-secant hyperbolic Weibull" = "ashw",
-                    "unit-Gumbel" = "ugumbel")
-```
-
-
-The workhorse function is `unitquantreg`, which follows same interface like `stats::glm`.
-
-```{r example, }
+```{r, eval=FALSE}
 library(unitquantreg)
-data(water)
-lt_fits <- lapply(lt_families, function(fam) {
-  unitquantreg(
-    formula = phpws ~ mhdi + incpc + region + log(pop), data = water, tau = 0.5,
-    family = fam, link = "logit", link.theta = "log")
-})
-t(sapply(lt_fits, coef))
 ```
 
-You can use the `likelihood_stats` to get likelihood-base statistics:
+and look at user manuals typing:
+
+```{r, eval=FALSE}
+vignette("unitquantreg")
+vignette("structure_functionality")
+```
+
+## Citation
 
 ```{r}
-likelihood_stats(lt = lt_fits)
+citation("unitquantreg")
 ```
 
-It is also possible to perform pairwise [Vuong test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test) to model selection of nonnested models.
+## License
 
-```{r}
-# Select just a few model to not mess the output
-lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Weibull")]
-pairwise.vuong.test(lt = lt_chosen)
-```
-
-
-The currently methods implemented for `unitquantreg` objects are
-```{r methods}
-methods(class = "unitquantreg")
-```
-
-
-It is also possible to fit the model for several quantiles values like `rq` function from [**quantreg**](https://cran.r-project.org/web/packages/quantreg/index.html) package.
-
-```{r various-quantiles}
-fits <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-                     data = water, tau = 1:49/50, family = "uweibull",
-                     link = "logit", link.theta = "log")
-class(fits)
-plot(fits, which = "coef", mean_effect = FALSE)
-```
-
-The currently methods implemented for `unitquantregs` objects are
-```{r }
-methods(class = "unitquantregs")
-```
+The `unitquantreg` package is released under the Apache License, Version 2.0.
+Please, see file [`LICENSE.md`](https://github.com/AndrMenezes/unitquantreg/blob/master/LICENSE.md).

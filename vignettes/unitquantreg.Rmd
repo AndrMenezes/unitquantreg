@@ -1,0 +1,111 @@
+---
+title: "Get started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The goal of `unitquantreg` is to provide tools for estimation and inference on
+parametric quantile regression models for bounded data.
+
+The package was written following the same interface as `stats::glm` function,
+containing several S3 methods for inference, residual analysis, prediction,
+plotting, and model comparison.
+
+For more computation efficient the [`dpqr`]'s, likelihood, score and
+hessian functions are vectorized and written in `C++`.
+
+The parameter estimation and inference are performed under the frequentist
+paradigm, and the
+[**optimx**](https://cran.r-project.org/web/packages/optimx/index.html)
+package is used to perform the numerical optimization.
+Besides that, the analytical score function are provided in the optimization
+process and the standard errors are computed from the analytical hessian matrix,
+both function are implemented in efficient away using `C++`.
+
+
+The distribution families available are:
+
+```{r distr-families}
+lt_families <- list("unit-Weibull" = "uweibull",
+                    "Kumaraswamy" = "kum",
+                    "unit-Logistic" = "ulogistic",
+                    "unit-Birnbaum-Saunders" = "ubs",
+                    "log-extended Exponential-Geometric" = "leeg",
+                    "unit-Chen" = "uchen",
+                    "unit-Generalized Half-Normal-E" = "ughne",
+                    "unit-Generalized Half-Normal-X" = "ughnx",
+                    "unit-Gompertz" = "ugompertz",
+                    "Johnson-SB" = "johnsonsb",
+                    "unit-Burr-XII" = "uburrxii",
+                    "arc-secant hyperbolic Weibull" = "ashw",
+                    "unit-Gumbel" = "ugumbel")
+```
+
+
+The workhorse function is `unitquantreg`, which follows the same interface as
+`stats::glm`.
+
+```{r example}
+library(unitquantreg)
+data(water)
+lt_fits <- lapply(lt_families, function(fam) {
+  unitquantreg(
+    formula = phpws ~ mhdi + incpc + region + log(pop), data = water, tau = 0.5,
+    family = fam, link = "logit", link.theta = "log")
+})
+t(sapply(lt_fits, coef))
+```
+
+You can use the `likelihood_stats` to get likelihood-base statistics:
+
+```{r likelihood-stats}
+likelihood_stats(lt = lt_fits)
+```
+
+It is also possible to perform pairwise
+[Vuong test](https://en.wikipedia.org/wiki/Vuong%27s_closeness_test) to model
+selection of nonnested models.
+
+```{r pairwise-vuong}
+# Select just a few model to not mess the output
+lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Weibull")]
+pairwise.vuong.test(lt = lt_chosen)
+```
+
+The currently methods implemented for `unitquantreg` objects are:
+```{r methods}
+methods(class = "unitquantreg")
+```
+
+Another feature of unitquantreg package is to fit different models for several
+quantiles values.
+
+```{r various-quantiles}
+fits <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+                     data = water, tau = 1:49/50, family = "uweibull",
+                     link = "logit", link.theta = "log")
+class(fits)
+```
+
+Then, the user can visualize the results using the `plot` method:
+
+```{r plot-unitquantregs}
+plot(fits, which = "coef", mean_effect = FALSE)
+```
+
+
+The currently methods implemented for `unitquantregs` objects are:
+```{r }
+methods(class = "unitquantregs")
+```
+

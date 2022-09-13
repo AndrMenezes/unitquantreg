@@ -16,6 +16,11 @@ authors:
 figures:
   fig.ext: png
 
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+
 reference:
 - title: Families of distributions
   desc: The `dpqr` functions of available bounded distributions.
@@ -38,6 +43,7 @@ reference:
   contents:
   - unitquantreg
   - unitquantreg.control
+  - unitquantreg-package
 
 - title: S3 methods for unitquantreg(s) objects
   contents:
