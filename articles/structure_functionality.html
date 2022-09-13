@@ -377,7 +377,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"ulogistic"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  15.758   0.007  15.769</span></span></code></pre></div>
+<span><span class="co">#&gt;  11.886   0.000  11.887</span></span></code></pre></div>
 <p>Now we can check the (Half)-Normal plots using the output of <code><a href="../reference/hnp.html">hnp()</a></code> method.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -449,7 +449,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"uweibull"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  17.729   0.016  17.748</span></span>
+<span><span class="co">#&gt;  12.961   0.000  12.962</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_uweibull</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/fits-uweibull-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>Using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method with argument <code>which = "conddist"</code> for <code>unitquantregs</code> objects it is possible to estimate and visualize the conditional distribution of a response variable at different values of covariates. For instance,</p>
