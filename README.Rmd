@@ -15,9 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-<img src="man/figures/unitquantreg_hex.png" align="right" height="150">
-
-## Welcome to `unitquantreg` R package
+# Welcome to `unitquantreg` R package <img src="man/figures/unitquantreg_hex.png" align="right" alt="" width="200">
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml)
@@ -38,7 +36,7 @@ You can install the development version from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 if(!require(remotes)) install.packages('remotes')
-remotes::install_github("AndrMenezes/unitquantreg")
+remotes::install_github("AndrMenezes/unitquantreg", build_vignettes = TRUE)
 ```
 
 You can then load the package

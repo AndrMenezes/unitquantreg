@@ -28,6 +28,6 @@ The unit-Weibull distribution as an alternative to the Kumaraswamy distribution 
 modeling of quantiles conditional on covariates. \emph{Jounal of Applied Statistics}, \bold{47}(6), 954--974.
 }
 \author{
-André Felipe Menezes \email{andrefelipemaringa@gmail.com}
+André Felipe Menezes
 }
 \keyword{datasets}
