@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,37 +39,37 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">unitquantreg</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/unitquantreg.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/introduction.html">The `unitquantreg` R package: Structure and functionality</a>
+      <a href="articles/structure_functionality.html">Structure and functionality</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/AndrMenezes/unitquantreg/">
+  <a href="https://github.com/AndrMenezes/unitquantreg/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -84,181 +86,106 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="unitquantreg-an-r-package-for-estimation-and-inference-on-parametric-quantile-regression-models-for-bounded-data" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#unitquantreg-an-r-package-for-estimation-and-inference-on-parametric-quantile-regression-models-for-bounded-data" class="anchor"></a>unitquantreg: An R Package for Estimation and Inference on Parametric Quantile Regression Models for Bounded Data</h1></div>
+
+<p><img src="reference/figures/unitquantreg_hex.png" align="right" height="150"></p>
+<div class="section level2">
+<h2 id="welcome-to-unitquantreg-r-package">Welcome to <code>unitquantreg</code> R package<a class="anchor" aria-label="anchor" href="#welcome-to-unitquantreg-r-package"></a>
+</h2>
 <!-- badges: start -->
-<!-- badges: end -->
 <p>The goal of <code>unitquantreg</code> is to provide tools for estimation and inference on parametric quantile regression models for bounded data.</p>
-<p>We developed routines with similar interface the <code><a href="https://rdrr.io/r/stats/glm.html">stats::glm</a></code> function, which contains estimation, inference, residual analysis, prediction, model comparison.</p>
-<p>For more computation efficient the dpqr’s, likelihoods, score and hessian functions are vectorized and coded in <code>C++</code>.</p>
-<p>The parameter estimation and inference are performed under the frequentist paradigm. The <a href="https://cran.r-project.org/web/packages/optimx/index.html"><strong>optimx</strong></a> R package is use, since allows different optimization technique to maximize the log-likelihood function. The analytical score function are use in the maximization and the standard errors are computed using the analytical hessian matrix, both are implemented in efficient away using <code>C++</code>.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<p>We developed routines with similar interface as <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm</a></code> function, which contains estimation, inference, residual analysis, prediction, and model comparison.</p>
+<p>For more computation efficient the [<code>dpqr</code>]’s, likelihood, score and hessian functions are vectorized and written in <code>C++</code>.</p>
+<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"AndrMenezes/unitquantreg"</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>The distribution families available are:</p>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'remotes'</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"AndrMenezes/unitquantreg"</span><span class="op">)</span></span></code></pre></div>
+<p>You can then load the package</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lt_families</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"unit-Weibull"</span> <span class="op">=</span> <span class="st">"uweibull"</span>,
-                    <span class="st">"Kumaraswamy"</span> <span class="op">=</span> <span class="st">"kum"</span>,
-                    <span class="st">"unit-Logistic"</span> <span class="op">=</span> <span class="st">"ulogistic"</span>,
-                    <span class="st">"unit-Birnbaum-Saunders"</span> <span class="op">=</span> <span class="st">"ubs"</span>,
-                    <span class="st">"log-extended Exponential-Geometric"</span> <span class="op">=</span> <span class="st">"leeg"</span>,
-                    <span class="st">"unit-Chen"</span> <span class="op">=</span> <span class="st">"uchen"</span>,
-                    <span class="st">"unit-Generalized Half-Normal-E"</span> <span class="op">=</span> <span class="st">"ughne"</span>,
-                    <span class="st">"unit-Generalized Half-Normal-X"</span> <span class="op">=</span> <span class="st">"ughnx"</span>,
-                    <span class="st">"unit-Gompertz"</span> <span class="op">=</span> <span class="st">"ugompertz"</span>,
-                    <span class="st">"Johnson-SB"</span> <span class="op">=</span> <span class="st">"johnsonsb"</span>,
-                    <span class="st">"unit-Burr-XII"</span> <span class="op">=</span> <span class="st">"uburrxii"</span>,
-                    <span class="st">"arc-secant hyperbolic Weibull"</span> <span class="op">=</span> <span class="st">"ashw"</span>,
-                    <span class="st">"unit-Gumbel"</span> <span class="op">=</span> <span class="st">"ugumbel"</span><span class="op">)</span></code></pre></div>
-<p>The workhorse function is <code>unitquantreg</code>, which follows same interface like <code><a href="https://rdrr.io/r/stats/glm.html">stats::glm</a></code>.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://andrmenezes.github.io/unitquantreg">unitquantreg</a></span><span class="op">)</span></span></code></pre></div>
+<p>and look at user manuals typing:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://andrmenezes.github.io/unitquantreg">unitquantreg</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span>
-<span class="va">lt_fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">lt_families</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fam</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="reference/unitquantreg.html">unitquantreg</a></span><span class="op">(</span>
-    formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">0.5</span>,
-    family <span class="op">=</span> <span class="va">fam</span>, link <span class="op">=</span> <span class="st">"logit"</span>, link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">lt_fits</span>, <span class="va">coef</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;                                    (Intercept)      mhdi         incpc</span>
-<span class="co">#&gt; unit-Weibull                         -6.514485 11.826177  2.600473e-04</span>
-<span class="co">#&gt; Kumaraswamy                          -1.625951  4.843166  2.111029e-03</span>
-<span class="co">#&gt; unit-Logistic                        -5.365469 10.508100  1.559636e-03</span>
-<span class="co">#&gt; unit-Birnbaum-Saunders               -6.556648 13.723681  6.499360e-04</span>
-<span class="co">#&gt; log-extended Exponential-Geometric   -4.712735  9.142144  1.928040e-03</span>
-<span class="co">#&gt; unit-Chen                            -8.098012 13.560938 -6.162645e-05</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-E       -6.598061 11.731146 -1.037014e-04</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-X       -5.035562 13.186081  1.580614e-03</span>
-<span class="co">#&gt; unit-Gompertz                        -6.260194 11.719934  4.103341e-04</span>
-<span class="co">#&gt; Johnson-SB                           -5.993763 11.803290  1.144566e-03</span>
-<span class="co">#&gt; unit-Burr-XII                        -5.811837 11.043123  3.777215e-04</span>
-<span class="co">#&gt; arc-secant hyperbolic Weibull        -7.363838 12.705584  7.957473e-05</span>
-<span class="co">#&gt; unit-Gumbel                          -9.338592 14.990026 -5.503130e-04</span>
-<span class="co">#&gt;                                         region    log(pop)  log(theta)</span>
-<span class="co">#&gt; unit-Weibull                       -0.26990871  0.10546762  0.17249694</span>
-<span class="co">#&gt; Kumaraswamy                        -0.07860323 -0.04727081  1.75778137</span>
-<span class="co">#&gt; unit-Logistic                      -0.15826000  0.01773368  0.63005907</span>
-<span class="co">#&gt; unit-Birnbaum-Saunders             -0.18081222 -0.02300195  0.00832919</span>
-<span class="co">#&gt; log-extended Exponential-Geometric -0.18882479  0.02252007  1.68797084</span>
-<span class="co">#&gt; unit-Chen                          -0.48153890  0.19218762 -0.25568492</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-E     -0.37220694  0.14224250 -0.18418543</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-X     -0.16993805 -0.18341181 -0.38141377</span>
-<span class="co">#&gt; unit-Gompertz                      -0.23932329  0.09146941 -5.42477111</span>
-<span class="co">#&gt; Johnson-SB                         -0.19500756  0.01823070  0.01748328</span>
-<span class="co">#&gt; unit-Burr-XII                      -0.19140000  0.07565710  0.28322367</span>
-<span class="co">#&gt; arc-secant hyperbolic Weibull      -0.38168564  0.14972053  0.72098495</span>
-<span class="co">#&gt; unit-Gumbel                        -0.62080389  0.25058612 -0.26073820</span></code></pre></div>
-<p>You can use the <code>likelihood_stats</code> to get likelihood-base statistics:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"unitquantreg"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"structure_functionality"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/likelihood_stats.html">likelihood_stats</a></span><span class="op">(</span>lt <span class="op">=</span> <span class="va">lt_fits</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Likelihood-based statistics of fit for unit quantile regression models </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:  likelihood_stats(lt = lt_fits)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                                    Neg2LogLike AIC       BIC       HQIC     </span>
-<span class="co">#&gt; unit-Logistic                      -8443.029   -8431.029 -8394.140 -8417.855</span>
-<span class="co">#&gt; Johnson-SB                         -8238.405   -8226.405 -8189.516 -8213.232</span>
-<span class="co">#&gt; unit-Burr-XII                      -8096.114   -8084.114 -8047.225 -8070.941</span>
-<span class="co">#&gt; unit-Weibull                       -7994.077   -7982.077 -7945.188 -7968.903</span>
-<span class="co">#&gt; unit-Birnbaum-Saunders             -7955.990   -7943.990 -7907.101 -7930.817</span>
-<span class="co">#&gt; unit-Gompertz                      -7808.838   -7796.838 -7759.949 -7783.664</span>
-<span class="co">#&gt; arc-secant hyperbolic Weibull      -7679.482   -7667.482 -7630.593 -7654.308</span>
-<span class="co">#&gt; log-extended Exponential-Geometric -7677.034   -7665.034 -7628.145 -7651.860</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-E     -7496.966   -7484.966 -7448.077 -7471.792</span>
-<span class="co">#&gt; Kumaraswamy                        -7188.498   -7176.498 -7139.609 -7163.324</span>
-<span class="co">#&gt; unit-Chen                          -7016.542   -7004.542 -6967.653 -6991.368</span>
-<span class="co">#&gt; unit-Generalized Half-Normal-X     -6965.962   -6953.962 -6917.073 -6940.789</span>
-<span class="co">#&gt; unit-Gumbel                        -6531.775   -6519.775 -6482.886 -6506.602</span></code></pre></div>
-<p>It is also possible to perform pairwise <a href="https://en.wikipedia.org/wiki/Vuong%27s_closeness_test">Vuong test</a> to model selection of nonnested models.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Select just a few model to not mess the output</span>
-<span class="va">lt_chosen</span> <span class="op">&lt;-</span> <span class="va">lt_fits</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"unit-Logistic"</span>, <span class="st">"Johnson-SB"</span>, <span class="st">"unit-Burr-XII"</span>, <span class="st">"unit-Weibull"</span><span class="op">)</span><span class="op">]</span>
-<span class="fu"><a href="reference/pairwise.vuong.test.html">pairwise.vuong.test</a></span><span class="op">(</span>lt <span class="op">=</span> <span class="va">lt_chosen</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Pairwise comparisons using Vuong likelihood ratio test for non-nested models </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; data:  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop), </span>
-<span class="co">#&gt;     data = water, tau = 0.5, family = fam, link = "logit", link.theta = "log") </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;               unit-Logistic Johnson-SB unit-Burr-XII</span>
-<span class="co">#&gt; Johnson-SB    0.00031       -          -            </span>
-<span class="co">#&gt; unit-Burr-XII 3.9e-07       0.09659    -            </span>
-<span class="co">#&gt; unit-Weibull  8.8e-11       0.00013    0.04868      </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; P value adjustment method: holm</span></code></pre></div>
-<p>The currently methods implemented for <code>unitquantreg</code> objects are</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span>
-<span class="co">#&gt;  [1] coef         confint      fitted       hnp          logLik      </span>
-<span class="co">#&gt;  [6] model.frame  model.matrix plot         predict      print       </span>
-<span class="co">#&gt; [11] residuals    summary      terms        update       vcov        </span>
-<span class="co">#&gt; see '?methods' for accessing help and source code</span></code></pre></div>
-<p>It is also possible to fit the model for several quantiles values like <code>rq</code> function from <a href="https://cran.r-project.org/web/packages/quantreg/index.html"><strong>quantreg</strong></a> package.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,
-                     data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">49</span><span class="op">/</span><span class="fl">50</span>, family <span class="op">=</span> <span class="st">"uweibull"</span>,
-                     link <span class="op">=</span> <span class="st">"logit"</span>, link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">fits</span><span class="op">)</span>
-<span class="co">#&gt; [1] "unitquantregs"</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fits</span>, which <span class="op">=</span> <span class="st">"coef"</span>, mean_effect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README__various-quantiles-1.svg" width="90%" style="display: block; margin: auto;"></p>
-<p>The currently methods implemented for <code>unitquantregs</code> objects are</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">"unitquantregs"</span><span class="op">)</span>
-<span class="co">#&gt; [1] plot    print   summary</span>
-<span class="co">#&gt; see '?methods' for accessing help and source code</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"unitquantreg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; To cite unitquantreg in publications use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Menezes A, Mazucheli J (2021). _unitquantreg: Parametric quantile</span></span>
+<span><span class="co">#&gt;   regression models for bounded data_. R package version 0.0.3,</span></span>
+<span><span class="co">#&gt;   &lt;https://andrmenezes.github.io/unitquantreg&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   @Manual{,</span></span>
+<span><span class="co">#&gt;     title = {unitquantreg: {P}arametric quantile regression models for bounded data},</span></span>
+<span><span class="co">#&gt;     author = {Andr{'}e F. B. Menezes and Josmar Mazucheli},</span></span>
+<span><span class="co">#&gt;     note = {R package version 0.0.3},</span></span>
+<span><span class="co">#&gt;     url = {https://andrmenezes.github.io/unitquantreg},</span></span>
+<span><span class="co">#&gt;     year = {2021},</span></span>
+<span><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>The <code>unitquantreg</code> package is released under the Apache License, Version 2.0. Please, see file <a href="https://github.com/AndrMenezes/unitquantreg/blob/master/LICENSE.md" class="external-link"><code>LICENSE.md</code></a>.</p>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/AndrMenezes/unitquantreg/">https://​github.com/​AndrMenezes/​unitquantreg/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/AndrMenezes/unitquantreg/issues">https://​github.com/​AndrMenezes/​unitquantreg/​issues</a>
-</li>
+<li><a href="https://github.com/AndrMenezes/unitquantreg/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/AndrMenezes/unitquantreg/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small>Apache License (&gt;= 2)</small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing unitquantreg</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://andrmenezes.github.io">André F. B. Menezes</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3320-9834" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://andrmenezes.github.io" class="external-link">André F. B. Menezes</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3320-9834" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
-<a href="https://scholar.google.com/citations?hl=en&amp;user=JAGnl3sAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Josmar Mazucheli</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6740-0445" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://scholar.google.com/citations?hl=en&amp;user=JAGnl3sAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" class="external-link">Josmar Mazucheli</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6740-0445" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://andrmenezes.github.io">André F. B. Menezes</a>, <a href="https://scholar.google.com/citations?hl=en&amp;user=JAGnl3sAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Josmar Mazucheli</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://andrmenezes.github.io" class="external-link">André F. B. Menezes</a>, <a href="https://scholar.google.com/citations?hl=en&amp;user=JAGnl3sAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" class="external-link">Josmar Mazucheli</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -266,6 +193,8 @@
 
   
 
+
+  
 
   </body>
 </html>

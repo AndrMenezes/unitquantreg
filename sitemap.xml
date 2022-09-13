@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/404.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/articles/structure_functionality.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/articles/unitquantreg.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/authors.html</loc>
+  </url>
+  <url>
     <loc>https://andrmenezes.github.io/unitquantreg/index.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/news/index.html</loc>
   </url>
   <url>
     <loc>https://andrmenezes.github.io/unitquantreg/reference/ashw.html</loc>
@@ -11,6 +32,9 @@
   </url>
   <url>
     <loc>https://andrmenezes.github.io/unitquantreg/reference/hnp.html</loc>
+  </url>
+  <url>
+    <loc>https://andrmenezes.github.io/unitquantreg/reference/index.html</loc>
   </url>
   <url>
     <loc>https://andrmenezes.github.io/unitquantreg/reference/johnsonsb.html</loc>
@@ -73,10 +97,10 @@
     <loc>https://andrmenezes.github.io/unitquantreg/reference/unitquantreg-package.html</loc>
   </url>
   <url>
-    <loc>https://andrmenezes.github.io/unitquantreg/reference/unitquantreg.html</loc>
+    <loc>https://andrmenezes.github.io/unitquantreg/reference/unitquantreg.control.html</loc>
   </url>
   <url>
-    <loc>https://andrmenezes.github.io/unitquantreg/reference/unitquantreg.control.html</loc>
+    <loc>https://andrmenezes.github.io/unitquantreg/reference/unitquantreg.html</loc>
   </url>
   <url>
     <loc>https://andrmenezes.github.io/unitquantreg/reference/uweibull.html</loc>
@@ -86,8 +110,5 @@
   </url>
   <url>
     <loc>https://andrmenezes.github.io/unitquantreg/reference/water.html</loc>
-  </url>
-  <url>
-    <loc>https://andrmenezes.github.io/unitquantreg/articles/introduction.html</loc>
   </url>
 </urlset>
