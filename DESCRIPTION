@@ -7,7 +7,7 @@ Author: André F. B. Menezes [aut, cre] and Josmar Mazucheli [aut]
 Maintainer: André F. B. Menezes <andrefelipemaringa@gmail.com> and 
     Josmar Mazucheli <jmazucheli@gmail.com> 
 Description: Estimation and inference methods on parametric quantile regression models for bounded data.
-License: MIT + file LICENSE
+License: Apache License (>= 2)
 Encoding: UTF-8
 ByteCompile: yes
 LazyData: true
@@ -18,11 +18,12 @@ Suggests:
     rmarkdown,
     knitr,
     lmtest,
-    ggplot2
+    ggplot2,
+    covr
 Depends: 
     R (>= 3.5.0)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 NeedsCompilation: yes
 URL: https://andrmenezes.github.io/unitquantreg
 BugReports: https://github.com/AndrMenezes/unitquantreg/issues
