@@ -59,7 +59,7 @@ Hannan, E. J. and Quinn, B. G. (1979). The determination of the order of an auto
 Schwarz, G. (1978). Estimating the dimension of a model. \emph{Annals of Statistics}, \bold{6}(2), 461--464.
 }
 \author{
-André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+André F. B. Menezes
 
-Josmar Mazucheli \email{jmazucheli@gmail.com}
+Josmar Mazucheli
 }

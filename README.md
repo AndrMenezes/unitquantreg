@@ -1,9 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="man/figures/unitquantreg_hex.png" align="right" height="150">
-
-## Welcome to `unitquantreg` R package
+# Welcome to `unitquantreg` R package <img src="man/figures/unitquantreg_hex.png" align="right" alt="" width="200">
 
 <!-- badges: start -->
 

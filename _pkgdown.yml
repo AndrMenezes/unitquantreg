@@ -1,11 +1,17 @@
 url: https://andrmenezes.github.io/unitquantreg
 
 template:
+  bootstrap: 5
   params:
     ganalytics: UA-209203401-1
 
 development:
   mode: auto
+
+navbar:
+  structure:
+    left: [setup, reference, articles, news]
+    right: [search, github]
 
 authors:
   André F. B. Menezes:
@@ -15,11 +21,6 @@ authors:
 
 figures:
   fig.ext: png
-
-navbar:
-  structure:
-    left:  [intro, reference, articles, news]
-    right: [search, github]
 
 reference:
 - title: Families of distributions

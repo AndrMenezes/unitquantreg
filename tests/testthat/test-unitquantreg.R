@@ -84,9 +84,4 @@ test_that("comparison unitquantreg fits and SAS NLMIXED", {
   cbind(round(fit$gradient, 6), SAS_grad)
   expect_equal(unname(fit$gradient), SAS_grad, tol = 9e-1)
 
-  fits <- unitquantreg(formula = phpws ~ mhdi + region + incpc + log(pop),
-                       tau = seq(0.1, 0.9, l = 8), data = water,
-                       family = "uweibull")
-  expect_equal(class(fits), "unitquantregs")
-
 })
