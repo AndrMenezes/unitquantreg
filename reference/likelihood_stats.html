@@ -126,10 +126,10 @@ where \(L\) is the likelihood function.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">water</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">models</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"johnsonsb"</span>, <span class="st">"kum"</span>, <span class="st">"leeg"</span>, <span class="st">"ubs"</span>, <span class="st">"uburrxii"</span>, <span class="st">"uchen"</span>, <span class="st">"ughne"</span>, <span class="st">"ughnx"</span>,</span></span>
-<span class="r-in"><span><span class="st">"ugompertz"</span>, <span class="st">"ulogistic"</span>, <span class="st">"uweibull"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span></span></span>
-<span class="r-in"><span><span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">water</span>, family <span class="op">=</span> <span class="va">M</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">models</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"johnsonsb"</span>, <span class="st">"kum"</span>, <span class="st">"leeg"</span>, <span class="st">"ubs"</span>, <span class="st">"uburrxii"</span>, <span class="st">"uchen"</span>, <span class="st">"ughne"</span>,</span></span>
+<span class="r-in"><span><span class="st">"ughnx"</span>, <span class="st">"ugompertz"</span>, <span class="st">"ulogistic"</span>, <span class="st">"uweibull"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span>,</span></span>
+<span class="r-in"><span>tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">water</span>, family <span class="op">=</span> <span class="va">M</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ans</span> <span class="op">&lt;-</span> <span class="fu">likelihood_stats</span><span class="op">(</span>lt <span class="op">=</span> <span class="va">fits</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ans</span></span></span>
@@ -139,17 +139,17 @@ where \(L\) is the likelihood function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  likelihood_stats(lt = fits)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    Neg2LogLike AIC       BIC       HQIC     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      -8443.029   -8431.029 -8394.140 -8417.855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Johnson-SB                         -8238.405   -8226.405 -8189.516 -8213.232</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      -8096.114   -8084.114 -8047.225 -8070.941</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       -7994.077   -7982.077 -7945.188 -7968.903</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -7955.990   -7943.990 -7907.101 -7930.817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      -7809.055   -7797.055 -7760.166 -7783.882</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -7677.034   -7665.034 -7628.145 -7651.860</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     -7496.966   -7484.966 -7448.077 -7471.792</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -7188.498   -7176.498 -7139.609 -7163.324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          -7016.542   -7004.542 -6967.653 -6991.368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     -6965.957   -6953.957 -6917.068 -6940.783</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      -8354.265   -8348.265 -8329.821 -8341.678</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Johnson-SB                         -8181.096   -8175.096 -8156.651 -8168.509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      -8046.497   -8040.497 -8022.053 -8033.910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       -7927.895   -7921.895 -7903.451 -7915.309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -7921.672   -7915.672 -7897.228 -7909.086</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      -7765.711   -7759.711 -7741.266 -7753.124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -7598.070   -7592.070 -7573.626 -7585.483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     -7397.341   -7391.341 -7372.897 -7384.755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -7094.014   -7088.014 -7069.569 -7081.427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          -6922.525   -6916.525 -6898.080 -6909.938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     -6804.230   -6798.230 -6779.785 -6791.643</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
