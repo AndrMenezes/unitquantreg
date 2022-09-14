@@ -5,11 +5,11 @@ test_that("analitical and numerical gradient works in water data", {
   lt_fits <- lapply(seq_along(lt_families), function(i) {
     cat(lt_families[[i]], '\n')
     fit_nogradient <- unitquantreg(
-      phpws ~ mhdi + incpc + region + log(pop), data = water,
+      phpws ~ mhdi, data = water,
       tau = 0.5, family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(gradient = FALSE))
     fit_gradient <- unitquantreg(
-      phpws ~ mhdi + incpc + region + log(pop), data = water,
+      phpws ~ mhdi, data = water,
       tau = 0.5, family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(gradient = TRUE))
     se_nogradient <-sqrt(diag(vcov(fit_nogradient)))
@@ -29,10 +29,8 @@ test_that("analitical and numerical gradient works in water data", {
     )
   })
   df_res_parms <- do.call("rbind", lapply(lt_fits, "[[", "df_se"))
-  npar <- 6
-  expect_equal(ncol(df_res_parms), npar)
+  npar <- length(unique(df_res_parms$parms))
   expect_equal(nrow(df_res_parms), length(lt_families) * npar)
-
 })
 
 test_that("analitical and numerical gradient works in bodyfat data", {
@@ -64,9 +62,7 @@ test_that("analitical and numerical gradient works in bodyfat data", {
     )
   })
   df_res_parms <- do.call("rbind", lapply(lt_fits, "[[", "df_se"))
-  npar <- 6
-  expect_equal(ncol(df_res_parms), 6)
+  npar <- length(unique(df_res_parms$parms))
   expect_equal(nrow(df_res_parms), length(lt_families) * npar)
-
 })
 

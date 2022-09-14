@@ -3,8 +3,8 @@ test_that("likelihood_stats works for water data", {
   system.time(
     lt_fits <- lapply(lt_families, function(fam) {
       cat(fam, "\n")
-      unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-                   tau = 0.5, data = water, family = fam)
+      unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water,
+                   family = fam)
   }))
 
   tmp <- likelihood_stats(lt = lt_fits)

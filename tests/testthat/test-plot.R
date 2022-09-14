@@ -21,8 +21,8 @@ test_that("plot method for unitquantreg(s) class works", {
   plot(fit)
 
   # For several quantiles (taus)
-  fits <- unitquantreg(formula = y ~ x1 + I(x1^2) | x1, tau = 1:49 / 50, data = data_simulated,
-                       family = "uweibull")
+  fits <- unitquantreg(formula = y ~ x1 + I(x1^2) | x1, tau = 1:49 / 50,
+                       data = data_simulated, family = "uweibull")
   plot(fits, which = "coef")
   plot(fits, which = "coef", mean_effect = TRUE)
   plot(fits, which = "coef", parm = "x1")

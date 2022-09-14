@@ -5,11 +5,11 @@ test_that("analitical and numerical hessian works in water data", {
   lt_fits <- lapply(seq_along(lt_families), function(i) {
     cat(lt_families[[i]], '\n')
     fit_numeric <- unitquantreg(
-      formula = phpws ~ mhdi + incpc + region + log(pop),
+      formula = phpws ~ mhdi,
       tau = 0.5, data = water, family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(hessian = TRUE))
     fit_analitic <- unitquantreg(
-      formula = phpws ~ mhdi + incpc + region + log(pop),
+      formula = phpws ~ mhdi,
       tau = 0.5, data = water, family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(hessian = FALSE))
 
