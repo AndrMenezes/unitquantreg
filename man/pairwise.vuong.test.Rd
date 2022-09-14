@@ -36,8 +36,8 @@ data(water, package = "unitquantreg")
 
 models  <- c("johnsonsb", "kum", "leeg", "ubs", "uburrxii", "uchen", "ughne", "ughnx",
 "ugompertz", "ulogistic", "uweibull")
-fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi + incpc +
-region + log(pop),tau = 0.5, data = water, family = M))
+fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi,
+tau = 0.5, data = water, family = M))
 
 ans <- pairwise.vuong.test(lt = fits)
 ans
