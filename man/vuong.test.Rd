@@ -56,8 +56,8 @@ data(water, package = "unitquantreg")
 
 fit_uweibull <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
 tau = 0.5, data = water, family = "uweibull")
-fit_kum <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-tau = 0.5, data = water, family = "kum")
+fit_kum <- unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water,
+family = "kum")
 
 ans <- vuong.test(object1 = fit_uweibull, object2 = fit_kum)
 ans

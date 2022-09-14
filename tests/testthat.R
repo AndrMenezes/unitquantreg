@@ -15,6 +15,6 @@ lt_families <- list(
   "unit-Burr-XII" = "uburrxii",
   "arc-secant hyperbolic Weibull" = "ashw",
   "unit-Gumbel" = "ugumbel"
-  )
+)
 
 test_check("unitquantreg")

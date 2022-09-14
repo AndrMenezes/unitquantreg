@@ -59,8 +59,8 @@
 #'
 #' fit_uweibull <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
 #' tau = 0.5, data = water, family = "uweibull")
-#' fit_kum <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-#' tau = 0.5, data = water, family = "kum")
+#' fit_kum <- unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water,
+#' family = "kum")
 #'
 #' ans <- vuong.test(object1 = fit_uweibull, object2 = fit_kum)
 #' ans
@@ -151,8 +151,8 @@ vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 #'
 #' models  <- c("johnsonsb", "kum", "leeg", "ubs", "uburrxii", "uchen", "ughne", "ughnx",
 #' "ugompertz", "ulogistic", "uweibull")
-#' fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi + incpc +
-#' region + log(pop),tau = 0.5, data = water, family = M))
+#' fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi,
+#' tau = 0.5, data = water, family = M))
 #'
 #' ans <- pairwise.vuong.test(lt = fits)
 #' ans

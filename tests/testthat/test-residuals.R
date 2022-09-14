@@ -3,8 +3,7 @@ test_that("residuals method works for all family of distributions", {
   data(water)
   lt_fits <- lapply(lt_families, function(fam){
     cat(fam, "\n")
-    unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-                 tau = 0.5, data = water, family = fam)
+    unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water, family = fam)
   })
   sort(sapply(lt_fits, AIC))
 

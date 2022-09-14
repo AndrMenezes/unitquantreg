@@ -13,8 +13,9 @@ test_that("methods works for unitquanreg objects", {
   data_simulated <- data.frame(x1 = X[, 2], z1 = Z[, 2])
   data_simulated$y <- ruweibull(n, mu, theta)
 
-  fit_1 <- unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1, data = data_simulated,
-                        family = "uweibull", tau = 0.5, link.theta = "log")
+  fit_1 <- unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1,
+                        data = data_simulated, family = "uweibull",
+                        tau = 0.5, link.theta = "log")
   fit_1
   summary(fit_1)
   vcov(fit_1)

@@ -77,7 +77,7 @@ test_that("hnp method works for all distribution families in water data", {
   data("water")
   lt_fits <- lapply(seq_along(lt_families), function(i) {
     cat(lt_families[[i]], '\n')
-    unitquantreg(formula = phpws ~ mhdi + region + incpc + log(pop),
+    unitquantreg(formula = phpws ~ mhdi,
                  tau = 0.5, data = water, family = lt_families[[i]])
   })
   names(lt_fits) <- names(lt_families)
