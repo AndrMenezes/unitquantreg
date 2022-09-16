@@ -21,5 +21,12 @@ test_that("methods works for unitquanreg objects", {
   vcov(fit_1)
   coef(fit_1)
   confint(fit_1)
-
+  terms(fit_1)
+  model.frame(fit_1)
+  model.matrix(fit_1)
+  update(fit_1, . ~ . -x1)
+  update(fit_1, . ~ . -z1)
+  update(fit_1, . ~ . -I(x1^2))
+  update(fit_1, . ~ . | . -z1)
+  update(fit_1, . ~ . | . -x1)
 })

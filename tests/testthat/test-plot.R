@@ -17,8 +17,10 @@ test_that("plot method for unitquantreg(s) class works", {
   plot(fit, which = 2)
   plot(fit, which = 3)
   plot(fit, which = 4)
+  oldpar <- par()
   par(mfrow = c(2, 2))
   plot(fit)
+  par(oldpar)
 
   # For several quantiles (taus)
   fits <- unitquantreg(formula = y ~ x1 + I(x1^2) | x1, tau = 1:49 / 50,
