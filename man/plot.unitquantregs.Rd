@@ -59,7 +59,8 @@ The options are \code{"density"} or \code{"cdf"}.}
 \item{...}{other parameters to be passed through to plotting functions.}
 }
 \value{
-No return value, called for side effects.
+If \code{output_df = TRUE} then returns a data.frame used to plot.
+Otherwise, no return value, called for side effects.
 }
 \description{
 Provide two type of plots for \code{unitquantregs} objects.

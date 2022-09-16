@@ -127,7 +127,7 @@ plot.unitquantreg <- function(x, which = 1L:4L,
     if (one_fig) title(sub = sub.caption, ...)
     mtext(caption[4L], 3, 0.25)
   }
-  if (!one.fig && par("oma")[3] >= 1)
+  if (!one_fig && par("oma")[3] >= 1)
     mtext(sub.caption, outer = TRUE, cex = 1.25)
 
   invisible()
