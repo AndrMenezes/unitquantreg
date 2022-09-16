@@ -3,7 +3,7 @@ bibentry("Manual",
          author      = c(person(given = "Andr{'}e F. B.", family = "Menezes"),
                          person(given = "Josmar", family = "Mazucheli")),
          note        = "R package version 0.0.3",
-         url         = "https://andrmenezes.github.io/unitquantreg",
+         url         = "https://andrmenezes.github.io/unitquantreg/",
          year        = "2021",
 	       header      = "To cite unitquantreg in publications use:"
 )

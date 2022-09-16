@@ -78,10 +78,8 @@ column of ones.}
 }
 \value{
 \code{\link{unitquantreg}} can return an object of
-class \code{unitquantreg} if \code{tau} is one quantile, i.e., a list with
+class \code{unitquantreg} if \code{tau} is a scalar, i.e., a list with
 the following components.
-\code{\link{unitquantreg.fit}} returns an unclassed list with
-components up to \code{elapsed_time}.
 \item{family}{the distribution family name.}
 \item{coefficients}{a list with elements \code{"quantile"} and \code{"shape"}
 containing the coefficients from the respective models.}
@@ -116,6 +114,9 @@ parameters estimates is positive definite.}
 \item{y}{the response vector, if \code{y = TRUE}.}
 \item{x}{a list with elements \code{"quantile"} and \code{"shape"}
 containing the model matrices from the respective models, if \code{x = TRUE}.}
+
+While \code{\link{unitquantreg.fit}} returns an unclassed list with
+components up to \code{elapsed_time}.
 
 If \code{tau} is a numeric vector with length greater than one an object of
 class \code{unitquantregs} is returned, which consist of list of objects of

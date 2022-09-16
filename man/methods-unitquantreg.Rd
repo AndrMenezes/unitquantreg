@@ -64,9 +64,58 @@
 
 \item{evaluate}{If true evaluate the new call else return the call.}
 }
+\value{
+The \code{summary} method gives Wald tests for the regressions coefficients
+based on the observed Fisher information matrix. As usual the \code{summary}
+method returns a list with relevant model statistics and estimates, which
+can be printed using the \code{print} method.
+
+The \code{coef}, \code{vcov}, \code{confint} and \code{fitted} methods can
+be use to extract, respectively, the estimated coefficients, the
+estimated covariance matrix, the Wald confidence intervals, and fitted
+values.
+
+A \code{\link{logLik}} method is also provide, then the \code{\link{AIC}}
+function can be use to calculated the Akaike Information Criterion.
+
+The generic methods \code{\link{terms}}, \code{\link{model.frame}},
+\code{\link{model.matrix}}, \code{\link{update}} and are also provided.
+}
 \description{
-Methods for extracting information from fitted unit quantile regression
+Methods for extracting information from fitted regression models
 objects of class \code{unitquantreg} and \code{unitquantregs}.
+}
+\examples{
+set.seed(6669)
+n <- 200
+betas <- c(1, 2)
+gamas <- c(-1, 1)
+X <- cbind(1, x1 = runif(n))
+Z <- cbind(1, z1 = rexp(n))
+eta <- drop(X \%*\% betas)
+zeta <- drop(Z \%*\% gamas)
+mu <- exp(eta) / (1 + exp(eta))
+theta <- exp(zeta)
+data_simulated <- data.frame(x1 = X[, 2], z1 = Z[, 2])
+data_simulated$y <- ruweibull(n, mu, theta)
+
+fit_1 <- unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1,
+                      data = data_simulated, family = "uweibull",
+                      tau = 0.5, link.theta = "log")
+fit_1
+summary(fit_1)
+vcov(fit_1)
+coef(fit_1)
+confint(fit_1)
+terms(fit_1)
+model.frame(fit_1)
+model.matrix(fit_1)
+update(fit_1, . ~ . -x1)
+update(fit_1, . ~ . -z1)
+update(fit_1, . ~ . -I(x1^2))
+update(fit_1, . ~ . | . -z1)
+update(fit_1, . ~ . | . -x1)
+
 }
 \author{
 André F. B. Menezes

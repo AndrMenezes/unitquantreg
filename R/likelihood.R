@@ -3,7 +3,7 @@
 #'
 #' @description Internal functions using in \code{\link[unitquantreg]{unitquantreg.fit}}
 #' to compute the negative log-likelihood function, the score vector and the hessian
-#' matrix using analytic expressions implemented in \code{C++}.
+#' matrix using analytic expressions written in \code{C++}.
 #
 #' @param par vector of regression model coefficients for \eqn{\mu} and/or
 #' \eqn{\theta}.

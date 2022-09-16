@@ -1,3 +1,30 @@
+## Notes
+
+> Please add more details about the package functionality and implemented
+methods in your Description text. If there are references describing the
+methods in your package, please add these.
+
+The DESCRIPTION file was re-written and a reference was included following the 
+specified format.
+
+> Please add \value to .Rd files regarding exported methods and explain
+the functions results in the documentation.
+
+The missing Rd-tags were updated.
+
+> Please make sure that you do not change the user's options, par or working
+directory.
+
+Checked, please see the following lines:
+  - 88-89 in `R/plot.R`;
+  - 142-143 in `R/utils.R`.
+
+> Please always make sure to reset to user's options().
+
+Corrected, please see the following lines:
+  - 232-235 in `inst/doc/structure_functionality.R`;
+  - 20-23 in `tests/testthat/test-plot.R`.
+
 ## Test environments
 
 * ubuntu 20.04, devel and release
@@ -15,6 +42,4 @@ There was 1 NOTE:
     sub-directories of 1Mb or more:
       libs   9.0Mb
 
-The NOTE refers to `C++` codes.
-
-* This is a new release.
+The NOTE refers to large size of `C++` codes.

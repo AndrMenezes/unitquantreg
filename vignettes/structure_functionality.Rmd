@@ -38,9 +38,9 @@ abbrev_name <- c("uweibull", "kum", "ulogistic", "uchen", "ubs", "leeg", "ughne"
 refs <- c("[Mazucheli, et al. (2018)](http://japs.isoss.net/13(2)1%2011046.pdf)",
           "[Kumaraswamy, (1980)](https://www.sciencedirect.com/science/article/abs/pii/0022169480900360)",
           "[Tadikamalla and Johnson (1982)](https://www.jstor.org/stable/2335422)",
-          "[Korkmaz, et al. (2020)](https://www.researchgate.net/publication/352373037_ON_THE_UNIT-CHEN_DISTRIBUTION_WITH_ASSOCIATED_QUANTILE_REGRESSION_AND_APPLICATIONS)",
+          "[Korkmaz, et al. (2020)](https://doi.org/10.1515/ms-2022-0052)",
           "[Mazucheli, et al. (2021)](https://www.mdpi.com/2073-8994/13/4/682)",
-          "[Jodrá and Jiménez-Gamero (2020)](https://www.ine.pt/revstat/pdf/REVSTAT_v18-n4-2.pdf)",
+          "[Jodrá and Jiménez-Gamero (2020)](https://doi.org/10.57805/revstat.v18i4.309)",
           "[Korkmaz MÇ (2020)](https://www.scientificbulletin.upb.ro/rev_docs_arhiva/full6b9_464742.pdf)",
           "New",
           "[Mazucheli et al. (2019)](https://rivista-statistica.unibo.it/article/view/8497)",
@@ -60,7 +60,7 @@ to guarantee more computational efficiency.
 
 The parameter estimation and inference are performed under the frequentist paradigm.
 Maximization of the log-likelihood function is done by optimization techniques available
-in the `R` through the [`optimx`](https://cran.r-project.org/web/packages/optimx/index.html) 
+in the `R` through the [`optimx`](https://CRAN.R-project.org/package=optimx) 
 package, which is a general-purpose optimization wrapper function that allows the use of
 several `R` tools for optimization, including the existing `stats::optim()` function.
 To achieve quick and better convergence the analytical score function is use during the
@@ -79,7 +79,7 @@ library(unitquantreg)
 args(unitquantreg)
 ```
 
-The `formula` argument use the concept of [`Formula`](https://cran.r-project.org/web/packages/Formula/index.html)
+The `formula` argument use the concept of [`Formula`](https://CRAN.R-project.org/package=Formula)
 package allows multiple parts on the right-hand side, which indicates regression structure
 for the quantile and shape parameter of the distribution. For instance,
 `formula = y ~ x1 | z1` means the following regression structure
@@ -136,7 +136,7 @@ between fitted models
 
 Finally, `uniquantreg` objects also permits use the inference methods functions 
 `lmtest::coeftest()`, `lmtest::coefci`, `lmtest::coefci`, `lmtest::waldtest` and `lmtest::lrtest`
-implemented in [`lmtest`](https://cran.r-project.org/web/packages/lmtest/index.html) to
+implemented in [`lmtest`](https://CRAN.R-project.org/package=lmtest) to
 perform hypothesis test, confidence intervals for **nested models**.
 
 Next, a detailed account of the usage of all these functions is provided.
@@ -229,8 +229,10 @@ method.
 
 
 ```{r plots-diagnostic, cache=TRUE}
+oldpar <- par()
 par(mfrow = c(2, 2))
 plot(lt_fits[["unit-Logistic"]])
+par(oldpar)
 ```
 
 Plots of the residuals against the fitted linear predictor and
@@ -295,14 +297,14 @@ ggplot(df_plot, aes(x=teo, y=obs)) +
 Inference results about the parameter estimates can be accessed through the
 `summary` method. For instance,
 
-```{r}
+```{r summary-fits}
 summary(lt_fits[["unit-Logistic"]])
 ```
 
 For `unitquantregs` objects the `plot` method provide a convenience to check the
 significance as well as the effect of estimate along the specify quantile value.
 
-```{r}
+```{r plot-ulogistic}
 plot(fits_ulogistic, which = "coef", mean_effect = FALSE)
 ```
 

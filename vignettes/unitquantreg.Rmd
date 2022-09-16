@@ -26,7 +26,7 @@ hessian functions are vectorized and written in `C++`.
 
 The parameter estimation and inference are performed under the frequentist
 paradigm, and the
-[**optimx**](https://cran.r-project.org/web/packages/optimx/index.html)
+[**optimx**](https://CRAN.R-project.org/package=optimx)
 package is used to perform the numerical optimization.
 Besides that, the analytical score function are provided in the optimization
 process and the standard errors are computed from the analytical hessian matrix,

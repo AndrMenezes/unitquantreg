@@ -30,6 +30,8 @@
 #' check possible misspecification of link function; Half-normal plot of
 #' residuals (\code{which = 4}) to check distribution assumption.
 #'
+#' @return
+#' No return value, called for side effects.
 #'
 #' @references
 #' Dunn, P. K. and Smyth, G. K. (2018) Generalized Linear Models With Examples in R, Springer, New York.
@@ -49,15 +51,20 @@
 #' @export
 #'
 plot.unitquantreg <- function(x, which = 1L:4L,
-                             caption = c("Residuals vs. indices of obs.",
-                                         "Residuals vs. linear predictor",
-                                         "Working response vs. linear predictor",
-                                         "Half-normal plot of residuals"),
-                             sub.caption = paste(deparse(x$call), collapse = "\n"),
-                             main = "",
-                             ask = prod(par("mfcol")) < length(which) && dev.interactive(),
-                             ..., add.smooth = getOption("add.smooth"),
-                             type = "quantile", nsim = 99L, level = 0.95) {
+                              caption = c(
+                                "Residuals vs. indices of obs.",
+                                "Residuals vs. linear predictor",
+                                "Working response vs. linear predictor",
+                                "Half-normal plot of residuals"),
+                              sub.caption = paste(
+                                deparse(x$call), collapse = "\n"),
+                              main = "",
+                              ask = prod(par("mfcol")) < length(which) && dev.interactive(),
+                              ...,
+                              add.smooth = getOption("add.smooth"),
+                              type = "quantile",
+                              nsim = 99L,
+                              level = 0.95) {
 
   if (!is.numeric(which) || any(which < 1L) || any(which > 4L))
     stop("'which' must be in 1:4")
@@ -74,15 +81,17 @@ plot.unitquantreg <- function(x, which = 1L:4L,
   show[which] <- TRUE
   Main <- rep("", 4)
   Main[which] <- rep(main, length.out = sum(show))
-  one.fig <- prod(par("mfcol")) == 1
+  one_fig <- prod(par("mfcol")) == 1
 
+  # Keeping user's graphs options
   if (ask) {
     op <- par(ask = TRUE)
     on.exit(par(op))
   }
   if (show[1L]) {
-    plot(seq_len(n), res, xlab = "Obs. number", ylab = Type, main = Main[1L], ...)
-    if (one.fig) title(sub = sub.caption, ...)
+    plot(seq_len(n), res, xlab = "Obs. number", ylab = Type,
+         main = Main[1L], ...)
+    if (one_fig) title(sub = sub.caption, ...)
     mtext(caption[1L], 3, 0.25)
     abline(h = 0, lty = 3, col = "gray")
     if (add.smooth) lines(lowess(1:n, res), col = "blue", lwd = 2)
@@ -90,7 +99,7 @@ plot.unitquantreg <- function(x, which = 1L:4L,
   if (show[2L]) {
     plot(eta, res,
          xlab = "Linear predictor", ylab = Type, main = Main[2L], ...)
-    if (one.fig) title(sub = sub.caption, ...)
+    if (one_fig) title(sub = sub.caption, ...)
     mtext(caption[2L], 3, 0.25)
     abline(h = 0, lty = 3, col = "gray")
     if (add.smooth) lines(lowess(eta, res), col = "blue", lwd = 2)
@@ -99,7 +108,7 @@ plot.unitquantreg <- function(x, which = 1L:4L,
     z <- eta + residuals(x, type = "working")
     plot(z ~ eta, xlab = "Linear predictor", ylab = "Working responses",
          main = Main[3L], ...)
-    if (one.fig) title(sub = sub.caption, ...)
+    if (one_fig) title(sub = sub.caption, ...)
     mtext(caption[3L], 3, 0.25)
     if (add.smooth) lines(lowess(z ~ eta), lwd = 2, col = "blue")
   }
@@ -115,11 +124,12 @@ plot.unitquantreg <- function(x, which = 1L:4L,
     lines(hn[["teo"]], y = hn[["lower"]])
     lines(hn[["teo"]], y = hn[["upper"]])
     lines(hn[["teo"]], y = hn[["median"]], lty = 2)
-    if (one.fig) title(sub = sub.caption, ...)
+    if (one_fig) title(sub = sub.caption, ...)
     mtext(caption[4L], 3, 0.25)
   }
+  if (!one_fig && par("oma")[3] >= 1)
+    mtext(sub.caption, outer = TRUE, cex = 1.25)
 
-  if (!one.fig && par("oma")[3] >= 1) mtext(sub.caption, outer = TRUE, cex = 1.25)
   invisible()
 }
 
@@ -154,6 +164,10 @@ plot.unitquantreg <- function(x, which = 1L:4L,
 #' If \code{which = "conddist"} plot the conditional distribution at specific values of
 #' covariates. The conditional distribution could be the cumulative distribution function
 #' if \code{dist_type = "cdf"} or the probability density function if \code{dist_type = "pdf"}.
+#'
+#' @return
+#' If \code{output_df = TRUE} then returns a data.frame used to plot.
+#' Otherwise, no return value, called for side effects.
 #'
 #' @seealso \code{\link{plot.unitquantreg}}.
 #'

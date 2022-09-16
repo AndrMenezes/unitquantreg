@@ -28,7 +28,7 @@
 #' the Cox-Snell residuals, \eqn{r_{CS}}, follow a standard exponential
 #' distribution.
 #'
-#' @return Numeric vector of residuals extract from object of class
+#' @return Numeric vector of residuals extract from an object of class
 #' \code{\link[unitquantreg]{unitquantreg}}.
 #'
 #'

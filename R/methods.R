@@ -2,9 +2,6 @@
 #'
 #' @title Methods for \code{unitquantreg} and \code{unitquantregs} objects
 #'
-#' @description Methods for extracting information from fitted unit quantile regression
-#' objects of class \code{unitquantreg} and \code{unitquantregs}.
-#'
 #' @author André F. B. Menezes
 #'
 #' @param object,x fitted model object of class \code{\link{unitquantreg}}.
@@ -17,6 +14,57 @@
 #' @param formula an R formula.
 #' @param evaluate If true evaluate the new call else return the call.
 #' @param ... additional argument(s) for methods. Currently not used.
+#'
+#' @description Methods for extracting information from fitted regression models
+#' objects of class \code{unitquantreg} and \code{unitquantregs}.
+#'
+#' @return
+#' The \code{summary} method gives Wald tests for the regressions coefficients
+#' based on the observed Fisher information matrix. As usual the \code{summary}
+#' method returns a list with relevant model statistics and estimates, which
+#' can be printed using the \code{print} method.
+#'
+#' The \code{coef}, \code{vcov}, \code{confint} and \code{fitted} methods can
+#' be use to extract, respectively, the estimated coefficients, the
+#' estimated covariance matrix, the Wald confidence intervals, and fitted
+#' values.
+#'
+#' A \code{\link{logLik}} method is also provide, then the \code{\link{AIC}}
+#' function can be use to calculated the Akaike Information Criterion.
+#'
+#' The generic methods \code{\link{terms}}, \code{\link{model.frame}},
+#' \code{\link{model.matrix}}, \code{\link{update}} and are also provided.
+#'
+#' @examples
+#' set.seed(6669)
+#' n <- 200
+#' betas <- c(1, 2)
+#' gamas <- c(-1, 1)
+#' X <- cbind(1, x1 = runif(n))
+#' Z <- cbind(1, z1 = rexp(n))
+#' eta <- drop(X %*% betas)
+#' zeta <- drop(Z %*% gamas)
+#' mu <- exp(eta) / (1 + exp(eta))
+#' theta <- exp(zeta)
+#' data_simulated <- data.frame(x1 = X[, 2], z1 = Z[, 2])
+#' data_simulated$y <- ruweibull(n, mu, theta)
+#'
+#' fit_1 <- unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1,
+#'                       data = data_simulated, family = "uweibull",
+#'                       tau = 0.5, link.theta = "log")
+#' fit_1
+#' summary(fit_1)
+#' vcov(fit_1)
+#' coef(fit_1)
+#' confint(fit_1)
+#' terms(fit_1)
+#' model.frame(fit_1)
+#' model.matrix(fit_1)
+#' update(fit_1, . ~ . -x1)
+#' update(fit_1, . ~ . -z1)
+#' update(fit_1, . ~ . -I(x1^2))
+#' update(fit_1, . ~ . | . -z1)
+#' update(fit_1, . ~ . | . -x1)
 #'
 #' @importFrom stats pnorm cov2cor coef vcov printCoefmat update formula
 #'
@@ -144,12 +192,12 @@ coef.unitquantreg <- function(object, type = c("full", "quantile", "shape"), ...
   cf <- object$coefficients
   type <- match.arg(type)
   out <- switch (type,
-    "full" = {
-      names(cf) <- NULL
-      unlist(cf)
-    },
-    "quantile" = cf$mu,
-    "shape" = cf$theta
+                 "full" = {
+                   names(cf) <- NULL
+                   unlist(cf)
+                 },
+                 "quantile" = cf$mu,
+                 "shape" = cf$theta
   )
   out
 }
@@ -239,14 +287,14 @@ terms.unitquantreg <- function(x, type = c("quantile", "shape"), ...) {
 #' @rdname methods-unitquantreg
 #' @export
 model.frame.unitquantreg <- function(formula, ...) {
-#  if (!is.null(formula$model)) return(formula$model)
+  #  if (!is.null(formula$model)) return(formula$model)
   dots <- list(...)
   nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0L)]
 
   if (length(nargs) || is.null(formula$model)) {
     fcall <- formula$call
     fcall$method <- "model.frame"
-    ## need stats:: for non-standard evaluation
+    ## need unitquantreg:: for non-standard evaluation
     fcall[[1L]] <- quote(unitquantreg::unitquantreg)
     fcall[names(nargs)] <- nargs
     env <- environment(formula$terms)
@@ -291,17 +339,6 @@ update.unitquantreg <- function (object, formula., ..., evaluate = TRUE)
   if (evaluate) eval(call, parent.frame())
   else call
 }
-
-
-# Simulate --------------------------------------------------------------------------
-
-# simulate.uniquantreg <- function(object, nsim = 1, seed = NULL) {
-#   val <- object$family$simulate(object, nsim)
-#   dim(val) <- c(length(object$y), nsim)
-#   val <- as.data.frame(val)
-#   names(val) <- paste("sim", seq_len(nsim), sep="_")
-#   val
-# }
 
 # Methods unitquantregs (tau vectorized) ----------------------------------
 

@@ -15,7 +15,7 @@
 \item{...}{currently not used.}
 }
 \value{
-Numeric vector of residuals extract from object of class
+Numeric vector of residuals extract from an object of class
 \code{\link[unitquantreg]{unitquantreg}}.
 }
 \description{
