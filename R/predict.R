@@ -16,6 +16,16 @@
 #' @param se.fit logical. If \code{TRUE} return the asymptotic standard errors.
 #' @param ... currently not used.
 #'
+#' @return
+#' If \code{se.fit = FALSE} then returns a \code{data.frame} with
+#' predict values and confidence interval if \code{interval = TRUE}.
+#'
+#' If \code{se.fit = TRUE} returns a list with components:
+#' \item{fit}{Predictions, as for \code{se.fit = FALSE}.}
+#' \item{se.fit}{Estimated standard errors.}
+#'
+#' For \code{type = "terms"} the output is a \code{data.frame} with a columns
+#' per term.
 #'
 #' @author
 #' André F. B. Menezes
