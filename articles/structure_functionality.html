@@ -42,6 +42,9 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
+  <a class="nav-link" href="../articles/unitquantreg.html">Get started</a>
+</li>
+<li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="active nav-item dropdown">
@@ -79,7 +82,7 @@
       <img src="" class="logo" alt=""><h1>Structure and functionality</h1>
                         <h4 data-toc-skip class="author">André Menezes</h4>
             
-            <h4 data-toc-skip class="date">Last compiled on 2022-09-14</h4>
+            <h4 data-toc-skip class="date">Last compiled on 2022-09-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/AndrMenezes/unitquantreg/blob/HEAD/vignettes/structure_functionality.Rmd" class="external-link"><code>vignettes/structure_functionality.Rmd</code></a></small>
       <div class="d-none name"><code>structure_functionality.Rmd</code></div>
@@ -118,7 +121,7 @@
 <tr class="even">
 <td align="left">log-extended Exponential-Geometric</td>
 <td align="left">leeg</td>
-<td align="left"><a href="https://www.ine.pt/revstat/pdf/REVSTAT_v18-n4-2.pdf" class="external-link">Jodrá and Jiménez-Gamero (2020)</a></td>
+<td align="left"><a href="https://doi.org/10.57805/revstat.v18i4.309" class="external-link">Jodrá and Jiménez-Gamero (2020)</a></td>
 </tr>
 <tr class="odd">
 <td align="left">unit-Birnbaum-Saunders</td>
@@ -133,7 +136,7 @@
 <tr class="odd">
 <td align="left">unit-Chen</td>
 <td align="left">uchen</td>
-<td align="left"><a href="https://www.researchgate.net/publication/352373037_ON_THE_UNIT-CHEN_DISTRIBUTION_WITH_ASSOCIATED_QUANTILE_REGRESSION_AND_APPLICATIONS" class="external-link">Korkmaz, et al. (2020)</a></td>
+<td align="left"><a href="https://doi.org/10.1515/ms-2022-0052" class="external-link">Korkmaz, et al. (2020)</a></td>
 </tr>
 <tr class="even">
 <td align="left">unit-Generalized Half-Normal-E</td>
@@ -168,7 +171,7 @@
 </tbody>
 </table>
 <p>The [<code>dpqr</code>]’s functions of the distributions are vectorized and implemented in <code>C++</code>. The log likelihood, score and hessian functions are also implemented in <code>C++</code> in order to guarantee more computational efficiency.</p>
-<p>The parameter estimation and inference are performed under the frequentist paradigm. Maximization of the log-likelihood function is done by optimization techniques available in the <code>R</code> through the <a href="https://cran.r-project.org/web/packages/optimx/index.html" class="external-link"><code>optimx</code></a> package, which is a general-purpose optimization wrapper function that allows the use of several <code>R</code> tools for optimization, including the existing <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">stats::optim()</a></code> function. To achieve quick and better convergence the analytical score function is use during the maximization. Also, standard errors of parameter estimates are computed using the analytical hessian matrix.</p>
+<p>The parameter estimation and inference are performed under the frequentist paradigm. Maximization of the log-likelihood function is done by optimization techniques available in the <code>R</code> through the <a href="https://CRAN.R-project.org/package=optimx" class="external-link"><code>optimx</code></a> package, which is a general-purpose optimization wrapper function that allows the use of several <code>R</code> tools for optimization, including the existing <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">stats::optim()</a></code> function. To achieve quick and better convergence the analytical score function is use during the maximization. Also, standard errors of parameter estimates are computed using the analytical hessian matrix.</p>
 </div>
 <div class="section level2">
 <h2 id="structure">Structure<a class="anchor" aria-label="anchor" href="#structure"></a>
@@ -179,7 +182,7 @@
 <span><span class="co">#&gt;     "log", "sqrt"), start = NULL, control = unitquantreg.control(), </span></span>
 <span><span class="co">#&gt;     model = TRUE, x = FALSE, y = TRUE) </span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre>
-<p>The <code>formula</code> argument use the concept of <a href="https://cran.r-project.org/web/packages/Formula/index.html" class="external-link"><code>Formula</code></a> package allows multiple parts on the right-hand side, which indicates regression structure for the quantile and shape parameter of the distribution. For instance, <code>formula = y ~ x1 | z1</code> means the following regression structure</p>
+<p>The <code>formula</code> argument use the concept of <a href="https://CRAN.R-project.org/package=Formula" class="external-link"><code>Formula</code></a> package allows multiple parts on the right-hand side, which indicates regression structure for the quantile and shape parameter of the distribution. For instance, <code>formula = y ~ x1 | z1</code> means the following regression structure</p>
 <p><span class="math display">\[
 g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_0 + \gamma_1\,z_1
 \]</span> where <span class="math inline">\(\mu\)</span> indicates the quantile of order <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\theta\)</span> is the shape parameter.</p>
@@ -218,7 +221,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <li><p><code><a href="../reference/vuong.test.html">vuong.test()</a></code> function performs Vuong test between two fitted <strong>non nested</strong> models,</p></li>
 <li><p><code><a href="../reference/pairwise.vuong.test.html">pairwise.vuong.test()</a></code> function performs pairwise Vuong test with adjusted p-value according to <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust.methods</a></code> between fitted models</p></li>
 </ul>
-<p>Finally, <code>uniquantreg</code> objects also permits use the inference methods functions <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coeftest()</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coefci</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coefci</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/waldtest.html" class="external-link">lmtest::waldtest</a></code> and <code><a href="https://rdrr.io/pkg/lmtest/man/lrtest.html" class="external-link">lmtest::lrtest</a></code> implemented in <a href="https://cran.r-project.org/web/packages/lmtest/index.html" class="external-link"><code>lmtest</code></a> to perform hypothesis test, confidence intervals for <strong>nested models</strong>.</p>
+<p>Finally, <code>uniquantreg</code> objects also permits use the inference methods functions <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coeftest()</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coefci</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html" class="external-link">lmtest::coefci</a></code>, <code><a href="https://rdrr.io/pkg/lmtest/man/waldtest.html" class="external-link">lmtest::waldtest</a></code> and <code><a href="https://rdrr.io/pkg/lmtest/man/lrtest.html" class="external-link">lmtest::lrtest</a></code> implemented in <a href="https://CRAN.R-project.org/package=lmtest" class="external-link"><code>lmtest</code></a> to perform hypothesis test, confidence intervals for <strong>nested models</strong>.</p>
 <p>Next, a detailed account of the usage of all these functions is provided.</p>
 </div>
 </div>
@@ -348,9 +351,18 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 </h3>
 <p>It is possible to check model assumptions from diagnostic plots using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function method for <code>unitquantreg</code> objects. The <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> method provides <code>quantile</code>, <code>cox-snell</code>, <code>working</code> and <code>partial</code> residuals type. The randomzide quantile residuals is the default choice of <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lt_fits</span><span class="op">[[</span><span class="st">"unit-Logistic"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/plots-diagnostic-1.png" width="1152" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cin" cannot be set</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cra" cannot be set</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "csi" cannot be set</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cxy" cannot be set</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "din" cannot be set</span></span>
+<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "page" cannot be set</span></span></code></pre></div>
 <p>Plots of the residuals against the fitted linear predictor and the residuals against indices of observations are the tools for diagnostic analysis to check the structural form of the model. Two features of the plots are important:</p>
 <ul>
 <li><p>Trends: Any trends appearing in these plots indicate that the systematic component can be improved. This could mean changing the link function, adding extra explanatory variables, or transforming the explanatory variables.</p></li>
@@ -358,16 +370,16 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 </ul>
 <p>Working residuals versus linear predictor is used to check possible misspecification of link function and Half-normal plot of residuals to check distribution assumption.</p>
 <p>Another best practice in diagnostic analysis is to inspect the (Half)-Normal plots with simulated envelope for several quantile value. This is done to obtain a more robust evaluation of the model assumptions. Thus, let’s fit the unit-Logistic quantile regression model for various quantiles.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
 <span>  <span class="va">fits_ulogistic</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
 <span>                                 data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">49</span><span class="op">/</span><span class="fl">50</span>,</span>
 <span>                                 family <span class="op">=</span> <span class="st">"ulogistic"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  13.621   0.008  13.633</span></span></code></pre></div>
+<span><span class="co">#&gt;  13.371   0.000  13.373</span></span></code></pre></div>
 <p>Now we can check the (Half)-Normal plots using the output of <code><a href="../reference/hnp.html">hnp()</a></code> method.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">get_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hnp.html">hnp</a></span><span class="op">(</span><span class="va">obj</span>, halfnormal <span class="op">=</span> <span class="cn">FALSE</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, nsim <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -398,7 +410,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <h3 id="inference-results">Inference results<a class="anchor" aria-label="anchor" href="#inference-results"></a>
 </h3>
 <p>Inference results about the parameter estimates can be accessed through the <code>summary</code> method. For instance,</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lt_fits</span><span class="op">[[</span><span class="st">"unit-Logistic"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Wald-tests for unit-Logistic quantile regression model</span></span>
@@ -426,28 +438,28 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span><span class="co">#&gt; Log-likelihood: 4221.514</span></span>
 <span><span class="co">#&gt; Number of iterations: 65</span></span></code></pre></div>
 <p>For <code>unitquantregs</code> objects the <code>plot</code> method provide a convenience to check the significance as well as the effect of estimate along the specify quantile value.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"coef"</span>, mean_effect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="structure_functionality_files/figure-html/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;"></p>
-<p>Curiously, the unit-Logistic quantile regression models capture constant effect for all covariates along the different quantiles. In contrast, the unit-Weibull model (the fourth best model) found a decrease effect of <code>mhdi</code> covaraite on the response as the quantile increases and increase effects of <code>incpc</code> and <code>region</code> on the response variable as the quantile increases.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"coef"</span>, mean_effect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="structure_functionality_files/figure-html/plot-ulogistic-1.png" width="1152" style="display: block; margin: auto;"></p>
+<p>Curiously, the unit-Logistic quantile regression models capture constant effect for all covariates along the different quantiles. In contrast, the unit-Weibull model (the fourth best model) found a decrease effect of <code>mhdi</code> covaraite on the response as the quantile increases and increase effects of <code>incpc</code> and <code>region</code> on the response variable as the quantile increases.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
 <span>  <span class="va">fits_uweibull</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span>
 <span>                                 data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">49</span><span class="op">/</span><span class="fl">50</span>,</span>
 <span>                                 family <span class="op">=</span> <span class="st">"uweibull"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  15.290   0.000  15.296</span></span>
+<span><span class="co">#&gt;  14.831   0.000  14.833</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_uweibull</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/fits-uweibull-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>Using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method with argument <code>which = "conddist"</code> for <code>unitquantregs</code> objects it is possible to estimate and visualize the conditional distribution of a response variable at different values of covariates. For instance,</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lt_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mhdi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.7</span><span class="op">)</span>, incpc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">water</span><span class="op">$</span><span class="va">incpc</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">water</span><span class="op">$</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"conddist"</span>, at_obs <span class="op">=</span> <span class="va">lt_data</span>, at_avg <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>     dist_type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/plot-conddis-1.png" width="1152" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"conddist"</span>, at_obs <span class="op">=</span> <span class="va">lt_data</span>, at_avg <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>     dist_type <span class="op">=</span> <span class="st">"cdf"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/plot-conddis-2.png" width="1152" style="display: block; margin: auto;"></p>
@@ -456,7 +468,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R version 4.2.1 (2022-06-23)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>

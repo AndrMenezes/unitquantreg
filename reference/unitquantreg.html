@@ -28,7 +28,10 @@ and the hessian matrix implemented in C++."><!-- mathjax --><script src="https:/
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/unitquantreg.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
@@ -173,10 +176,8 @@ column of ones.</p></dd>
     
 
 <p><code>unitquantreg</code> can return an object of
-class <code>unitquantreg</code> if <code>tau</code> is one quantile, i.e., a list with
-the following components.
-<code>unitquantreg.fit</code> returns an unclassed list with
-components up to <code>elapsed_time</code>.</p>
+class <code>unitquantreg</code> if <code>tau</code> is a scalar, i.e., a list with
+the following components.</p>
 <dl><dt>family</dt>
 <dd><p>the distribution family name.</p></dd>
 
@@ -260,7 +261,11 @@ parameters estimates is positive definite.</p></dd>
 containing the model matrices from the respective models, if <code>x = TRUE</code>.</p></dd>
 
 
-</dl><p>If <code>tau</code> is a numeric vector with length greater than one an object of
+</dl><p>While <code>unitquantreg.fit</code> returns an unclassed list with
+components up to <code>elapsed_time</code>.</p>
+
+
+<p>If <code>tau</code> is a numeric vector with length greater than one an object of
 class <code>unitquantregs</code> is returned, which consist of list of objects of
 class <code>unitquantreg</code> for each specified quantiles.</p>
     </div>

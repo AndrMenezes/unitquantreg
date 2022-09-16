@@ -41,6 +41,9 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/unitquantreg.html">Get started</a>
+</li>
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
@@ -88,7 +91,7 @@
 <p>The goal of <code>unitquantreg</code> is to provide tools for estimation and inference on parametric quantile regression models for bounded data.</p>
 <p>The package was written following the same interface as <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm</a></code> function, containing several S3 methods for inference, residual analysis, prediction, plotting, and model comparison.</p>
 <p>For more computation efficient the [<code>dpqr</code>]’s, likelihood, score and hessian functions are vectorized and written in <code>C++</code>.</p>
-<p>The parameter estimation and inference are performed under the frequentist paradigm, and the <a href="https://cran.r-project.org/web/packages/optimx/index.html" class="external-link"><strong>optimx</strong></a> package is used to perform the numerical optimization. Besides that, the analytical score function are provided in the optimization process and the standard errors are computed from the analytical hessian matrix, both function are implemented in efficient away using <code>C++</code>.</p>
+<p>The parameter estimation and inference are performed under the frequentist paradigm, and the <a href="https://CRAN.R-project.org/package=optimx" class="external-link"><strong>optimx</strong></a> package is used to perform the numerical optimization. Besides that, the analytical score function are provided in the optimization process and the standard errors are computed from the analytical hessian matrix, both function are implemented in efficient away using <code>C++</code>.</p>
 <p>The distribution families available are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lt_families</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"unit-Weibull"</span> <span class="op">=</span> <span class="st">"uweibull"</span>,</span>
@@ -106,7 +109,7 @@
 <span>                    <span class="st">"unit-Gumbel"</span> <span class="op">=</span> <span class="st">"ugumbel"</span><span class="op">)</span></span></code></pre></div>
 <p>The workhorse function is <code>unitquantreg</code>, which follows the same interface as <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://andrmenezes.github.io/unitquantreg">unitquantreg</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://andrmenezes.github.io/unitquantreg/">unitquantreg</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span></span>
 <span><span class="va">lt_fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">lt_families</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fam</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/unitquantreg.html">unitquantreg</a></span><span class="op">(</span></span>

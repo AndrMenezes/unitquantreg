@@ -24,7 +24,10 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/unitquantreg.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
@@ -111,6 +114,25 @@ scale.</p></dd>
 <dd><p>currently not used.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>If <code>se.fit = FALSE</code> then returns a <code>data.frame</code> with
+predict values and confidence interval if <code>interval = TRUE</code>.</p>
+
+
+<p>If <code>se.fit = TRUE</code> returns a list with components:</p>
+<dl><dt>fit</dt>
+<dd><p>Predictions, as for <code>se.fit = FALSE</code>.</p></dd>
+
+<dt>se.fit</dt>
+<dd><p>Estimated standard errors.</p></dd>
+
+
+</dl><p>For <code>type = "terms"</code> the output is a <code>data.frame</code> with a columns
+per term.</p>
+    </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>André F. B. Menezes</p>
