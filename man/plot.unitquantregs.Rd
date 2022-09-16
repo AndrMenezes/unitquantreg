@@ -58,6 +58,9 @@ The options are \code{"density"} or \code{"cdf"}.}
 
 \item{...}{other parameters to be passed through to plotting functions.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Provide two type of plots for \code{unitquantregs} objects.
 }

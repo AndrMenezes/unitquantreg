@@ -27,5 +27,5 @@ respectively.}
 \description{
 Internal functions using in \code{\link[unitquantreg]{unitquantreg.fit}}
 to compute the negative log-likelihood function, the score vector and the hessian
-matrix using analytic expressions implemented in \code{C++}.
+matrix using analytic expressions written in \code{C++}.
 }

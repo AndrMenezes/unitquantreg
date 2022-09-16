@@ -35,6 +35,17 @@ scale.}
 
 \item{...}{currently not used.}
 }
+\value{
+If \code{se.fit = FALSE} then returns a \code{data.frame} with
+predict values and confidence interval if \code{interval = TRUE}.
+
+If \code{se.fit = TRUE} returns a list with components:
+\item{fit}{Predictions, as for \code{se.fit = FALSE}.}
+\item{se.fit}{Estimated standard errors.}
+
+For \code{type = "terms"} the output is a \code{data.frame} with a columns
+per term.
+}
 \description{
 Extract various types of predictions from unit quantile regression models.
 }

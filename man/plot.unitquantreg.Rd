@@ -46,6 +46,9 @@ of the numbers 1 to 4, see below for further details.}
 \item{level}{numeric. Confidence level of the simulated envelope, see
 \code{\link{hnp.unitquantreg}}.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Provide diagnostic plots to check model assumptions for fitted model
 of class \code{unitquantreg}.
