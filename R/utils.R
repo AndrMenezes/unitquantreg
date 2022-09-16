@@ -91,20 +91,10 @@
         "%")
 }
 
-
-.FF <- function(x,Digits=4,Width=4){(formatC(x,digits=Digits,width=Width,format="f"))}
-
-# TODO: get initial guess for the shape parameter.
-.est_theta <- function(y, family) {
-  g_theta <- function(phi, y) {
-    n <- length(y)
-    n / phi + sum(log(-log(y))) - n / sum((-log(y))^phi) * sum((-log(y))^phi * log(-log(y)))
-  }
-  out <- tryCatch(stats::uniroot(g_theta, interval = c(1e-04, 100),
-                  y = y)[["root"]], error = function(e) NULL)
-  ifelse(is.null(out), 1.5, out)
-
+.FF <- function(x,Digits = 4, Width = 4){
+  formatC(x, digits = Digits, width = Width, format = "f")
 }
+
 
 
 # Function to plot estimated coefficients versus quantile levels
@@ -148,9 +138,11 @@
     parm <- rownames(lt_cfs[[1L]])[parm]
   parm <- parm[parm != "theta"]
 
+  # Keeping user's graphs options
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   # Graphics options
-  mfrow_orig <- par("mfrow")
-  mar_orig <- par("mar")
   if (is.null(mfrow))
     mfrow <- n2mfrow(length(parm))
   if (is.null(mar))
@@ -189,7 +181,6 @@
     }
     grid()
   }
-  par(mfrow = mfrow_orig, mar = mar_orig)
 
   if (output_df) {
     df2output <- as.data.frame(mat_cfs)
