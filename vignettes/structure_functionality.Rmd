@@ -229,7 +229,7 @@ method.
 
 
 ```{r plots-diagnostic, cache=TRUE}
-oldpar <- par()
+oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 2))
 plot(lt_fits[["unit-Logistic"]])
 par(oldpar)
