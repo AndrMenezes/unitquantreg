@@ -351,18 +351,12 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 </h3>
 <p>It is possible to check model assumptions from diagnostic plots using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function method for <code>unitquantreg</code> objects. The <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> method provides <code>quantile</code>, <code>cox-snell</code>, <code>working</code> and <code>partial</code> residuals type. The randomzide quantile residuals is the default choice of <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>no.readonly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lt_fits</span><span class="op">[[</span><span class="st">"unit-Logistic"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/plots-diagnostic-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cin" cannot be set</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cra" cannot be set</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "csi" cannot be set</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "cxy" cannot be set</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "din" cannot be set</span></span>
-<span><span class="co">#&gt; Warning in par(oldpar): graphical parameter "page" cannot be set</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span></code></pre></div>
 <p>Plots of the residuals against the fitted linear predictor and the residuals against indices of observations are the tools for diagnostic analysis to check the structural form of the model. Two features of the plots are important:</p>
 <ul>
 <li><p>Trends: Any trends appearing in these plots indicate that the systematic component can be improved. This could mean changing the link function, adding extra explanatory variables, or transforming the explanatory variables.</p></li>
@@ -377,7 +371,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"ulogistic"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  13.371   0.000  13.373</span></span></code></pre></div>
+<span><span class="co">#&gt;  11.880   0.000  11.881</span></span></code></pre></div>
 <p>Now we can check the (Half)-Normal plots using the output of <code><a href="../reference/hnp.html">hnp()</a></code> method.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -449,7 +443,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"uweibull"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  14.831   0.000  14.833</span></span>
+<span><span class="co">#&gt;  13.070   0.004  13.076</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_uweibull</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/fits-uweibull-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>Using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method with argument <code>which = "conddist"</code> for <code>unitquantregs</code> objects it is possible to estimate and visualize the conditional distribution of a response variable at different values of covariates. For instance,</p>
