@@ -229,8 +229,10 @@ method.
 
 
 ```{r plots-diagnostic, cache=TRUE}
+oldpar <- par()
 par(mfrow = c(2, 2))
 plot(lt_fits[["unit-Logistic"]])
+par(oldpar)
 ```
 
 Plots of the residuals against the fitted linear predictor and
@@ -295,14 +297,14 @@ ggplot(df_plot, aes(x=teo, y=obs)) +
 Inference results about the parameter estimates can be accessed through the
 `summary` method. For instance,
 
-```{r}
+```{r summary-fits}
 summary(lt_fits[["unit-Logistic"]])
 ```
 
 For `unitquantregs` objects the `plot` method provide a convenience to check the
 significance as well as the effect of estimate along the specify quantile value.
 
-```{r}
+```{r plot-ulogistic}
 plot(fits_ulogistic, which = "coef", mean_effect = FALSE)
 ```
 
