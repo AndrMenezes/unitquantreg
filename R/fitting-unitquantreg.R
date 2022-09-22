@@ -334,7 +334,7 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   #              linkobj.theta = linkobj.theta)
   # par <- opt$par
 
-  # Check if the optim converged
+  # Check if the optimization converged
   if (opt$convcode == 0L) {
     converged <- TRUE
   } else {
@@ -366,11 +366,13 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   if (!hessian) {
     he <- do.call(hessian_unitquantreg, parms)
   } else {
-    he <- suppressWarnings(
-      optimx::gHgen(par = par, fn = loglike_unitquantreg, gr = gradfun,
-                    tau = tau, family = family, linkobj = linkobj,
-                    linkobj.theta = linkobj.theta, X = X, Z = Z, y = y,
-                    control = list(ktrace = FALSE))[["Hn"]]
+    output <- capture.output(
+      he <- suppressWarnings(
+        optimx::gHgen(par = par, fn = loglike_unitquantreg, gr = gradfun,
+                      tau = tau, family = family, linkobj = linkobj,
+                      linkobj.theta = linkobj.theta, X = X, Z = Z, y = y,
+                      control = list(ktrace = FALSE))[["Hn"]]
+        )
     )
   }
 
@@ -378,9 +380,7 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   e <- eigen(he, symmetric = TRUE, only.values = TRUE)$values
   if (any(e > 0)) {
     vcov <- chol2inv(chol(he))
-    # vcov <- solve(he)
   } else {
-    # return(he)
     warning("Moore-Penrose inverse is used in covariance matrix.\n",
             "The final Hessian matrix is full rank but has at least one negative eigenvalue.\n",
             "Second-order optimality condition violated.", noBreaks. = TRUE)
