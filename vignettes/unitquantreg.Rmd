@@ -99,8 +99,8 @@ class(fits)
 
 Then, the user can visualize the results using the `plot` method:
 
-```{r plot-unitquantregs}
-plot(fits, which = "coef", mean_effect = FALSE)
+```{r plot-unitquantregs, out.width="80%"}
+plot(fits, which = "coef")
 ```
 
 

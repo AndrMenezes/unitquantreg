@@ -3,7 +3,8 @@
 #'
 #' @title Percentage of body fat data set
 #'
-#' @description The body fat percentage of individuals assisted in a public hospital in Curitiba, Paraná, Brasil.
+#' @description The body fat percentage of individuals assisted in a public
+#'  hospital in Curitiba, Paraná, Brasil.
 #'
 #' @format A \code{\link{data.frame}} with 298 observations and 9 columns:
 #'
@@ -16,12 +17,14 @@
 #' \item \code{bmi}: Body mass index - 24.71577.
 #' \item \code{age}: Age - 46.00.
 #' \item \code{sex}: Sex of individual. Female or male.
-#' \item \code{ipaq}: Factor variable indicating the sedentary, insufficiently active or active.
+#' \item \code{ipaq}: Factor variable indicating the sedentary, insufficiently
+#' active or active.
 #' }
 #'
-#' @author André Felipe Menezes
-#' @author Josmar Mazucheli
-#' @author Bruna Alves
+#' @author
+#' André Felipe Menezes
+#'
+#' Josmar Mazucheli
 #'
 #' @usage data(bodyfat, package = "unitquantreg")
 #'

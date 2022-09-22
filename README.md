@@ -5,9 +5,13 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/unitquantreg)](https://CRAN.R-project.org/package=unitquantreg)
 [![R-CMD-check](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/AndrMenezes/unitquantreg/branch/main/graph/badge.svg)](https://app.codecov.io/gh/AndrMenezes/unitquantreg?branch=main)
+[![rstudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/unitquantreg?)](https://github.com/metacran/cranlogs.app)
 <!-- badges: end -->
 
 The goal of `unitquantreg` is to provide tools for estimation and
@@ -20,12 +24,20 @@ model comparison.
 For more computation efficient the \[`dpqr`\]’s, likelihood, score and
 hessian functions are vectorized and written in `C++`.
 
-You can install the development version from
+You can install the stable version from
+[CRAN](https://cran.r-project.org/web/packages/unitquantreg/index.html)
+with:
+
+``` r
+install.packages("unitquantreg")
+```
+
+Or you can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
 if(!require(remotes)) install.packages('remotes')
-remotes::install_github("AndrMenezes/unitquantreg")
+remotes::install_github("AndrMenezes/unitquantreg", build_vignettes = TRUE)
 ```
 
 You can then load the package
@@ -50,7 +62,7 @@ citation("unitquantreg")
 #> 
 #>   Menezes A, Mazucheli J (2021). _unitquantreg: Parametric quantile
 #>   regression models for bounded data_. R package version 0.0.3,
-#>   <https://andrmenezes.github.io/unitquantreg>.
+#>   <https://andrmenezes.github.io/unitquantreg/>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -58,7 +70,7 @@ citation("unitquantreg")
 #>     title = {unitquantreg: {P}arametric quantile regression models for bounded data},
 #>     author = {Andr{'}e F. B. Menezes and Josmar Mazucheli},
 #>     note = {R package version 0.0.3},
-#>     url = {https://andrmenezes.github.io/unitquantreg},
+#>     url = {https://andrmenezes.github.io/unitquantreg/},
 #>     year = {2021},
 #>   }
 ```

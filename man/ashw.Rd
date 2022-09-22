@@ -76,5 +76,5 @@ Korkmaz, M. C., Chesneau, C. and Korkmaz, Z. S., (2021). A new alternative quant
 \author{
 Josmar Mazucheli
 
-Bruna Alves
+André F. B. Menezes
 }
