@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">unitquantreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@
       <img src="" class="logo" alt=""><h1>Structure and functionality</h1>
                         <h4 data-toc-skip class="author">André Menezes</h4>
             
-            <h4 data-toc-skip class="date">Last compiled on 2022-09-16</h4>
+            <h4 data-toc-skip class="date">Last compiled on 2022-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/AndrMenezes/unitquantreg/blob/HEAD/vignettes/structure_functionality.Rmd" class="external-link"><code>vignettes/structure_functionality.Rmd</code></a></small>
       <div class="d-none name"><code>structure_functionality.Rmd</code></div>
@@ -344,12 +344,12 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span><span class="co">#&gt; unit-Weibull  8.8e-11       0.00013    0.04868      </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; P value adjustment method: holm</span></span></code></pre></div>
-<p>The adjusted p-values of pairwise vuong tests shows that there is a large statistical significance difference between the models. In particular, the pairwise comparison between unit-Logistic and the other models provide a smaller p-values, indicating that the unit-Logistic median regression model is the most suitable model for this data set comparing to the others families of distributions.</p>
+<p>The adjusted p-values of pairwise Vuong tests shows that there is a large statistical significance difference between the models. In particular, the pairwise comparison between unit-Logistic and the other models provide a smaller p-values, indicating that the unit-Logistic median regression model is the most suitable model for this data set comparing to the others families of distributions.</p>
 </div>
 <div class="section level3">
 <h3 id="diagnostic-analysis">Diagnostic analysis<a class="anchor" aria-label="anchor" href="#diagnostic-analysis"></a>
 </h3>
-<p>It is possible to check model assumptions from diagnostic plots using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function method for <code>unitquantreg</code> objects. The <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> method provides <code>quantile</code>, <code>cox-snell</code>, <code>working</code> and <code>partial</code> residuals type. The randomzide quantile residuals is the default choice of <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method.</p>
+<p>It is possible to check model assumptions from diagnostic plots using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function method for <code>unitquantreg</code> objects. The <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> method provides <code>quantile</code>, <code>cox-snell</code>, <code>working</code> and <code>partial</code> residuals type. The randomize quantile residuals is the default choice of <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>no.readonly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -371,7 +371,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"ulogistic"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  11.880   0.000  11.881</span></span></code></pre></div>
+<span><span class="co">#&gt;  13.101   0.000  13.103</span></span></code></pre></div>
 <p>Now we can check the (Half)-Normal plots using the output of <code><a href="../reference/hnp.html">hnp()</a></code> method.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -385,7 +385,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span><span class="va">df_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fits_ulogistic</span><span class="op">[</span><span class="va">chosen_taus</span><span class="op">]</span>, <span class="va">get_data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df_plot</span><span class="op">$</span><span class="va">tau</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">tau</span><span class="op">)</span>, <span class="st">" == "</span>, <span class="va">df_plot</span><span class="op">$</span><span class="va">tau</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_plot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">teo</span>, y<span class="op">=</span><span class="va">obs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_plot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">teo</span>, y <span class="op">=</span> <span class="va">obs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">tau</span>, labeller <span class="op">=</span> <span class="va">label_parsed</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fl">3</span>, size <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">median</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -433,7 +433,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span><span class="co">#&gt; Number of iterations: 65</span></span></code></pre></div>
 <p>For <code>unitquantregs</code> objects the <code>plot</code> method provide a convenience to check the significance as well as the effect of estimate along the specify quantile value.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"coef"</span>, mean_effect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_ulogistic</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/plot-ulogistic-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>Curiously, the unit-Logistic quantile regression models capture constant effect for all covariates along the different quantiles. In contrast, the unit-Weibull model (the fourth best model) found a decrease effect of <code>mhdi</code> covaraite on the response as the quantile increases and increase effects of <code>incpc</code> and <code>region</code> on the response variable as the quantile increases.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -443,7 +443,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span>                                 family <span class="op">=</span> <span class="st">"uweibull"</span>, link <span class="op">=</span> <span class="st">"logit"</span>,</span>
 <span>                                 link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  13.070   0.004  13.076</span></span>
+<span><span class="co">#&gt;  14.538   0.000  14.540</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fits_uweibull</span>, which <span class="op">=</span> <span class="st">"coef"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="structure_functionality_files/figure-html/fits-uweibull-1.png" width="1152" style="display: block; margin: auto;"></p>
 <p>Using the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method with argument <code>which = "conddist"</code> for <code>unitquantregs</code> objects it is possible to estimate and visualize the conditional distribution of a response variable at different values of covariates. For instance,</p>
@@ -482,7 +482,7 @@ g_1(\mu) = \beta_0 + \beta_1\,x_1 \quad \textrm{and} \quad g_2(\theta) = \gamma_
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_3.3.6      unitquantreg_0.0.3</span></span>
+<span><span class="co">#&gt; [1] ggplot2_3.3.6      unitquantreg_0.0.4</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] xfun_0.33           bslib_0.4.0         purrr_0.3.4        </span></span>
