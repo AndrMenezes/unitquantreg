@@ -6,6 +6,11 @@ Please correct before 2022-10-03 to safely retain your package on CRAN.
 
 Minor corrections were made and tested in ATLAS linear algebra operation library.
 
+> Please change http --> https, add trailing slashes, or follow moved
+content as appropriate.
+
+Fixed.
+
 ## `unitquantreg` 0.0.3
 
 > Please add more details about the package functionality and implemented
