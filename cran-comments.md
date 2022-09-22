@@ -1,4 +1,12 @@
-## Notes
+## `unitquantreg` 0.0.4
+
+> Please see the problems shown on
+<https://cran.r-project.org/web/checks/check_results_unitquantreg.html>.
+Please correct before 2022-10-03 to safely retain your package on CRAN.
+
+Minor corrections were made and tested in ATLAS linear algebra operation library.
+
+## `unitquantreg` 0.0.3
 
 > Please add more details about the package functionality and implemented
 methods in your Description text. If there are references describing the
