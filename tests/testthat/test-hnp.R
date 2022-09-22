@@ -71,30 +71,3 @@ test_that("hnp method works for all distribution families in simulated data", {
   expect_equal(length(out_hnp), length(lt_families))
 
 })
-
-test_that("hnp method works for all distribution families in water data", {
-
-  data("water")
-  lt_fits <- lapply(seq_along(lt_families), function(i) {
-    cat(lt_families[[i]], '\n')
-    unitquantreg(formula = phpws ~ mhdi,
-                 tau = 0.5, data = water, family = lt_families[[i]])
-  })
-  names(lt_fits) <- names(lt_families)
-  # t(sapply(lt_fits, coef))
-  # lapply(lt_fits, summary)
-
-  # x11()
-  # par(mfrow = c(2, 6))
-  set.seed(6969)
-  system.time(
-    out_hnp <- invisible(lapply(seq_along(lt_fits), function(i) {
-      cat(lt_families[[i]], '\n')
-      tmp <- hnp(lt_fits[[i]], main = names(lt_fits)[i], plot = FALSE, nsim = 10)
-      cat(tmp$time_elapsed, "\n")
-      tmp
-    }))
-  )
-  expect_equal(length(out_hnp), length(lt_families))
-
-})

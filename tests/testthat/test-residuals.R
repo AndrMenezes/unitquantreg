@@ -1,41 +1,5 @@
 test_that("residuals method works for all family of distributions", {
 
-  data(water)
-  lt_fits <- lapply(lt_families, function(fam){
-    cat(fam, "\n")
-    unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water, family = fam)
-  })
-  sort(sapply(lt_fits, AIC))
-
-  lt_qres <- lapply(lt_fits, residuals, type = "quantile")
-  # x11()
-  # par(mfrow = c(2, 4))
-  # invisible(lapply(seq_along(lt_qres), function(i){
-  #   qqnorm(lt_qres[[i]][is.finite(lt_qres[[i]])], main = lt_fits[[i]]$family)
-  # }))
-
-  expect_equal(length(lt_qres), length(lt_families),
-               label = "quantile residuals works for all family of distributions")
-
-
-  lt_qcs <- lapply(lt_fits, residuals, type = "cox-snell")
-  # x11()
-  # par(mfrow = c(2, 4))
-  # invisible(lapply(seq_along(lt_qres), function(i){
-  #   teo <- lt_qcs[[i]][is.finite(lt_qcs[[i]])]
-  #   n <- length(teo)
-  #   qqplot(x = qexp((1:n - 3 / 8) / (n + 1 / 4)),
-  #          y = teo, main = lt_fits[[i]]$family)
-  # }))
-
-  expect_equal(length(lt_qcs), length(lt_families),
-               label = "cox-snell residuals works for all family of distributions")
-
-})
-
-
-test_that("working residuals to check link function", {
-
   set.seed(6669)
   n <- 200
   betas <- c(1, 2)
@@ -53,7 +17,14 @@ test_that("working residuals to check link function", {
                  family = lt_families[[i]])
   })
   names(lt_fits) <- names(lt_families)
-  t(sapply(lt_fits, coef))
+
+  lt_qres <- lapply(lt_fits, residuals, type = "quantile")
+  expect_equal(length(lt_qres), length(lt_families),
+               label = "quantile residuals works for all family of distributions")
+
+  lt_qcs <- lapply(lt_fits, residuals, type = "cox-snell")
+  expect_equal(length(lt_qcs), length(lt_families),
+               label = "cox-snell residuals works for all family of distributions")
 
   lt_working <- lapply(lt_fits, residuals, type = "working")
   expect_equal(length(lt_working), length(lt_families),

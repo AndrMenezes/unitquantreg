@@ -1,16 +1,16 @@
 test_that("analitical and numerical hessian works in water data", {
 
-  data(water)
+  data("bodyfat")
 
   lt_fits <- lapply(seq_along(lt_families), function(i) {
     cat(lt_families[[i]], '\n')
     fit_numeric <- unitquantreg(
-      formula = phpws ~ mhdi,
-      tau = 0.5, data = water, family = lt_families[[i]], link.theta = "log",
+      formula = arms ~ bmi, tau = 0.5, data = bodyfat,
+      family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(hessian = TRUE))
     fit_analitic <- unitquantreg(
-      formula = phpws ~ mhdi,
-      tau = 0.5, data = water, family = lt_families[[i]], link.theta = "log",
+      formula = arms ~ bmi, tau = 0.5, data = bodyfat,
+      family = lt_families[[i]], link.theta = "log",
       control = unitquantreg.control(hessian = FALSE))
 
     se_numeric <- round(sqrt(diag(vcov(fit_numeric))), 5)
