@@ -57,7 +57,7 @@
 #' vcov(fit_1)
 #' coef(fit_1)
 #' confint(fit_1)
-#' terms(fit_1)[1:5, ]
+#' terms(fit_1)
 #' model.frame(fit_1)[1:5, ]
 #' model.matrix(fit_1)[1:5, ]
 #' update(fit_1, . ~ . -x1)
