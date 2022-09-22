@@ -10,7 +10,7 @@
 #' @author
 #' Josmar Mazucheli
 #'
-#' Bruna Alves
+#' André F. B. Menezes
 #'
 #' @references
 #'
