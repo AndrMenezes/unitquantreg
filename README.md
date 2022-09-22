@@ -11,7 +11,7 @@ status](https://www.r-pkg.org/badges/version/unitquantreg)](https://CRAN.R-proje
 [![Codecov test
 coverage](https://codecov.io/gh/AndrMenezes/unitquantreg/branch/main/graph/badge.svg)](https://app.codecov.io/gh/AndrMenezes/unitquantreg?branch=main)
 [![rstudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/unitquantreg?)](https://github.com/metacran/cranlogs.app)
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/unitquantreg?)](https://github.com/r-hub/cranlogs.app)
 <!-- badges: end -->
 
 The goal of `unitquantreg` is to provide tools for estimation and
@@ -25,8 +25,7 @@ For more computation efficient the \[`dpqr`\]’s, likelihood, score and
 hessian functions are vectorized and written in `C++`.
 
 You can install the stable version from
-[CRAN](https://cran.r-project.org/web/packages/unitquantreg/index.html)
-with:
+[CRAN](https://CRAN.R-project.org/package=unitquantreg) with:
 
 ``` r
 install.packages("unitquantreg")
