@@ -186,6 +186,7 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #'
 #' @importFrom stats make.link model.frame model.matrix model.response na.omit delete.response terms
 #' @importFrom Formula as.Formula Formula
+#' @importFrom utils capture.output
 NULL
 
 #' @rdname unitquantreg
