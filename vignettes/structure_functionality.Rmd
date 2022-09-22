@@ -213,7 +213,7 @@ lt_chosen <- lt_fits[c("unit-Logistic", "Johnson-SB", "unit-Burr-XII", "unit-Wei
 pairwise.vuong.test(lt = lt_chosen)
 ```
 
-The adjusted p-values of pairwise vuong tests shows that there is a large statistical 
+The adjusted p-values of pairwise Vuong tests shows that there is a large statistical 
 significance difference between the models. In particular, the pairwise comparison between
 unit-Logistic and the other models provide a smaller p-values, indicating that the
 unit-Logistic median regression model is the most suitable model for this data set
@@ -224,12 +224,12 @@ comparing to the others families of distributions.
 It is possible to check model assumptions from diagnostic plots using the `plot()`
 function method for `unitquantreg` objects.
 The `residuals()` method provides `quantile`, `cox-snell`, `working` and `partial`
-residuals type. The randomzide quantile residuals is the default choice of `plot()`
+residuals type. The randomize quantile residuals is the default choice of `plot()`
 method.
 
 
 ```{r plots-diagnostic, cache=TRUE}
-oldpar <- par()
+oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 2))
 plot(lt_fits[["unit-Logistic"]])
 par(oldpar)
@@ -276,7 +276,7 @@ chosen_taus <- c("0.02", "0.5", "0.98")
 df_plot <- do.call("rbind", lapply(fits_ulogistic[chosen_taus], get_data))
 df_plot$tau <- paste0(expression(tau), " == ", df_plot$tau)
 
-ggplot(df_plot, aes(x=teo, y=obs)) +
+ggplot(df_plot, aes(x = teo, y = obs)) +
   facet_wrap(~tau, labeller = label_parsed) +
   geom_point(shape = 3, size = 1.4) +
   geom_line(aes(y = median), linetype = "dashed") +
@@ -305,7 +305,7 @@ For `unitquantregs` objects the `plot` method provide a convenience to check the
 significance as well as the effect of estimate along the specify quantile value.
 
 ```{r plot-ulogistic}
-plot(fits_ulogistic, which = "coef", mean_effect = FALSE)
+plot(fits_ulogistic, which = "coef")
 ```
 
 Curiously, the unit-Logistic quantile regression models capture constant effect for all
