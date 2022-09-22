@@ -18,8 +18,10 @@ knitr::opts_chunk$set(
 # Welcome to `unitquantreg` R package <img src="man/figures/unitquantreg_hex.png" align="right" alt="" width="200">
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/unitquantreg)](https://CRAN.R-project.org/package=unitquantreg)
 [![R-CMD-check](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AndrMenezes/unitquantreg/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/AndrMenezes/unitquantreg/branch/main/graph/badge.svg)](https://app.codecov.io/gh/AndrMenezes/unitquantreg?branch=main)
+[![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/unitquantreg?)](https://github.com/metacran/cranlogs.app)
 <!-- badges: end -->
 
 The goal of `unitquantreg` is to provide tools for estimation and inference on
@@ -32,7 +34,13 @@ model comparison.
 For more computation efficient the [`dpqr`]'s, likelihood, score and
 hessian functions are vectorized and written in `C++`.
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the stable version from [CRAN](https://cran.r-project.org/web/packages/unitquantreg/index.html) with: 
+
+```{r, eval=FALSE}
+install.packages("unitquantreg")
+```
+
+Or you can install the development version from [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 if(!require(remotes)) install.packages('remotes')
@@ -61,4 +69,5 @@ citation("unitquantreg")
 ## License
 
 The `unitquantreg` package is released under the Apache License, Version 2.0.
-Please, see file [`LICENSE.md`](https://github.com/AndrMenezes/unitquantreg/blob/master/LICENSE.md).
+Please, see file
+[`LICENSE.md`](https://github.com/AndrMenezes/unitquantreg/blob/master/LICENSE.md).
