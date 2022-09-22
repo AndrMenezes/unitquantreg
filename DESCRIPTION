@@ -1,6 +1,6 @@
 Package: unitquantreg
 Title: Parametric Quantile Regression Models for Bounded Data
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(person(given = "André F. B.", family = "Menezes", role = c("aut", "cre"), email = "andrefelipemaringa@gmail.com", comment = c(ORCID = "0000-0002-3320-9834")),
     person(given = "Josmar", family = "Mazucheli", role = c("aut"), comment = c(ORCID = "0000-0001-6740-0445")))
 Maintainer: André F. B. Menezes <andrefelipemaringa@gmail.com> 
