@@ -16,7 +16,8 @@ A \code{\link{data.frame}} with 298 observations and 9 columns:
 \item \code{bmi}: Body mass index - 24.71577.
 \item \code{age}: Age - 46.00.
 \item \code{sex}: Sex of individual. Female or male.
-\item \code{ipaq}: Factor variable indicating the sedentary, insufficiently active or active.
+\item \code{ipaq}: Factor variable indicating the sedentary, insufficiently
+active or active.
 }
 }
 \source{
@@ -26,7 +27,8 @@ A \code{\link{data.frame}} with 298 observations and 9 columns:
 data(bodyfat, package = "unitquantreg")
 }
 \description{
-The body fat percentage of individuals assisted in a public hospital in Curitiba, Paraná, Brasil.
+The body fat percentage of individuals assisted in a public
+hospital in Curitiba, Paraná, Brasil.
 }
 \references{
 Petterle, R. R., Bonat, W. H., Scarpin, C. T., Jonasson, T., and Borba, V. Z. C., (2020). Multivariate quasi-beta regression models for continuous bounded data. \emph{The International Journal of Biostatistics}, 1--15, (preprint).
@@ -37,7 +39,5 @@ Mazucheli, J., Leiva, V., Alves, B., and Menezes A. F. B., (2021). A new quantil
 André Felipe Menezes
 
 Josmar Mazucheli
-
-Bruna Alves
 }
 \keyword{datasets}

@@ -42,8 +42,7 @@ where \eqn{L} is the likelihood function.
 \examples{
 data(water, package = "unitquantreg")
 
-models  <- c("johnsonsb", "kum", "leeg", "ubs", "uburrxii", "uchen", "ughne",
-"ughnx", "ugompertz", "ulogistic", "uweibull")
+models  <- c("johnsonsb", "kum", "uweibull")
 fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi,
 tau = 0.5, data = water, family = M))
 
