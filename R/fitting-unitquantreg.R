@@ -44,16 +44,22 @@
 #' @return A list with components named as the arguments.
 #'
 #' @examples
-#' data(water)
+#' data(sim_bounded, package = "unitquantreg")
+#' sim_bounded_curr <- sim_bounded[sim_bounded$family == "uweibull", ]
+#'
 #' # Fitting using the analytical gradient
-#' fit_gradient <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-#'                              data = water, tau = 0.5, family = "uweibull",
-#'                              control = unitquantreg.control(gradient = TRUE, trace = 1))
+#' fit_gradient <- unitquantreg(formula = y1 ~ x,
+#'                              data = sim_bounded_curr, tau = 0.5,
+#'                              family = "uweibull",
+#'                              control = unitquantreg.control(gradient = TRUE,
+#'                                                             trace = 1))
 #'
 #' # Fitting without using the analytical gradient
-#' fit_nogradient <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-#'                                data = water, tau = 0.5, family = "uweibull",
-#'                                control = unitquantreg.control(gradient = FALSE, trace = 1))
+#' fit_nogradient <- unitquantreg(formula = y1 ~ x,
+#'                              data = sim_bounded_curr, tau = 0.5,
+#'                              family = "uweibull",
+#'                              control = unitquantreg.control(gradient = FALSE,
+#'                                                             trace = 1))
 #' # Compare estimated coefficients
 #' cbind(gradient = coef(fit_gradient), no_gradient = coef(fit_nogradient))
 #'
