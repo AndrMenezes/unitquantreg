@@ -19,7 +19,7 @@
 data(water, package = "unitquantreg")
 }
 \description{
-the access of people in households with piped water supply in the cities of Brazil from
+The access of people in households with piped water supply in the cities of Brazil from
 the Southeast and Northeast regions. Information obtained during the census of 2010.
 }
 \references{
@@ -28,6 +28,6 @@ The unit-Weibull distribution as an alternative to the Kumaraswamy distribution 
 modeling of quantiles conditional on covariates. \emph{Jounal of Applied Statistics}, \bold{47}(6), 954--974.
 }
 \author{
-André Felipe Menezes
+André F. B. Menezes
 }
 \keyword{datasets}

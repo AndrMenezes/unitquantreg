@@ -32,16 +32,16 @@ Calculate pairwise comparisons between fitted models performing
 vuong test for objects of class \code{\link[unitquantreg]{unitquantreg}}.
 }
 \examples{
-data(water, package = "unitquantreg")
+data(sim_bounded, package = "unitquantreg")
+sim_bounded_curr <- sim_bounded[sim_bounded$family == "uweibull", ]
 
-models  <- c("johnsonsb", "kum", "leeg", "ubs", "uburrxii", "uchen", "ughne", "ughnx",
-"ugompertz", "ulogistic", "uweibull")
-fits <- lapply(models, function(M) unitquantreg(formula = phpws ~ mhdi,
-tau = 0.5, data = water, family = M))
+lt_fits <- lapply(models, function(fam) {
+  unitquantreg(formula = y1 ~ x, tau = 0.5, data = sim_bounded_curr,
+               family = fam)
+})
 
-ans <- pairwise.vuong.test(lt = fits)
+ans <- pairwise.vuong.test(lt = lt_fits)
 ans
-
 
 }
 \seealso{
