@@ -112,9 +112,9 @@ vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 
   # Compute p-value according to hypothesis
   pvalue <- switch(alternative,
-    "two.sided" = 2 * pnorm(abs(Tstat), lower.tail = FALSE),
-    "greater" = pnorm(abs(Tstat), lower.tail = FALSE),
-    "less" = pnorm(abs(Tstat), lower.tail = TRUE)
+                   "two.sided" = 2 * pnorm(abs(Tstat), lower.tail = FALSE),
+                   "greater" = pnorm(abs(Tstat), lower.tail = FALSE),
+                   "less" = pnorm(abs(Tstat), lower.tail = TRUE)
   )
 
   # Output
@@ -152,6 +152,7 @@ vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 #' data(sim_bounded, package = "unitquantreg")
 #' sim_bounded_curr <- sim_bounded[sim_bounded$family == "uweibull", ]
 #'
+#' models <- c("uweibull", "kum", "ulogistic")
 #' lt_fits <- lapply(models, function(fam) {
 #'   unitquantreg(formula = y1 ~ x, tau = 0.5, data = sim_bounded_curr,
 #'                family = fam)
