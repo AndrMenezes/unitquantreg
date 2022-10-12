@@ -11,10 +11,10 @@
 \item \code{y1}: simulated response variable with constant shape parameter,
 \eqn{\theta = 2}.
 \item \code{y2}: simulated response variable with regression structure in
-the shape parameter, \eqn{\theta = \exp{\boldsymbol{\zeta}}}, where
-\eqn{\boldsymbol{\zeta} = \mathbf{Z}\boldsymbol{\gamma}}.
-\item \code{x}: covariate related to \eqn{\mu}, i.e., the median.
-\item \code{z}: covariate related to \eqn{\theta}, i.e., the shape parameter.
+the shape parameter, \eqn{\theta_i = \exp(\zeta_i}), where
+\eqn{\zeta_i = \mathbf{z}_i^\top\,\boldsymbol{\gamma}}.
+\item \code{x}: covariate related to \eqn{\mu_i}, i.e., the median.
+\item \code{z}: covariate related to \eqn{\theta_i}, i.e., the shape parameter.
 \item \code{family}: string indicating the family of distribution.
 }
 }
