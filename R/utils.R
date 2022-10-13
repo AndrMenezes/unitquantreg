@@ -67,21 +67,20 @@
 
 .get_abbrev <- function(family, fname = TRUE) {
   if (fname) family <- .get_family_name(family)
-  out <- switch (family,
-                 "unit-Weibull" = "uweibull",
-                 "Kumaraswamy" = "kum",
-                 "unit-Logistic" = "ulogistic",
-                 "unit-Chen" = "uchen",
-                 "unit-Birnbaum-Saunders" = "ubs",
-                 "log-extended Exponential-Geometric" = "leeg",
-                 "unit-Generalized Half-Normal-E" = "ughne",
-                 "unit-Generalized Half-Normal-X" = "ughnx",
-                 "unit-Gompertz" = "ugompertz",
-                 "unit-Burr-XII" = "uburrxii",
-                 "Johnson-SB" = "johnsonsb",
-                 "arc-secant hyperbolic Weibull" = "ashw",
-                 "unit-Gumbel" = "ugumbel"
-                 )
+  out <- switch(family,
+                "unit-Weibull" = "uweibull",
+                "Kumaraswamy" = "kum",
+                "unit-Logistic" = "ulogistic",
+                "unit-Chen" = "uchen",
+                "unit-Birnbaum-Saunders" = "ubs",
+                "log-extended Exponential-Geometric" = "leeg",
+                "unit-Generalized Half-Normal-E" = "ughne",
+                "unit-Generalized Half-Normal-X" = "ughnx",
+                "unit-Gompertz" = "ugompertz",
+                "unit-Burr-XII" = "uburrxii",
+                "Johnson-SB" = "johnsonsb",
+                "arc-secant hyperbolic Weibull" = "ashw",
+                "unit-Gumbel" = "ugumbel")
   out
 }
 
@@ -100,7 +99,7 @@
 # Function to plot estimated coefficients versus quantile levels
 #' @importFrom graphics par plot mtext abline lines title grid polygon points legend
 #' @importFrom grDevices n2mfrow gray
-#' @importFrom stats predict coef confint
+#' @importFrom stats predict coef confint median
 
 .plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95,
                        mean_effect = FALSE, mfrow = NULL, mar = NULL, ylim = NULL,
@@ -197,20 +196,34 @@
                            at_obs = NULL, output_df = FALSE,
                            legend_position = "topleft", ...) {
 
+  # Distribution arguments
   type <- match.arg(dist_type)
   distr_name <- .get_abbrev(x[[1L]]$family, fname = FALSE)
 
-  # Get pdf or cdf
-  cond_foo <- if (type == "cdf") match.fun(paste0("p", distr_name)) else match.fun(paste0("d", distr_name))
+  # Useful objects
+  p <- length(x[[1L]]$coefficients$mu)
+  theta_const <- x[[1L]]$theta_const
 
-  # Create the data.frame with observed value of covariates
-  if (!is.null(at_obs)) {
-    newdata <- expand.grid(at_obs)
+  # Get pdf or cdf
+  prefix <- if (type == "cdf") "p" else "d"
+  cond_foo <- match.fun(paste0(prefix, distr_name))
+
+  all_terms <- labels(terms(x[[1L]]$formula))
+  terms_betas <- if (theta_const) all_terms else all_terms[1L:(p - 1)]
+  mis_x <- terms_betas[!terms_betas %in% names(at_obs)]
+  if (length(mis_x) >= 1L)
+    stop(sprintf("You should define values for the covariate %s", mis_x))
+
+  at_obs__x <- if (is.null(at_obs)) at_obs else at_obs[terms_betas]
+
+  # Create the data.frame with observed value of covariates for X matrix
+  if (!is.null(at_obs__x)) {
+    newdata <- expand.grid(at_obs__x)
     newdata$avg <- FALSE
   } else newdata <- data.frame()
   if (at_avg) {
     df_avg <- as.data.frame(
-        t(colMeans(model.matrix(x[[1L]]))))[, -1, drop = FALSE]
+        t(colMeans(model.matrix(x[[1L]], type = "quantile"))))[, -1, drop = FALSE]
     df_avg$avg <- TRUE
     newdata <- rbind(newdata, df_avg)
   }
@@ -230,6 +243,11 @@
   }
   newdata <- newdata[, -which(colnames(newdata) %in% id_nm)]
 
+  # Create the data.frame with observed value of covariates for Z matrix
+  newdata_Z <- if (theta_const) newdata else model.matrix(x[[1L]], type = "shape")
+  which_intercept <- which(colnames(newdata_Z) == "(Intercept)")
+  newdata_Z <- as.data.frame(newdata_Z[, -which_intercept, drop = FALSE])
+
   # Get predict value for parameters (mu and theta)
   df_mu <- do.call(rbind, lapply(x, function(z) {
     tmp <- predict(z, type = "quantile", newdata = newdata)
@@ -245,9 +263,9 @@
     }))
   } else {
     df_theta <- do.call(rbind, lapply(x, function(z) {
-      tmp <- predict(z, type = "shape", newdata = newdata)
-      tmp$tau <- z$tau
-      tmp
+      tmp <- predict(z, type = "shape", newdata = newdata_Z)
+      # Using the median value of predicted theta
+      data.frame(theta = median(tmp$fit), tau = z$tau)
     }))
   }
   rownames(df_mu) <- rownames(df_theta) <- NULL
