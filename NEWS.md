@@ -1,7 +1,7 @@
 # `unitquantreg` 0.0.5
 
 - Reduced unit testing timings.
-- Reduced example timings. 
+- Reduced example timings.
 - Used `tryCatch()` to handle when `chol()` fails in the hessian matrix.
 - Fixed `.plot_conddist()` when shape parameter is not constant.
 - Included a `stop` in `.plot_conddist()` to check if all covariates have values in `at_obs` argument.
