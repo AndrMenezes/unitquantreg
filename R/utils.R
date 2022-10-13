@@ -208,17 +208,12 @@
   prefix <- if (type == "cdf") "p" else "d"
   cond_foo <- match.fun(paste0(prefix, distr_name))
 
-  all_terms <- labels(terms(x[[1L]]$formula))
-  terms_betas <- if (theta_const) all_terms else all_terms[1L:(p - 1)]
-  mis_x <- terms_betas[!terms_betas %in% names(at_obs)]
-  if (length(mis_x) >= 1L)
-    stop(sprintf("You should define values for the covariate %s", mis_x))
-
-  at_obs__x <- if (is.null(at_obs)) at_obs else at_obs[terms_betas]
+  if (length(at_obs) != p - 1)
+    stop("There are covariates values missing in at_avg argument")
 
   # Create the data.frame with observed value of covariates for X matrix
-  if (!is.null(at_obs__x)) {
-    newdata <- expand.grid(at_obs__x)
+  if (!is.null(at_obs)) {
+    newdata <- expand.grid(at_obs)
     newdata$avg <- FALSE
   } else newdata <- data.frame()
   if (at_avg) {
