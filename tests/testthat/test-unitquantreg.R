@@ -1,3 +1,24 @@
+test_that("testing singular covariance matrix", {
+
+  data(sim_bounded, package = "unitquantreg")
+
+  expect_warning(
+    unitquantreg(formula = y1 ~ x + z, data = sim_bounded, tau = 0.5,
+                 family = "ubs")
+  )
+
+  y <- sim_bounded$y1
+  n <- length(y)
+  X <- cbind("(Intercept)" = 1, w = y + seq.int(0, 1, l = n))
+  expect_warning(
+    unitquantreg.fit(y = y, X = X,, tau = 0.5,
+                     link = "logit", link.theta = "identity",
+                     family = "ubs")
+  )
+
+})
+
+
 test_that("testing fit and their methods with simulated data for theta fixed", {
 
   # Load data
