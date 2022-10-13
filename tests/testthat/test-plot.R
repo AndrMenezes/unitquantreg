@@ -11,24 +11,37 @@ test_that("plot method for unitquantreg(s) class works", {
                       family = "uweibull",
                       tau = 0.5, link.theta = "log")
 
-  plot(fit, which = 1)
-  plot(fit, which = 2)
-  plot(fit, which = 3)
-  plot(fit, which = 4, nsim = 5)
+  expect_no_error(plot(fit, which = 1))
+  expect_no_error(plot(fit, which = 2))
+  expect_no_error(plot(fit, which = 3))
+  expect_no_error(plot(fit, which = 4, nsim = 5))
+
 
   # For several quantiles (taus)
-  fits <- unitquantreg(formula = y1 ~ x + I(x^2) | x, tau = 1:49 / 50,
+  fits <- unitquantreg(formula = y1 ~ x + I(x^2), tau = 1:49 / 50,
                        data = sim_bounded_curr, family = "uweibull",
                        link.theta = "log")
-  plot(fits, which = "coef")
-  plot(fits, which = "coef", mean_effect = TRUE)
-  plot(fits, which = "coef", parm = "x")
-  plot(fits, which = "coef", parm = "x", mean_effect = FALSE)
+  expect_no_error(plot(fits, which = "coef"))
+  expect_no_error(plot(fits, which = "coef", mean_effect = TRUE))
+  expect_no_error(plot(fits, which = "coef", parm = "x"))
+  expect_no_error(plot(fits, which = "coef", parm = "x", mean_effect = FALSE))
 
-  plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
+  expect_error(
+    plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7)),
+         dist_type = "cdf"))
+  expect_no_error(
+    plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
                                                "I(x^2)" = c(0.4, 0.8)),
-       dist_type = "cdf")
-  plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
+         dist_type = "cdf"))
+  expect_no_error(
+    plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
                                                "I(x^2)" = c(0.4, 0.8)),
-       dist_type = "density")
+         dist_type = "density"))
+
+  expect_type(
+    plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
+                                                 "I(x^2)" = c(0.4, 0.8)),
+         dist_type = "density", output_df = TRUE),
+    "list")
+
 })
