@@ -100,11 +100,11 @@ confint(fit_1)
 terms(fit_1)
 model.frame(fit_1)[1:5, ]
 model.matrix(fit_1)[1:5, ]
-update(fit_1, . ~ . -x1)
-update(fit_1, . ~ . -z1)
-update(fit_1, . ~ . -I(x1^2))
-update(fit_1, . ~ . | . -z1)
-update(fit_1, . ~ . | . -x1)
+update(fit_1, . ~ . -x)
+update(fit_1, . ~ . -z)
+update(fit_1, . ~ . -I(x^2))
+update(fit_1, . ~ . | . -z)
+update(fit_1, . ~ . | . -x)
 
 }
 \author{
