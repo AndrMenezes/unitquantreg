@@ -31,11 +31,11 @@ test_that("plot method for unitquantreg(s) class works", {
          dist_type = "cdf"))
   expect_no_error(
     plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
-                                               "I(x^2)" = c(0.4, 0.8)),
+                                                 "I(x^2)" = c(0.4, 0.8)),
          dist_type = "cdf"))
   expect_no_error(
     plot(fits, which = "conddist", at_obs = list(x = c(0.2, 0.4, 0.6, 0.7),
-                                               "I(x^2)" = c(0.4, 0.8)),
+                                                 "I(x^2)" = c(0.4, 0.8)),
          dist_type = "density"))
 
   expect_type(
