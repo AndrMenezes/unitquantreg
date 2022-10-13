@@ -32,14 +32,14 @@ Performs Vuong test between two fitted objects of class
 The statistic of Vuong likelihood ratio test for compare two
 non-nested regression models is defined by
 \deqn{T = \frac{1}{\widehat{\omega}^2\,\sqrt{n}}\,\sum_{i=1}^{n}\,
-\log\frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{
-g(y_i \mid \bm{x}_i,\widehat{\bm{\gamma}})}}
+\log\frac{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})}{
+g(y_i \mid \boldsymbol{x}_i,\widehat{\boldsymbol{\gamma}})}}
 where
-\deqn{\widehat{\omega}^2 = \frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}\right)^2 - \left[\frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{ g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}\right)\right]^2}
+\deqn{\widehat{\omega}^2 = \frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})}{g(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\gamma}})}\right)^2 - \left[\frac{1}{n}\,\sum_{i=1}^{n}\,\left(\log \frac{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})}{ g(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\gamma}})}\right)\right]^2}
 is an estimator for the variance of
-\eqn{\frac{1}{\sqrt{n}}\,\displaystyle\sum_{i=1}^{n}\,\log\frac{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}},
-\eqn{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})} and
-\eqn{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}
+\eqn{\frac{1}{\sqrt{n}}\,\displaystyle\sum_{i=1}^{n}\,\log\frac{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})}{g(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\gamma}})}},
+\eqn{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})} and
+\eqn{g(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\gamma}})}
 are the corresponding rival densities evaluated at the maximum likelihood estimates.
 
 When \eqn{n \rightarrow \infty} we have that \eqn{T \rightarrow N(0, 1)} in distribution.
@@ -47,17 +47,20 @@ Therefore, at \eqn{\alpha\%} level of significance  the null hypothesis of
 the equivalence of the competing models is rejected if \eqn{|T| > z_{\alpha/2}},
 where \eqn{z_{\alpha/2}} is the \eqn{\alpha/2} quantile of standard normal distribution.
 
-In practical terms, \eqn{f(y_i \mid \bm{x}_i, \widehat{\bm{\theta}})}
-is better (worse) than \eqn{g(y_i \mid \bm{x}_i, \widehat{\bm{\gamma}})}
+In practical terms, \eqn{f(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\theta}})}
+is better (worse) than \eqn{g(y_i \mid \boldsymbol{x}_i, \widehat{\boldsymbol{\gamma}})}
 if \eqn{T>z_{\alpha/2}} (or \eqn{T< -z_{\alpha/2}}).
 }
 \examples{
-data(water, package = "unitquantreg")
+data(sim_bounded, package = "unitquantreg")
+sim_bounded_curr <- sim_bounded[sim_bounded$family == "uweibull", ]
 
-fit_uweibull <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-tau = 0.5, data = water, family = "uweibull")
-fit_kum <- unitquantreg(formula = phpws ~ mhdi, tau = 0.5, data = water,
-family = "kum")
+fit_uweibull <- unitquantreg(formula = y1 ~ x, tau = 0.5,
+                             data = sim_bounded_curr,
+                             family = "uweibull")
+fit_kum <- unitquantreg(formula = y1 ~ x, tau = 0.5,
+                             data = sim_bounded_curr,
+                             family = "kum")
 
 ans <- vuong.test(object1 = fit_uweibull, object2 = fit_kum)
 ans
@@ -70,7 +73,7 @@ Vuong, Q. (1989). Likelihood ratio tests for model selection and
 non-nested hypotheses. \emph{Econometrica}, \bold{57}(2), 307--333.
 }
 \author{
-André F. B. Menezes \email{andrefelipemaringa@gmail.com}
+André F. B. Menezes
 
-Josmar Mazucheli \email{jmazucheli@gmail.com}
+Josmar Mazucheli
 }

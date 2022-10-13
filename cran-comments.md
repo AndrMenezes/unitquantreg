@@ -1,3 +1,9 @@
+## `unitquantreg` 0.0.5
+
+- Used `tryCatch()` to handle when `chol()` fails in the hessian matrix.
+- Unit testing and examples have been re-written in order reduce the timings.
+
+
 ## `unitquantreg` 0.0.4
 
 > Please see the problems shown on

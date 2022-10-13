@@ -44,16 +44,22 @@
 #' @return A list with components named as the arguments.
 #'
 #' @examples
-#' data(water)
+#' data(sim_bounded, package = "unitquantreg")
+#' sim_bounded_curr <- sim_bounded[sim_bounded$family == "uweibull", ]
+#'
 #' # Fitting using the analytical gradient
-#' fit_gradient <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-#'                              data = water, tau = 0.5, family = "uweibull",
-#'                              control = unitquantreg.control(gradient = TRUE, trace = 1))
+#' fit_gradient <- unitquantreg(formula = y1 ~ x,
+#'                              data = sim_bounded_curr, tau = 0.5,
+#'                              family = "uweibull",
+#'                              control = unitquantreg.control(gradient = TRUE,
+#'                                                             trace = 1))
 #'
 #' # Fitting without using the analytical gradient
-#' fit_nogradient <- unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
-#'                                data = water, tau = 0.5, family = "uweibull",
-#'                                control = unitquantreg.control(gradient = FALSE, trace = 1))
+#' fit_nogradient <- unitquantreg(formula = y1 ~ x,
+#'                              data = sim_bounded_curr, tau = 0.5,
+#'                              family = "uweibull",
+#'                              control = unitquantreg.control(gradient = FALSE,
+#'                                                             trace = 1))
 #' # Compare estimated coefficients
 #' cbind(gradient = coef(fit_gradient), no_gradient = coef(fit_nogradient))
 #'
@@ -235,7 +241,7 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
   q <- ncol(Z)
 
   # Sanity check for response variable
-  if(!(min(Y) > 0 & max(Y) < 1)) {
+  if (!(min(Y) > 0 & max(Y) < 1)) {
     stop("invalid dependent variable, all observations must be in (0, 1)")
   }
 
@@ -246,7 +252,7 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
   link <- match.arg(link)
 
   if (is.null(link.theta)) {
-    link.theta <- if(simple_formula) "identity" else "log"
+    link.theta <- if (simple_formula) "identity" else "log"
   }
   else {
     link.theta <- match.arg(link.theta)
@@ -313,7 +319,7 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
     names(start) <- colnames(X)
 
     # For theta/gamma
-    gs <- if (link.theta == "log")  0.1 else 1.1
+    gs <- if (link.theta == "log") 0.1 else 1.1
     gamma <- rep(gs, length.out = q)
     start <- c(start, gamma)
     names(start)[1:q + p] <- colnames(Z)
@@ -328,12 +334,6 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
                         family = family, linkobj = linkobj,
                         linkobj.theta = linkobj.theta)
   par <- stats::coef(opt)
-
-  # opt <- optim(par = start, fn = loglike_unitquantreg, gr = score_unitquantreg,
-  #              method = method, hessian = hessian, control = control, X = X,
-  #              Z = Z, y = y, tau = tau, family = family_name, linkobj = linkobj,
-  #              linkobj.theta = linkobj.theta)
-  # par <- opt$par
 
   # Check if the optimization converged
   if (opt$convcode == 0L) {
@@ -378,9 +378,9 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   }
 
   # Check hessian matrix to compute vcov (Observed Fisher Information) matrix
-  e <- eigen(he, symmetric = TRUE, only.values = TRUE)$values
-  if (any(e > 0)) {
-    vcov <- chol2inv(chol(he))
+  chol_he <- tryCatch(chol(he), error = function(e) NULL)
+  if (!is.null(chol_he)) {
+    vcov <- chol2inv(chol_he)
   } else {
     warning("Moore-Penrose inverse is used in covariance matrix.\n",
             "The final Hessian matrix is full rank but has at least one negative eigenvalue.\n",

@@ -191,8 +191,9 @@ lt_families <- list("unit-Weibull" = "uweibull",
                     "arc-secant hyperbolic Weibull" = "ashw",
                     "unit-Gumbel" = "ugumbel")
 lt_fits <- lapply(lt_families, function(fam) {
-  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop), data = water,
-               tau = 0.5, family = fam, link = "logit", link.theta = "log")
+  unitquantreg(formula = phpws ~ mhdi + incpc + region + log(pop),
+               data = water, tau = 0.5, family = fam, link = "logit",
+               link.theta = "log")
 })
 t(sapply(lt_fits, coef))
 ```
@@ -263,7 +264,7 @@ system.time(
                                  link.theta = "log"))
 ```
 
-Now we can check the (Half)-Normal plots using the output of `hnp()` method.
+Now, we can check the (Half)-Normal plots using the output of `hnp()` method.
 ```{r plots-hnp, cache=TRUE}
 library(ggplot2)
 get_data <- function(obj) {

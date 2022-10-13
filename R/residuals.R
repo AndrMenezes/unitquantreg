@@ -54,14 +54,14 @@ residuals.unitquantreg <- function(object, type = c("quantile", "cox-snell",
     pfun <- match.fun(paste0("p", abbrev))
     parms <- list(q = y, mu = mu, theta = theta, tau = tau)
     Fy <- do.call(pfun, parms)
-    res <- switch (type,
+    res <- switch(type,
       "cox-snell" = -log(1 - Fy),
       "quantile" =  qnorm(Fy))
   } else if (type %in% c("working", "partial")) {
     eta <- object$link$mu$linkfun
     d_eta_mu <- numDeriv::grad(func = eta, x = mu)
     r <- (y - mu) * d_eta_mu
-    res <- switch (type,
+    res <- switch(type,
       "working" = r,
       "partial" = r + predict(object, type = "terms"))
   }
