@@ -30,7 +30,6 @@ loglike_unitquantreg <- function(par, tau, family, linkobj, linkobj.theta, X, Z,
   mu <- linkobj$linkinv(drop(X %*% beta))
 
   # Shape parameter (theta)
-  q <- ncol(Z)
   gamma <- par[-seq.int(length.out = p)]
   theta <- linkobj.theta$linkinv(drop(Z %*% gamma))
 
@@ -61,7 +60,6 @@ score_unitquantreg <- function(par, tau, family, linkobj, linkobj.theta, X, Z, y
   dmu_deta <- linkobj$mu.eta(eta_mu)
 
   # Shape parameter (theta)
-  q <- ncol(Z)
   gamma <- par[-seq.int(length.out = p)]
   zeta_theta <- drop(Z %*% gamma)
   theta <- linkobj.theta$linkinv(zeta_theta)
@@ -99,7 +97,6 @@ hessian_unitquantreg <- function(par, tau, family, linkobj, linkobj.theta, X, Z,
   mu <- linkobj$linkinv(eta_mu)
 
   # Shape parameter (theta)
-  q <- ncol(Z)
   gamma <- par[-seq.int(length.out = p)]
   zeta_theta <- drop(Z %*% gamma)
   theta <- linkobj.theta$linkinv(zeta_theta)
@@ -130,4 +127,3 @@ hessian_unitquantreg <- function(par, tau, family, linkobj, linkobj.theta, X, Z,
 
   H
 }
-
