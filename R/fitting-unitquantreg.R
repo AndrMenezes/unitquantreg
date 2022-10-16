@@ -72,7 +72,7 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
                                  maxit = 5000, factr = 1e7,
                                  reltol = sqrt(.Machine$double.eps),
                                  trace = 0L, starttests = FALSE,
-                                 dowarn = FALSE,...) {
+                                 dowarn = FALSE, ...) {
   out <- list(
     method = method,
     hessian = hessian,
@@ -237,9 +237,6 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
   Z <- model.matrix(mtZ, mf)
   Y <- model.response(mf, "numeric")
 
-  p <- ncol(X)
-  q <- ncol(Z)
-
   # Sanity check for response variable
   if (!(min(Y) > 0 & max(Y) < 1)) {
     stop("invalid dependent variable, all observations must be in (0, 1)")
@@ -253,8 +250,7 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
 
   if (is.null(link.theta)) {
     link.theta <- if (simple_formula) "identity" else "log"
-  }
-  else {
+  } else {
     link.theta <- match.arg(link.theta)
   }
 
@@ -311,6 +307,8 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   theta_const <- (q == 1L) && isTRUE(all.equal(as.vector(Z[, 1L]), rep.int(1, n)))
 
   # Initial guess
+  if (length(start) != (p + q))
+    stop("You should include start values for all coefficients")
   if (is.null(start)) {
     # For beta
     ystar <- linkobj$linkfun(y)
