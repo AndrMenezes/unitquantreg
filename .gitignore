@@ -12,3 +12,8 @@ inst/doc
 /doc/
 /Meta/
 docs
+CRAN-SUBMISSION
+
+DESCRIPTION__template
+VERSION
+bump_version.sh
