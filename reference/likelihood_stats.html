@@ -18,7 +18,7 @@ from unitquantreg objects."><!-- mathjax --><script src="https://cdnjs.cloudflar
     
     <a class="navbar-brand me-2" href="../index.html">unitquantreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,23 +127,26 @@ where \(L\) is the likelihood function.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">water</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_bounded</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_bounded_curr</span> <span class="op">&lt;-</span> <span class="va">sim_bounded</span><span class="op">[</span><span class="va">sim_bounded</span><span class="op">$</span><span class="va">family</span> <span class="op">==</span> <span class="st">"uweibull"</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">models</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"johnsonsb"</span>, <span class="st">"kum"</span>, <span class="st">"uweibull"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span>,</span></span>
-<span class="r-in"><span>tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">water</span>, family <span class="op">=</span> <span class="va">M</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uweibull"</span>, <span class="st">"kum"</span>, <span class="st">"ulogistic"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lt_fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fam</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y1</span> <span class="op">~</span> <span class="va">x</span>, tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">sim_bounded_curr</span>,</span></span>
+<span class="r-in"><span>               family <span class="op">=</span> <span class="va">fam</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ans</span> <span class="op">&lt;-</span> <span class="fu">likelihood_stats</span><span class="op">(</span>lt <span class="op">=</span> <span class="va">fits</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ans</span> <span class="op">&lt;-</span> <span class="fu">likelihood_stats</span><span class="op">(</span>lt <span class="op">=</span> <span class="va">lt_fits</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ans</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Likelihood-based statistics of fit for unit quantile regression models </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  likelihood_stats(lt = fits)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  likelihood_stats(lt = lt_fits)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Neg2LogLike AIC       BIC       HQIC     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Johnson-SB   -8181.096   -8175.096 -8156.651 -8168.509</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull -7927.895   -7921.895 -7903.451 -7915.309</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy  -7094.014   -7088.014 -7069.569 -7081.427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Neg2LogLike AIC      BIC      HQIC    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull  -281.230    -275.230 -267.414 -272.067</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic -268.428    -262.428 -254.613 -259.265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy   -242.826    -236.826 -229.010 -233.663</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

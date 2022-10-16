@@ -18,7 +18,7 @@ regression models using unitquantreg."><!-- mathjax --><script src="https://cdnj
     
     <a class="navbar-brand me-2" href="../index.html">unitquantreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,70 +167,20 @@ procedure used by <code><a href="unitquantreg.html">unitquantreg</a></code>.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Fitting using the analytical gradient</span></span></span>
-<span class="r-in"><span><span class="va">fit_gradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                             data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">0.5</span>, family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
-<span class="r-in"><span>                             control <span class="op">=</span> <span class="fu">unitquantreg.control</span><span class="op">(</span>gradient <span class="op">=</span> <span class="cn">TRUE</span>, trace <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fn is  fn </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Looking for method =  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Method:  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value -3888.898517 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iter  10 value -3997.038111</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> final  value -3997.038287 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> converged</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Post processing for method  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Successful convergence! </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Compute Hessian approximation at finish of  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Compute gradient approximation at finish of  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Save results from method  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)          mhdi         incpc        region      log(pop) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -6.5144974552 11.8261951558  0.0002600424 -0.2699077622  0.1054679766 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1.1882680569 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3997.038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $message</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $convcode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $fevals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       69 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $gevals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gradient </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $nitns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $kkt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $kkt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $xtimes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> user.self </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.041 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Assemble the answers</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_bounded</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_bounded_curr</span> <span class="op">&lt;-</span> <span class="va">sim_bounded</span><span class="op">[</span><span class="va">sim_bounded</span><span class="op">$</span><span class="va">family</span> <span class="op">==</span> <span class="st">"uweibull"</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fitting without using the analytical gradient</span></span></span>
-<span class="r-in"><span><span class="va">fit_nogradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span> <span class="op">+</span> <span class="va">incpc</span> <span class="op">+</span> <span class="va">region</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                               data <span class="op">=</span> <span class="va">water</span>, tau <span class="op">=</span> <span class="fl">0.5</span>, family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
-<span class="r-in"><span>                               control <span class="op">=</span> <span class="fu">unitquantreg.control</span><span class="op">(</span>gradient <span class="op">=</span> <span class="cn">FALSE</span>, trace <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Fitting using the analytical gradient</span></span></span>
+<span class="r-in"><span><span class="va">fit_gradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y1</span> <span class="op">~</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>                             data <span class="op">=</span> <span class="va">sim_bounded_curr</span>, tau <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>                             family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
+<span class="r-in"><span>                             control <span class="op">=</span> <span class="fu">unitquantreg.control</span><span class="op">(</span>gradient <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                                                            trace <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fn is  fn </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Looking for method =  BFGS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Method:  BFGS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value -3888.898517 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> final  value -3966.629595 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value -113.361578 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> final  value -140.614828 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> converged</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Post processing for method  BFGS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Successful convergence! </span>
@@ -238,13 +188,11 @@ procedure used by <code><a href="unitquantreg.html">unitquantreg</a></code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Compute gradient approximation at finish of  BFGS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Save results from method  BFGS </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)          mhdi         incpc        region      log(pop) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -6.3401686653 11.5056825768 -0.0001163519 -0.3108585471  0.1277500383 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1.2561924517 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x (Intercept) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.9971136   1.9125274   2.0537425 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3966.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -140.6148</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $message</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
@@ -254,7 +202,7 @@ procedure used by <code><a href="unitquantreg.html">unitquantreg</a></code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fevals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      175 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       29 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $gevals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gradient </span>
@@ -264,25 +212,75 @@ procedure used by <code><a href="unitquantreg.html">unitquantreg</a></code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kkt1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kkt2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $xtimes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> user.self </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     0.136 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.003 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Assemble the answers</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fitting without using the analytical gradient</span></span></span>
+<span class="r-in"><span><span class="va">fit_nogradient</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y1</span> <span class="op">~</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>                             data <span class="op">=</span> <span class="va">sim_bounded_curr</span>, tau <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>                             family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
+<span class="r-in"><span>                             control <span class="op">=</span> <span class="fu">unitquantreg.control</span><span class="op">(</span>gradient <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                                                            trace <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fn is  fn </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Looking for method =  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Method:  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> initial  value -113.361578 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> final  value -140.614828 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> converged</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Post processing for method  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful convergence! </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Compute Hessian approximation at finish of  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Compute gradient approximation at finish of  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Save results from method  BFGS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $par</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x (Intercept) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.9971127   1.9125284   2.0537431 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -140.6148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $message</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $convcode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $fevals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       29 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $gevals</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gradient </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $nitns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $kkt1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $kkt2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $xtimes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> user.self </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     0.005 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Assemble the answers</span>
 <span class="r-in"><span><span class="co"># Compare estimated coefficients</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>gradient <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit_gradient</span><span class="op">)</span>, no_gradient <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit_nogradient</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  gradient   no_gradient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -6.5144974552 -6.3401686653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mhdi        11.8261951558 11.5056825768</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> incpc        0.0002600424 -0.0001163519</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> region      -0.2699077622 -0.3108585471</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log(pop)     0.1054679766  0.1277500383</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> theta        1.1882680569  1.2561924517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              gradient no_gradient</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 0.9971136   0.9971127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x           1.9125274   1.9125284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta       2.0537425   2.0537431</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

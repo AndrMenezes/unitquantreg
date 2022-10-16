@@ -18,7 +18,7 @@ objects of class unitquantreg and unitquantregs."><!-- mathjax --><script src="h
     
     <a class="navbar-brand me-2" href="../index.html">unitquantreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,107 +185,97 @@ values.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">6669</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span></span></span>
-<span class="r-in"><span><span class="va">betas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">gamas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, z1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">eta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop</a></span><span class="op">(</span><span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">betas</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">zeta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/drop.html" class="external-link">drop</a></span><span class="op">(</span><span class="va">Z</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">gamas</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">zeta</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data_simulated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">X</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, z1 <span class="op">=</span> <span class="va">Z</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data_simulated</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="uweibull.html">ruweibull</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">mu</span>, <span class="va">theta</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">z1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">z1</span> <span class="op">+</span> <span class="va">x1</span>,</span></span>
-<span class="r-in"><span>                      data <span class="op">=</span> <span class="va">data_simulated</span>, family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_bounded</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_bounded_curr</span> <span class="op">&lt;-</span> <span class="va">sim_bounded</span><span class="op">[</span><span class="va">sim_bounded</span><span class="op">$</span><span class="va">family</span> <span class="op">==</span> <span class="st">"uweibull"</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">fit_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y1</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">z</span> <span class="op">+</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>                      data <span class="op">=</span> <span class="va">sim_bounded_curr</span>,</span></span>
+<span class="r-in"><span>                      family <span class="op">=</span> <span class="st">"uweibull"</span>,</span></span>
 <span class="r-in"><span>                      tau <span class="op">=</span> <span class="fl">0.5</span>, link.theta <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit_1</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + z + I(x^2) | z + x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1           z1      I(x1^2)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.0628       1.8619      -0.0074       0.1766  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x            z       I(x^2)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1.0861       2.6523      -0.4404      -0.7293  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1           x1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -1.0880       1.1546       0.0310  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z            x  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.5411       0.5391      -0.1054  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Wald-tests for unit-Weibull quantile regression model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1 + x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + z + I(x^2) | z + x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients: (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate Std. Error Z value Pr(&gt;|z|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.062804   0.094987  11.189  &lt; 2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1           1.861929   0.283241   6.574 4.91e-11 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1          -0.007392   0.028406  -0.260    0.795    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I(x1^2)      0.176555   0.297773   0.593    0.553    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error Z value Pr(&gt;|z|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   1.0861     0.2107   5.155 2.54e-07 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x             2.6523     0.6779   3.913 9.12e-05 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z            -0.4404     0.2214  -1.989   0.0467 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I(x^2)       -0.7293     0.6557  -1.112   0.2660    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error Z value Pr(&gt;|z|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -1.08800    0.11055  -9.842   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1           1.15457    0.06315  18.284   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1           0.03102    0.18214   0.170    0.865    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error Z value Pr(&gt;|z|)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   0.5411     0.2372   2.281   0.0226 *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z             0.5391     0.3035   1.776   0.0757 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x            -0.1054     0.2956  -0.356   0.7215  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual degrees of freedom: 193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log-likelihood: 248.7657</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of iterations: 95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual degrees of freedom: 93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-likelihood: 143.7336</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of iterations: 44</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       (Intercept)           x1            z1       I(x1^2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          0.0090225395 -0.001350236 -2.166068e-03 -0.0004797596</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1                  -0.0013502361  0.080225545 -4.079395e-03 -0.0819164201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1                  -0.0021660676 -0.004079395  8.069201e-04  0.0042674372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I(x1^2)             -0.0004797596 -0.081916420  4.267437e-03  0.0886684631</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept) -0.0009161317  0.001992448  5.906882e-05 -0.0005448296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z1          -0.0014292331  0.002120325  1.960683e-04 -0.0024169753</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x1           0.0004251515 -0.010413859  6.844629e-04  0.0078392745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     (theta)_(Intercept)    (theta)_z1    (theta)_x1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)               -9.161317e-04 -0.0014292331  0.0004251515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1                         1.992448e-03  0.0021203253 -0.0104138590</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1                         5.906882e-05  0.0001960683  0.0006844629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I(x1^2)                   -5.448296e-04 -0.0024169753  0.0078392745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept)        1.222181e-02 -0.0026827060 -0.0155467990</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z1                -2.682706e-03  0.0039876716 -0.0005636706</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x1                -1.554680e-02 -0.0005636706  0.0331756164</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     (Intercept)             x           z      I(x^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          0.04439620 -0.0969196768 -0.03133869  0.07536450</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x                   -0.09691968  0.4594902036  0.01436940 -0.42359812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z                   -0.03133869  0.0143693963  0.04902941 -0.01091014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I(x^2)               0.07536450 -0.4235981160 -0.01091014  0.42995789</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept) -0.02453668  0.0008140218  0.02791556  0.02046642</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z            0.02238187  0.0215560905 -0.04136403 -0.03394016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x            0.02220360 -0.0235238444 -0.01430664 -0.00788777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     (theta)_(Intercept)   (theta)_z   (theta)_x</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)               -0.0245366791  0.02238187  0.02220360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x                          0.0008140218  0.02155609 -0.02352384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z                          0.0279155594 -0.04136403 -0.01430664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I(x^2)                     0.0204664168 -0.03394016 -0.00788777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept)        0.0562868809 -0.05183865 -0.05141838</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z                 -0.0518386501  0.09208514  0.01691677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x                 -0.0514183812  0.01691677  0.08738822</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         (Intercept)                  x1                  z1             I(x1^2) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1.062804147         1.861929411        -0.007392029         0.176555038 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept)          (theta)_z1          (theta)_x1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        -1.088002893         1.154571188         0.031024543 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         (Intercept)                   x                   z              I(x^2) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           1.0861165           2.6523390          -0.4403630          -0.7292936 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept)           (theta)_z           (theta)_x </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           0.5411322           0.5390803          -0.1053611 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           2.5 %      97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          0.87663295  1.24897534</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1                   1.30678697  2.41707185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1                  -0.06306743  0.04828337</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I(x1^2)             -0.40706834  0.76017842</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept) -1.30468145 -0.87132434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z1           1.03080336  1.27833902</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x1          -0.32596672  0.38801581</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           2.5 %       97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          0.67314412  1.499088820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x                    1.32376360  3.980914474</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z                   -0.87434970 -0.006376292</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I(x^2)              -2.01446504  0.555877761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_(Intercept)  0.07613358  1.006130855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_z           -0.05568122  1.133841819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (theta)_x           -0.68475582  0.474033656</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/terms.html" class="external-link">terms</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> y ~ x1 + z1 + I(x1^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y1 ~ x + z + I(x^2)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"variables")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list(y, x1, z1, I(x1^2))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> list(y1, x, z, I(x^2))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"factors")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         x1 z1 I(x1^2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> y        0  0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x1       1  0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> z1       0  1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I(x1^2)  0  0       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        x z I(x^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> y1     0 0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> x      1 0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> z      0 1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I(x^2) 0 0      1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"term.labels")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "x1"      "z1"      "I(x1^2)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "x"      "z"      "I(x^2)"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"order")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"intercept")</span>
@@ -293,95 +283,95 @@ values.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"response")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,".Environment")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55b8165d5aa8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c7f7809e60&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           y         x1        z1      I(x1^2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.9165575 0.18696902 0.3500114 0.034957....</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.9868665 0.98263057 0.9999790 0.965562....</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.8587095 0.08645855 0.5914377 0.007475....</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.7833273 0.34691893 1.1668354 0.120352....</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.9211845 0.80975514 1.4398415 0.655703....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          y1          x         z       I(x^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.8437491 0.18696902 0.2260138 0.034957....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.9381423 0.98263057 0.5747853 0.965562....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.8565817 0.08645855 0.5068224 0.007475....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.8166633 0.34691893 0.7821340 0.120352....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.9019195 0.80975514 0.2091639 0.655703....</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">fit_1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)         x1        z1     I(x1^2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1 0.18696902 0.3500114 0.034957415</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           1 0.98263057 0.9999790 0.965562828</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1 0.08645855 0.5914377 0.007475081</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           1 0.34691893 1.1668354 0.120352745</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           1 0.80975514 1.4398415 0.655703385</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">x1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)          x         z      I(x^2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           1 0.18696902 0.2260138 0.034957415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           1 0.98263057 0.5747853 0.965562828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1 0.08645855 0.5068224 0.007475081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           1 0.34691893 0.7821340 0.120352745</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           1 0.80975514 0.2091639 0.655703385</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ z1 + I(x1^2) | z1 + x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ z + I(x^2) | z + x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1      I(x1^2)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.2658       0.0371       2.0538  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z       I(x^2)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1.7231      -0.5780       1.5967  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1           x1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -1.0971       0.9338       0.3176  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z            x  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.3233       0.4236       0.2801  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">z1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="va">z</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + I(x1^2) | z1 + x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + I(x^2) | z + x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1      I(x1^2)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.0430       1.8246       0.2154  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x       I(x^2)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.8264       2.7114      -0.7228  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1           x1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -1.0873       1.1560       0.0374  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z            x  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.7754       0.1707      -0.2514  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x1</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + z1 | z1 + x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + z | z + x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1           z1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.0638       2.0258      -0.0161  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x            z  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1.1978       1.9432      -0.4399  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1           x1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -1.0851       1.1565       0.0145  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z            x  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.5822       0.4597      -0.1241  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">|</span> <span class="va">.</span> <span class="op">-</span><span class="va">z1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">|</span> <span class="va">.</span> <span class="op">-</span><span class="va">z</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | x1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + z + I(x^2) | x, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1           z1      I(x1^2)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.3993      -2.6083       0.5267       4.1177  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x            z       I(x^2)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.9562       2.4672      -0.1824      -0.4387  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -0.7104       0.5783  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.8457      -0.2332  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">|</span> <span class="va">.</span> <span class="op">-</span><span class="va">x1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_1</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">|</span> <span class="va">.</span> <span class="op">-</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull quantile regression model </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y ~ x1 + z1 + I(x1^2) | z1, data = data_simulated, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:  unitquantreg(formula = y1 ~ x + z + I(x^2) | z, data = sim_bounded_curr, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tau = 0.5, family = "uweibull", link.theta = "log")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mu coefficients (quantile model with logit link and tau = 0.5): </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           x1           z1      I(x1^2)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1.0621       1.8721      -0.0080       0.1687  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            x            z       I(x^2)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1.1156       2.6265      -0.4622      -0.7422  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Theta coefficients (shape model with log link):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           z1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     -1.0741       1.1559  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)            z  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      0.4766       0.5634  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

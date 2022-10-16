@@ -18,7 +18,7 @@ vuong test for objects of class unitquantreg."><!-- mathjax --><script src="http
     
     <a class="navbar-brand me-2" href="../index.html">unitquantreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,90 +114,28 @@ Can be abbreviated.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">water</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_bounded</span>, package <span class="op">=</span> <span class="st">"unitquantreg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sim_bounded_curr</span> <span class="op">&lt;-</span> <span class="va">sim_bounded</span><span class="op">[</span><span class="va">sim_bounded</span><span class="op">$</span><span class="va">family</span> <span class="op">==</span> <span class="st">"uweibull"</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">models</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"johnsonsb"</span>, <span class="st">"kum"</span>, <span class="st">"leeg"</span>, <span class="st">"ubs"</span>, <span class="st">"uburrxii"</span>, <span class="st">"uchen"</span>, <span class="st">"ughne"</span>, <span class="st">"ughnx"</span>,</span></span>
-<span class="r-in"><span><span class="st">"ugompertz"</span>, <span class="st">"ulogistic"</span>, <span class="st">"uweibull"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">M</span><span class="op">)</span> <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">phpws</span> <span class="op">~</span> <span class="va">mhdi</span>,</span></span>
-<span class="r-in"><span>tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">water</span>, family <span class="op">=</span> <span class="va">M</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uweibull"</span>, <span class="st">"kum"</span>, <span class="st">"ulogistic"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lt_fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">models</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fam</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="unitquantreg.html">unitquantreg</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y1</span> <span class="op">~</span> <span class="va">x</span>, tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">sim_bounded_curr</span>,</span></span>
+<span class="r-in"><span>               family <span class="op">=</span> <span class="va">fam</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ans</span> <span class="op">&lt;-</span> <span class="fu">pairwise.vuong.test</span><span class="op">(</span>lt <span class="op">=</span> <span class="va">fits</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ans</span> <span class="op">&lt;-</span> <span class="fu">pairwise.vuong.test</span><span class="op">(</span>lt <span class="op">=</span> <span class="va">lt_fits</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ans</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Pairwise comparisons using Vuong likelihood ratio test for non-nested models </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> data:  unitquantreg(formula = phpws ~ mhdi, data = water, tau = 0.5, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     family = M) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> data:  unitquantreg(formula = y1 ~ x, data = sim_bounded_curr, tau = 0.5, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     family = fam) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    Johnson-SB Kumaraswamy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        &lt; 2e-16    -          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric &lt; 2e-16    &lt; 2e-16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             0.01291    3.6e-07    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      0.52755    1.8e-11    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          &lt; 2e-16    0.52755    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     &lt; 2e-16    0.07285    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     &lt; 2e-16    0.52755    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      7.5e-11    5.9e-08    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      0.01291    &lt; 2e-16    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       7.6e-05    4.0e-14    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    log-extended Exponential-Geometric</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -                                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             0.08591                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      0.00045                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          8.9e-09                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     0.19830                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     1.2e-05                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      0.28372                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      &lt; 2e-16                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       0.00021                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    unit-Birnbaum-Saunders unit-Burr-XII</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      0.52755                -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          9.3e-07                9.6e-10      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     0.00045                2.4e-11      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     &lt; 2e-16                &lt; 2e-16      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      0.37398                3.5e-10      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      7.7e-09                3.0e-06      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       1.00000                0.19307      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    unit-Chen unit-Generalized Half-Normal-E</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -         -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -         -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -         -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      -         -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          -         -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     3.1e-05   -                             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     1.00000   0.01291                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      2.0e-07   7.6e-05                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      &lt; 2e-16   &lt; 2e-16                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       1.3e-14   &lt; 2e-16                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    unit-Generalized Half-Normal-X unit-Gompertz</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     -                              -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      2.3e-12                        -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      &lt; 2e-16                        &lt; 2e-16      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       1.3e-12                        0.00196      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    unit-Logistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy                        -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> log-extended Exponential-Geometric -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Birnbaum-Saunders             -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Burr-XII                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Chen                          -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-E     -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Generalized Half-Normal-X     -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Gompertz                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic                      -            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Weibull                       1.8e-08      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               unit-Weibull Kumaraswamy</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kumaraswamy   0.00022      -          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> unit-Logistic 0.01955      0.01955    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P value adjustment method: holm </span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
