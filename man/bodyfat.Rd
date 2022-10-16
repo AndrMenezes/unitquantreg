@@ -36,7 +36,7 @@ Petterle, R. R., Bonat, W. H., Scarpin, C. T., Jonasson, T., and Borba, V. Z. C.
 Mazucheli, J., Leiva, V., Alves, B., and Menezes A. F. B., (2021). A new quantile regression for modeling bounded data under a unit Birnbaum-Saunders distribution with applications in medicine and politics. \emph{Symmetry}, \bold{13}(4) 1--21.
 }
 \author{
-André Felipe Menezes
+André F. B. Menezes
 
 Josmar Mazucheli
 }

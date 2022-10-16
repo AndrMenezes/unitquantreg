@@ -22,7 +22,7 @@
 #' }
 #'
 #' @author
-#' André Felipe Menezes
+#' André F. B. Menezes
 #'
 #' Josmar Mazucheli
 #'
@@ -44,7 +44,7 @@
 #'
 #' @title Access to piped water supply data set
 #'
-#' @description the access of people in households with piped water supply in the cities of Brazil from
+#' @description The access of people in households with piped water supply in the cities of Brazil from
 #' the Southeast and Northeast regions. Information obtained during the census of 2010.
 #'
 #' @format \code{\link{data.frame}} with 3457 observations and 5 columns:
@@ -57,7 +57,7 @@
 #' \item \code{pop}: total population.
 #' }
 #'
-#' @author André Felipe Menezes
+#' @author André F. B. Menezes
 #'
 #' @usage data(water, package = "unitquantreg")
 #'
@@ -66,5 +66,45 @@
 #' modeling of quantiles conditional on covariates. \emph{Jounal of Applied Statistics}, \bold{47}(6), 954--974.
 #'
 "water"
+
+#' @name sim_bounded
+#' @aliases sim_bounded
+#'
+#' @title Simulated data set
+#'
+#' @description This data set was simulated from all families of distributions
+#' available in \code{\link[unitquantreg]{unitquantreg}} package considering
+#' the median, i.e., \eqn{\tau=0.5}.
+#'
+#' @details There are two response variable, namely \code{y1} and \code{y2}.
+#' The former was simulated considering a regression structure for
+#' \eqn{\mu} and one covariate simulated from a standard uniform distribution,
+#' where the true vector of coefficients for \eqn{\mu} is
+#' \eqn{\boldsymbol{\beta} = (1, 2)} and \eqn{\theta = 2}.
+#' The latter was simulated assuming a regression structure for both \eqn{\mu}
+#' and \eqn{\theta} (shape parameter) and only one independent covariates
+#' simulated from two standard uniform distributions. The true vectors of
+#' coefficients for \eqn{\mu} and \eqn{\theta} are
+#' \eqn{\boldsymbol{\beta} = (1, 2)} and \eqn{\boldsymbol{\gamma} = (-1, 1)},
+#' respectively.
+#'
+#' @format \code{\link{data.frame}} with 1300 observations and 5 columns:
+#'
+#' \itemize{
+#' \item \code{y1}: simulated response variable with constant shape parameter,
+#' \eqn{\theta = 2}.
+#' \item \code{y2}: simulated response variable with regression structure in
+#' the shape parameter, \eqn{\theta_i = \exp(\zeta_i}), where
+#' \eqn{\zeta_i = \mathbf{z}_i^\top\,\boldsymbol{\gamma}}.
+#' \item \code{x}: covariate related to \eqn{\mu_i}, i.e., the median.
+#' \item \code{z}: covariate related to \eqn{\theta_i}, i.e., the shape parameter.
+#' \item \code{family}: string indicating the family of distribution.
+#' }
+#'
+#' @author André F. B. Menezes
+#'
+#' @usage data(sim_bounded, package = "unitquantreg")
+#'
+"sim_bounded"
 
 

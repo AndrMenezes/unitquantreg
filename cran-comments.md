@@ -1,3 +1,9 @@
+## `unitquantreg` 0.0.5
+
+- Used `tryCatch()` to handle when `chol()` fails in the hessian matrix.
+- Unit testing and examples have been re-written in order reduce the timings.
+
+
 ## `unitquantreg` 0.0.4
 
 > Please see the problems shown on
@@ -5,6 +11,11 @@
 Please correct before 2022-10-03 to safely retain your package on CRAN.
 
 Minor corrections were made and tested in ATLAS linear algebra operation library.
+
+> Please change http --> https, add trailing slashes, or follow moved
+content as appropriate.
+
+Fixed.
 
 ## `unitquantreg` 0.0.3
 

@@ -1,28 +1,46 @@
-test_that("unitquanreg fits with simulated data works", {
+test_that("testing singular covariance matrix", {
 
-  set.seed(6669)
-  n <- 200
+  data(sim_bounded, package = "unitquantreg")
+
+  expect_warning(
+    unitquantreg(formula = y1 ~ x + z, data = sim_bounded, tau = 0.5,
+                 family = "ubs")
+  )
+
+  y <- sim_bounded$y1
+  n <- length(y)
+  X <- cbind("(Intercept)" = 1, w = y + seq.int(0, 1, l = n))
+  expect_warning(
+    unitquantreg.fit(y = y, X = X,, tau = 0.5,
+                     link = "logit", link.theta = "identity",
+                     family = "ubs")
+  )
+
+})
+
+
+test_that("testing fit and their methods with simulated data for theta fixed", {
+
+  # Load data
+  data(sim_bounded, package = "unitquantreg")
+
+  # True values
   betas <- c(1, 2)
-  X <- cbind(1, x1 = runif(n))
-  eta <- drop(X %*% betas)
-  mu <- exp(eta) / (1 + exp(eta))
-  theta <- 2.0
-  data_simulated <- data.frame(x1 = X[, 2])
+  theta <- 2
 
-  # Theta fixed
-  lt_fits <- lapply(seq_along(lt_families), function(i) {
-    cat(lt_families[[i]], '\n')
-    rfun <- match.fun(paste0("r", lt_families[[i]]))
-    data_simulated$y <- do.call(rfun, list(n, mu = mu, theta = theta, tau = 0.5))
-    data_simulated$y[data_simulated$y == 0] <- 0.00001
-    unitquantreg(formula = y ~ x1, tau = 0.5, data = data_simulated,
-                 family = lt_families[[i]])
+  # Fitting
+  lt_fits_1 <- lapply(lt_families, function(fam) {
+    # cat(fam, '\n')
+    sim_bounded_curr <- sim_bounded[sim_bounded$family == fam, ]
+    unitquantreg(formula = y1 ~ x, data = sim_bounded_curr, tau = 0.5,
+                 family = fam)
   })
-  names(lt_fits) <- names(lt_families)
+  names(lt_fits_1) <- names(lt_families)
 
-  expect_equal(length(lt_fits), length(lt_families))
+  expect_equal(length(lt_fits_1), length(lt_families),
+               label = "fit procedure works for all families of distributions")
 
-  m_parms <- t(sapply(lt_fits, coef))
+  m_parms <- t(sapply(lt_fits_1, coef))
   expect_equal(unname(m_parms[, 1]), rep(betas[1], length(lt_families)), tol = 2e-1,
                label = "estimated beta_0 is equal to true beta_0 with 0.2 of tolerance")
 
@@ -32,56 +50,187 @@ test_that("unitquanreg fits with simulated data works", {
   expect_equal(unname(m_parms[, 3]), rep(theta, length(lt_families)), tol = 2e-1,
                label = "estimated theta is equal to true theta with 0.2 of tolerance")
 
+  # Residuals
+  lt_qres <- lapply(lt_fits_1, residuals, type = "quantile")
+  expect_equal(length(lt_qres), length(lt_families),
+               label = "quantile residuals works for all family of distributions")
 
-  # Theta varying
-  set.seed(1212)
-  Z <- cbind(1, z1 = rexp(n))
-  gammas <- c(1, 0.5)
-  theta <- exp(c(Z %*% gammas))
-  data_simulated$z1 <- Z[, 2]
+  lt_qcs <- lapply(lt_fits_1, residuals, type = "cox-snell")
+  expect_equal(length(lt_qcs), length(lt_families),
+               label = "cox-snell residuals works for all family of distributions")
 
-  lt_fits <- lapply(seq_along(lt_families), function(i) {
-    cat(lt_families[[i]], '\n')
-    rfun <- match.fun(paste0("r", lt_families[[i]]))
-    data_simulated$y <- do.call(rfun, list(n, mu = mu, theta = theta, tau = 0.5))
-    data_simulated$y[data_simulated$y == 0] <- 0.00001
-    data_simulated$y[data_simulated$y == 1] <- 0.99999
-    unitquantreg(formula = y ~ x1 | z1, tau = 0.5, data = data_simulated,
-                 link.theta = "log", family = lt_families[[i]])
-  })
-  names(lt_fits) <- names(lt_families)
+  lt_working <- lapply(lt_fits_1, residuals, type = "working")
+  expect_equal(length(lt_working), length(lt_families),
+               label = "working residuals works for all family of distributions")
 
-  m_parms <- t(sapply(lt_fits, coef))
-  expect_equal(unname(m_parms[, 1]), rep(betas[1], length(lt_families)), tol = 1e-1,
-               label = "estimated beta_0 is equal to true beta_0 with 0.1 of tolerance")
+  lt_partial <- lapply(lt_fits_1, residuals, type = "partial")
+  expect_equal(length(lt_partial), length(lt_families),
+               label = "partial residuals works for all family of distributions")
 
-  expect_equal(unname(m_parms[, 2]), rep(betas[2], length(lt_families)), tol = 1e-1,
-               label = "estimated beta_1 is equal to true beta_1 with 0.1 of tolerance")
+  # Likelihood stats
+  like_stats <- likelihood_stats(lt = lt_fits_1)
+  expect_equal(class(like_stats), "likelihood_stats")
 
-  expect_equal(unname(m_parms[, 3]), rep(gammas[1], length(lt_families)), tol = 3e-1,
-               label = "estimated gamma_0 is equal to true gamma_0 with 0.3 of tolerance")
+  # Voung
+  tmp_vuong <- vuong.test(lt_fits_1[[1L]], lt_fits_1[[2L]])
+  expect_s3_class(tmp_vuong, "htest")
+  tmp_pairwise_vuong <- pairwise.vuong.test(lt = lt_fits_1)
+  expect_s3_class(tmp_pairwise_vuong, "pairwise.htest")
 
-  expect_equal(unname(m_parms[, 4]), rep(gammas[2], length(lt_families)), tol = 6e-1,
-               label = "estimated gamma_1 is equal to true gamma_1 with 0.6 of tolerance")
+  # Predict quantile
+
+  ## Point predict
+  tmp <- do.call("cbind", lapply(lt_fits_1, predict, type = "quantile"))
+  colnames(tmp) <- names(lt_families)
+  expect_equal(ncol(tmp), length(lt_families), label = "quantile predict")
+
+  ## Point and standard error
+  tmp <- lapply(lt_fits_1, predict, type = "quantile", se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(dim(check_1), dim(check_2), label = "quantile predict with se.fit")
+
+  ## Point and confidence interval
+  tmp <- do.call("cbind", lapply(lt_fits_1, predict, type = "quantile",
+                                 interval = "confidence"))
+  expect_equal(ncol(tmp), length(lt_families) * 3,
+               label = "quantile predict with confidence interval")
+
+  ## Point, standard error and confidence
+  tmp <- lapply(lt_fits_1, predict, type = "quantile", interval = "confidence",
+                se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(ncol(check_1), length(lt_families) * 3,
+               label = "quantile predict with se.fit and confidence interval")
+  expect_equal(ncol(check_2), length(lt_families),
+               label = "quantile predict with se.fit and confidence interval")
+
+  # Predict link
+
+  ## Just point predict
+  tmp <- do.call("cbind", lapply(lt_fits_1, predict, type = "link"))
+  colnames(tmp) <- names(lt_families)
+  expect_equal(ncol(tmp), length(lt_families), label = "link predict")
+
+  ## Point and standard error
+  tmp <- lapply(lt_fits_1, predict, type = "link", se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(dim(check_1), dim(check_2), label = "link predict with se.fit")
+
+  ## Point and confidence
+  tmp <- do.call("cbind", lapply(lt_fits_1, predict, type = "link",
+                                 interval = "confidence"))
+  expect_equal(ncol(tmp), length(lt_families) * 3,
+               label = "link predict with confidence interval")
+
+  ## Point, standard error and confidence
+  tmp <- lapply(lt_fits_1, predict, type = "link", interval = "confidence",
+                se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(ncol(check_1), length(lt_families) * 3,
+               label = "link predict with se.fit and confidence interval")
+  expect_equal(ncol(check_2), length(lt_families),
+               label = "link predict with se.fit and confidence interval")
+
+  # Predict theta
+  expect_error(lapply(lt_fits_1, predict, type = "theta"),
+               label = "try predict theta with constant shape model")
+
+  # Predict terms
+  tmp <- do.call("cbind", lapply(lt_fits_1, predict, type = "terms"))
+  expect_equal(ncol(tmp), length(lt_families), label = "terms predict")
 
 
 })
 
+test_that("testing fit and related methods with simulated data for theta varying", {
 
-test_that("comparison unitquantreg fits and SAS NLMIXED", {
-  data(water)
-  fit <- unitquantreg(formula = phpws ~ mhdi + region + incpc + log(pop),
-                      tau = 0.5, data = water, family = "uweibull")
+  # Load data
+  data(sim_bounded, package = "unitquantreg")
 
-  SAS_coef <- c(-6.5145, 11.8262, -0.2699, 0.00026, 0.1055, 1.1883)
-  expect_equal(unname(coef(fit)), SAS_coef, tol = 1e-5)
+  # True values
+  betas <- c(1, 2)
+  gammas <- c(-1, 1)
 
-  SAS_se <- c(0.3272, 0.5562, 0.04944, 0.000149, 0.0155, 0.0142)
-  R_se <- unname(sqrt(diag(vcov(fit))))
-  expect_equal(R_se, SAS_se, tol = 1e-1)
+  # Fitting
+  lt_fits_2 <- lapply(lt_families, function(fam) {
+    # cat(fam, '\n')
+    sim_bounded_curr <- sim_bounded[sim_bounded$family == fam, ]
+    unitquantreg(formula = y2 ~ x | z, data = sim_bounded_curr,
+                 tau = 0.5, family = fam, link.theta = "log")
+  })
+  names(lt_fits_2) <- names(lt_families)
 
-  SAS_grad <- c(0.000892, 0.000701, -0.00105, 0.905682, 0.008567, -0.00087)
-  cbind(round(fit$gradient, 6), SAS_grad)
-  expect_equal(unname(fit$gradient), SAS_grad, tol = 9e-1)
+  m_parms <- t(sapply(lt_fits_2, coef))
+  cbind(m_parms[, 1], betas[1], m_parms[, 1] - betas[1])
+  expect_equal(unname(m_parms[, 1]), rep(betas[1], length(lt_families)), tol = 6e-1,
+               label = "estimated beta_0 is equal to true beta_0 with 0.6 of tolerance")
+
+  expect_equal(unname(m_parms[, 2]), rep(betas[2], length(lt_families)), tol = 6e-1,
+               label = "estimated beta_1 is equal to true beta_1 with 0.6 of tolerance")
+
+  expect_equal(unname(m_parms[, 3]), rep(gammas[1], length(lt_families)), tol = 6e-1,
+               label = "estimated gamma_0 is equal to true gamma_0 with 0.6 of tolerance")
+
+  expect_equal(unname(m_parms[, 4]), rep(gammas[2], length(lt_families)), tol = 6e-1,
+               label = "estimated gamma_1 is equal to true gamma_1 with 0.6 of tolerance")
+
+  # Residuals
+  lt_qres <- lapply(lt_fits_2, residuals, type = "quantile")
+  expect_equal(length(lt_qres), length(lt_families),
+               label = "quantile residuals works for all family of distributions")
+
+  lt_qcs <- lapply(lt_fits_2, residuals, type = "cox-snell")
+  expect_equal(length(lt_qcs), length(lt_families),
+               label = "cox-snell residuals works for all family of distributions")
+
+  lt_working <- lapply(lt_fits_2, residuals, type = "working")
+  expect_equal(length(lt_working), length(lt_families),
+               label = "working residuals works for all family of distributions")
+
+  lt_partial <- lapply(lt_fits_2, residuals, type = "partial")
+  expect_equal(length(lt_partial), length(lt_families),
+               label = "partial residuals works for all family of distributions")
+
+  # Likelihood stats
+  like_stats <- likelihood_stats(lt = lt_fits_2)
+  expect_equal(class(like_stats), "likelihood_stats")
+
+  # Voung
+  tmp_vuong <- vuong.test(lt_fits_2[[1L]], lt_fits_2[[2L]])
+  expect_s3_class(tmp_vuong, "htest")
+  tmp_pairwise_vuong <- pairwise.vuong.test(lt = lt_fits_2)
+  expect_s3_class(tmp_pairwise_vuong, "pairwise.htest")
+
+  # Predict
+  tmp <- do.call("cbind", lapply(lt_fits_2, predict, type = "shape"))
+  colnames(tmp) <- names(lt_families)
+  expect_equal(ncol(tmp), length(lt_families), label = "shape predict")
+
+  ## Point and standard error
+  tmp <- lapply(lt_fits_2, predict, type = "shape", se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(dim(check_1), dim(check_2), label = "shape predict with se.fit")
+
+  ## Point and confidence
+  tmp <- do.call("cbind", lapply(lt_fits_2, predict, type = "shape",
+                                 interval = "confidence"))
+  expect_equal(ncol(tmp), length(lt_families) * 3,
+               label = "shape predict with confidence interval")
+
+  ## Point, standard error and confidence
+  tmp <- lapply(lt_fits_2, predict, type = "shape", interval = "confidence",
+                se.fit = TRUE)
+  check_1 <- do.call("cbind", lapply(tmp, "[[", "fit"))
+  check_2 <- do.call("cbind", lapply(tmp, "[[", "se.fit"))
+  expect_equal(ncol(check_1), length(lt_families) * 3,
+               label = "shape predict with se.fit and confidence interval")
+  expect_equal(ncol(check_2), length(lt_families),
+               label = "shape predict with se.fit and confidence interval")
+
 
 })

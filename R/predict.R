@@ -114,10 +114,11 @@ predict.unitquantreg <- function(object, newdata,
   }
 
   if (type == "terms") {
-    beta <- object$coefficients$mu
+    betas <- object$coefficients$mu
     X1 <- sweep(X, 2L, colMeans(X))
     terms_betas <- labels(terms(ff))
-    out <- t(beta * t(X1))[, -1]
+    terms_betas <- if (object$theta_const) terms_betas else terms_betas[1L:(p - 1)]
+    out <- t(betas * t(X1))[, -1]
     out <- as.data.frame(out)
     names(out) <- terms_betas
     return(out)
