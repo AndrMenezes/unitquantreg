@@ -115,10 +115,10 @@ plot.unitquantreg <- function(x, which = 1L:4L,
   if (show[4L]) {
     hn <- hnp(x, resid.type = type, nsim = nsim, halfnormal = TRUE,
               plot = FALSE, level = level)
-    Ry <- c(min(hn[["lower"]]), max(hn[["upper"]]))
-    Rx <- range(hn[["teo"]])
+    r_y <- c(min(hn[["lower"]]), max(hn[["upper"]]))
+    r_x <- range(hn[["teo"]])
 
-    plot(hn[["teo"]], hn[["obs"]], ylim = Ry, xlim = Rx, main = Main[5],
+    plot(hn[["teo"]], hn[["obs"]], ylim = r_y, xlim = r_x, main = Main[5],
          xlab = "Theoretical quantiles",
          ylab = paste(Type, "(absolute values)"), ...)
     lines(hn[["teo"]], y = hn[["lower"]])
@@ -181,6 +181,7 @@ plot.unitquantreg <- function(x, which = 1L:4L,
 #' @rdname plot.unitquantregs
 #' @export
 #'
+
 plot.unitquantregs <- function(x, which = c("coef", "conddist"), output_df = FALSE,
                                parm = NULL, level = 0.95, mean_effect = FALSE,
                                mfrow = NULL, mar = NULL, ylim = NULL, main = NULL,
@@ -191,11 +192,12 @@ plot.unitquantregs <- function(x, which = c("coef", "conddist"), output_df = FAL
   if (which == "coef") {
     .plot_coef(x = x, output_df = output_df, parm = parm, level = level,
                mean_effect = mean_effect, mfrow = mfrow, mar = mar, ylim = ylim,
-               main = main, col = col, border = border, cex = cex, pch = pch, type = type,
-               xlab = xlab, ylab = ylab, ...)
+               main = main, col = col, border = border, cex = cex, pch = pch,
+               type = type, xlab = xlab, ylab = ylab, ...)
   }
   if (which == "conddist") {
-    .plot_conddist(x = x, output_df = output_df, dist_type = dist_type, at_avg = at_avg,
-                   at_obs = at_obs, legend_position = legend_position, ...)
+    .plot_conddist(x = x, output_df = output_df, dist_type = dist_type,
+                   at_avg = at_avg, at_obs = at_obs,
+                   legend_position = legend_position, ...)
   }
 }

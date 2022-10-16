@@ -62,7 +62,8 @@
 #' @seealso \code{\link{residuals.unitquantreg}}
 #'
 #' @references
-#' Atkinson, A. C., (1981). Two graphical displays for outlying and influential observations in regression. \emph{Biometrika} \bold{68}(1), 13--20.
+#' Atkinson, A. C., (1981). Two graphical displays for outlying and influential
+#' observations in regression. \emph{Biometrika} \bold{68}(1), 13--20.
 #'
 #'
 #' @importFrom stats qnorm qexp residuals quantile median coef
@@ -71,7 +72,7 @@
 #' @rdname hnp
 #' @export
 #'
-hnp <- function(object, ...){
+hnp <- function(object, ...) {
   UseMethod("hnp", object)
 }
 
@@ -86,10 +87,8 @@ hnp.unitquantreg <- function(object, nsim = 99, halfnormal = TRUE, plot = TRUE,
   mu <- object$fitted.values$mu
   theta  <- object$fitted.values$theta
   tau <- object$tau
-  family <- object$family
+  bounded_family <- object$bounded_family
   init <- coef(object)
-  link <- object$link$mu$name
-  link.theta <- object$link$theta$name
 
   control <- object$control
   control$hessian <- control$starttests <- control$dowarn <- FALSE
@@ -101,15 +100,12 @@ hnp.unitquantreg <- function(object, nsim = 99, halfnormal = TRUE, plot = TRUE,
   n <- nrow(X)
 
   # Get the random number generation
-  fam_abbrev <- .get_abbrev(object$family, fname = FALSE)
-  rfun <- match.fun(paste0("r", fam_abbrev))
+  rfun <- match.fun(paste0("r", object$family))
   parms <- list(n = n * nsim, mu = mu, theta = theta, tau = tau)
 
   # Generating data
   ysim <- do.call(rfun, parms)
   ysim <- matrix(ysim, nrow = n, ncol = nsim)
-  # apply(ysim, 2, median)
-  # median(mu)
 
   # Computing residuals
   ini <- proc.time()
@@ -118,8 +114,8 @@ hnp.unitquantreg <- function(object, nsim = 99, halfnormal = TRUE, plot = TRUE,
     ycur <- ysim[, j]
     try({
       fit <- suppressWarnings(
-        unitquantreg.fit(y = ycur, X = X, Z = Z, tau = tau, family = fam_abbrev,
-                         link = link, link.theta = link.theta, control = control,
+        unitquantreg.fit(y = ycur, X = X, Z = Z, tau = tau,
+                         family = bounded_family, control = control,
                          start = init)
       )
       fit$y <- ycur
@@ -137,36 +133,34 @@ hnp.unitquantreg <- function(object, nsim = 99, halfnormal = TRUE, plot = TRUE,
     res_obs <- sort(abs(residuals(object, type = resid.type)))
     res_sim <- apply(res_sim, 2, function(x) sort(abs(x), na.last = TRUE))
     if (resid.type == "quantile") {
-      res_teo <- qnorm((1:n + n - 1/8) / (2 * n + 0.5))
-    }
-    else if (resid.type == "cox-snell") {
-      res_teo <- qexp((1:n + n - 1/8) / (2 * n + 0.5))
+      res_teo <- qnorm((1:n + n - 1 / 8) / (2 * n + 0.5))
+    } else if (resid.type == "cox-snell") {
+      res_teo <- qexp((1:n + n - 1 / 8) / (2 * n + 0.5))
     }
   } else {
     res_obs <- sort(residuals(object, type = resid.type))
     res_sim <- apply(res_sim, 2, function(x) sort(x, na.last = TRUE))
     if (resid.type == "quantile") {
       res_teo <- qnorm((1:n - 3 / 8) / (n + 1 / 4))
-    }
-    else if (resid.type == "cox-snell") {
+    } else if (resid.type == "cox-snell") {
       res_teo <- qexp((1:n - 3 / 8) / (n + 1 / 4))
     }
   }
 
-  alpha   <- (1 - level)/2
-  res_lwr <- apply(res_sim, 1, quantile, probs = alpha, na.rm = T)
-  res_upr <- apply(res_sim, 1, quantile, probs = 1 - alpha, na.rm = T)
-  res_mid <- apply(res_sim, 1, median, na.rm = T)
+  alpha   <- (1 - level) / 2
+  res_lwr <- apply(res_sim, 1, quantile, probs = alpha, na.rm = TRUE)
+  res_upr <- apply(res_sim, 1, quantile, probs = 1 - alpha, na.rm = TRUE)
+  res_mid <- apply(res_sim, 1, median, na.rm = TRUE)
 
   if (plot) {
     yl <- ifelse(resid.type == "quantile", "Quantile residuals",
                  "Cox-Snell residuals")
 
-    Ry <- c(min(res_lwr), max(res_upr))
-    Rx <- range(res_teo)
+    r_y <- c(min(res_lwr), max(res_upr))
+    r_x <- range(res_teo)
 
-    plot(x = res_teo, y = res_obs, xlab = 'Theoretical quantiles',
-         ylab = yl, xlim = Rx, ylim = Ry, bty = 'o', pch = 3, ...)
+    plot(x = res_teo, y = res_obs, xlab = "Theoretical quantiles",
+         ylab = yl, xlim = r_x, ylim = r_y, bty = "o", pch = 3, ...)
     lines(x = res_teo, y = res_lwr)
     lines(x = res_teo, y = res_upr)
     lines(x = res_teo, y = res_mid, lty = 2)

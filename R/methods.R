@@ -61,15 +61,19 @@
 #' @rdname methods-unitquantreg
 #' @export
 
-print.unitquantreg <- function(x, digits = max(4, getOption("digits") - 3), ...) {
+print.unitquantreg <- function(x, digits = max(4, getOption("digits") - 3),
+                               ...) {
 
   cat("\n", x$family, " quantile regression model \n", sep = "")
 
-  cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n",
+      sep = "")
 
-  cat("Mu coefficients (quantile model with ", x$link$mu$name, " link and tau = ", x$tau,  "): \n", sep = "")
+  cat("Mu coefficients (quantile model with ", x$bounded_family$linkobj.mu$name,
+      " link and tau = ", x$tau,  "): \n", sep = "")
 
-  print.default(.FF(x$coefficients$mu, Digits = digits), print.gap = 2, quote = FALSE)
+  print.default(.FF(x$coefficients$mu, Digits = digits), print.gap = 2,
+                quote = FALSE)
 
   cat("\n")
 
@@ -79,9 +83,13 @@ print.unitquantreg <- function(x, digits = max(4, getOption("digits") - 3), ...)
                   quote = FALSE)
     cat("\n")
   } else {
-    names(x$coefficients$theta) <- gsub("(theta)_", "", names(x$coefficients$theta), fixed = TRUE)
-    cat("Theta coefficients (shape model with ", x$link$theta$name, " link):", "\n", sep = "")
-    print.default(.FF(x$coefficients$theta, Digits = digits), print.gap = 2, quote = FALSE)
+    names(x$coefficients$theta) <- gsub("(theta)_", "",
+                                        names(x$coefficients$theta),
+                                        fixed = TRUE)
+    cat("Theta coefficients (shape model with ",
+        x$bounded_family$linkobj.theta$name, " link):", "\n", sep = "")
+    print.default(.FF(x$coefficients$theta, Digits = digits), print.gap = 2,
+                  quote = FALSE)
     cat("\n")
   }
 
@@ -114,7 +122,8 @@ summary.unitquantreg <- function(object, correlation = FALSE, ...) {
               iterations  = object$iterations,
               tau         = object$tau,
               family      = object$family,
-              link        = object$link,
+              link_mu     = object$bounded_family$linkobj.mu$name,
+              link_theta  = object$bounded_family$linkobj.theta$name,
               dims        = c(length(cf[[1L]]), length(cf[[2L]])),
               theta_const = object$theta_const)
   class(out) <- "summary.unitquantreg"
@@ -125,10 +134,11 @@ summary.unitquantreg <- function(object, correlation = FALSE, ...) {
 # Print output summary ----------------------------------------------------
 
 #' @export
-print.summary.unitquantreg <- function(x, digits = max(4, getOption("digits") - 3), ...) {
+print.summary.unitquantreg <- function(x,
+                                       digits = max(4, getOption("digits") - 3),
+                                       ...) {
 
   p <- x$dims[[1L]]
-  q <- x$dims[[2L]]
 
   cat("\n Wald-tests for ", x$family, " quantile regression model", "\n",
       sep = "")
@@ -136,7 +146,7 @@ print.summary.unitquantreg <- function(x, digits = max(4, getOption("digits") - 
   cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n",
       sep = "")
 
-  cat("Mu coefficients: (quantile model with ", x$link$mu$name, " link and tau = ",
+  cat("Mu coefficients: (quantile model with ", x$link_mu, " link and tau = ",
       x$tau,  "): \n", sep = "")
   printCoefmat(x$coeftable[1:p, , drop = FALSE], digits = digits,
                has.Pvalue = TRUE)
@@ -144,11 +154,14 @@ print.summary.unitquantreg <- function(x, digits = max(4, getOption("digits") - 
 
   if (x$theta_const) {
     cat("Model with constant shape:", "\n", sep = "")
-    printCoefmat(x$coeftable[-(1:p), , drop = FALSE], digits = digits, has.Pvalue = TRUE)
+    printCoefmat(x$coeftable[-(1:p), , drop = FALSE], digits = digits,
+                 has.Pvalue = TRUE)
     cat("\n")
   } else {
-    rownames(x$coeftable)[-(1:p)] <- gsub("(theta)_", "", rownames(x$coeftable)[-(1:p)], fixed = TRUE)
-    cat("Theta coefficients (shape model with ", x$link$theta$name, " link):", "\n",
+    rownames(x$coeftable)[-(1:p)] <- gsub("(theta)_", "",
+                                          rownames(x$coeftable)[-(1:p)],
+                                          fixed = TRUE)
+    cat("Theta coefficients (shape model with ", x$link_theta, " link):", "\n",
         sep = "")
     printCoefmat(x$coeftable[-(1:p), , drop = FALSE], digits = digits,
                  has.Pvalue = TRUE)
@@ -175,20 +188,20 @@ print.summary.unitquantreg <- function(x, digits = max(4, getOption("digits") - 
 
 #' @rdname methods-unitquantreg
 #' @export
-coef.unitquantreg <- function(object, type = c("full", "quantile", "shape"), ...) {
+coef.unitquantreg <- function(object, type = c("full", "quantile", "shape"),
+                              ...) {
   if (!missing(...)) {
     warning("Extra arguments discarded")
   }
   cf <- object$coefficients
   type <- match.arg(type)
-  out <- switch (type,
-                 "full" = {
-                   names(cf) <- NULL
-                   unlist(cf)
-                 },
-                 "quantile" = cf$mu,
-                 "shape" = cf$theta
-  )
+  out <- switch(type,
+                "full" = {
+                  names(cf) <- NULL
+                  unlist(cf)
+                },
+                "quantile" = cf$mu,
+                "shape" = cf$theta)
   out
 }
 
@@ -249,7 +262,8 @@ confint.unitquantreg <- function(object, parm, level = 0.95, ...)
 
 #' @rdname methods-unitquantreg
 #' @export
-fitted.unitquantreg <- function(object, type = c("quantile", "shape", "full"),  ...) {
+fitted.unitquantreg <- function(object, type = c("quantile", "shape", "full"),
+                                ...) {
 
   if (!missing(...)) {
     warning("Extra arguments discarded")
@@ -257,10 +271,10 @@ fitted.unitquantreg <- function(object, type = c("quantile", "shape", "full"),  
 
   type <- match.arg(type)
 
-  switch (type,
-          "all" = object$fitted.values,
-          "quantile"  = object$fitted.values$mu,
-          "shape" = object$fitted.values$theta
+  switch(type,
+         "all" = object$fitted.values,
+         "quantile"  = object$fitted.values$mu,
+         "shape" = object$fitted.values$theta
   )
 }
 
@@ -297,7 +311,8 @@ model.frame.unitquantreg <- function(formula, ...) {
 
 #' @rdname methods-unitquantreg
 #' @export
-model.matrix.unitquantreg <- function(object, type = c("quantile", "shape"), ...) {
+model.matrix.unitquantreg <- function(object, type = c("quantile", "shape"),
+                                      ...) {
   type <- match.arg(type)
   if (is.null(object$x[[type]])) {
     model.matrix(object$terms[[type]], model.frame(object))
@@ -310,13 +325,13 @@ model.matrix.unitquantreg <- function(object, type = c("quantile", "shape"), ...
 
 #' @rdname methods-unitquantreg
 #' @export
-update.unitquantreg <- function (object, formula., ..., evaluate = TRUE)
-{
+update.unitquantreg <- function(object, formula., ..., evaluate = TRUE) {
   call <- object$call
   if (is.null(call)) stop("need an object with call component")
   extras <- match.call(expand.dots = FALSE)$...
   if (!missing(formula.)) {
-    call$formula <- formula(update(Formula::Formula(formula(object)), formula.))
+    call$formula <- formula(update(Formula::Formula(formula(object)),
+                                   formula.))
   }
   if (length(extras)) {
     existing <- !is.na(match(names(extras), names(call)))
@@ -335,12 +350,14 @@ update.unitquantreg <- function (object, formula., ..., evaluate = TRUE)
 #' @rdname methods-unitquantreg
 #' @export
 
-print.unitquantregs <- function(x, digits = max(3, getOption("digits") - 3), ...) {
+print.unitquantregs <- function(x, digits = max(3, getOption("digits") - 3),
+                                ...) {
 
 
   cat("\n", x[[1L]]$family, " quantile regression model \n", sep = "")
 
-  cat("\nCall:  ", paste(deparse(x[[1L]]$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  cat("\nCall:  ", paste(deparse(x[[1L]]$call), sep = "\n", collapse = "\n"),
+      "\n\n", sep = "")
 
   quant_coefs <- sapply(x, coef, type = "quantile")
   shape_coefs <- sapply(x, coef, type = "shape")
@@ -348,7 +365,8 @@ print.unitquantregs <- function(x, digits = max(3, getOption("digits") - 3), ...
 
   colnames(quant_coefs) <- paste0("tau = ", taus)
 
-  cat("Mu coefficients (quantile model with ", x[[1L]]$link$mu$name, " link): \n", sep = "")
+  cat("Mu coefficients (quantile model with ",
+      x[[1L]]$bounded_family$linkobj.mu$name, " link): \n", sep = "")
 
   print.default(.FF(quant_coefs, Digits = digits), print.gap = 2, quote = FALSE)
 
@@ -369,8 +387,10 @@ print.unitquantregs <- function(x, digits = max(3, getOption("digits") - 3), ...
   } else {
     colnames(shape_coefs) <- paste0("tau = ", taus)
 
-    cat("Theta coefficients (shape model with ", x[[1L]]$link$theta$name, " link):", "\n", sep = "")
-    print.default(.FF(shape_coefs, Digits = digits), print.gap = 2, quote = FALSE)
+    cat("Theta coefficients (shape model with ",
+        x[[1L]]$bounded_family$linkobj.theta$name, " link):", "\n", sep = "")
+    print.default(.FF(shape_coefs, Digits = digits), print.gap = 2,
+                  quote = FALSE)
     cat("\n")
   }
 
@@ -380,7 +400,9 @@ print.unitquantregs <- function(x, digits = max(3, getOption("digits") - 3), ...
 #' @rdname methods-unitquantreg
 #' @export
 
-summary.unitquantregs <- function(object, digits = max(3, getOption("digits") - 3), ...) {
+summary.unitquantregs <- function(object,
+                                  digits = max(3, getOption("digits") - 3),
+                                  ...) {
   out <- lapply(object, summary)
   names(out) <- .FF(sapply(object, "[[", "tau"), Digits = digits)
   out

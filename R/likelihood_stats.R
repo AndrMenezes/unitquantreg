@@ -66,7 +66,8 @@ likelihood_stats <- function(..., lt = NULL) {
 
   n <- length(lt[[1L]]$y)
   lt_mat <- lapply(lt, function(x) {
-    matrix(c(-2 * logLik(x), AIC(x), BIC(x), AIC(x, k = 2 * log(log(n)))), nrow = 1,
+    matrix(c(-2 * logLik(x), AIC(x), BIC(x), AIC(x, k = 2 * log(log(n)))),
+           nrow = 1,
            dimnames = list(x$family, c("Neg2LogLike", "AIC", "BIC", "HQIC")))
   })
   mat <- do.call(rbind, lt_mat)
@@ -84,9 +85,11 @@ print.likelihood_stats <- function(x, ...) {
 
   cr <- .FF(x[["stats"]], 3)
 
-  cat("\n Likelihood-based statistics of fit for unit quantile regression models \n", sep = "")
+  cat("\n Likelihood-based statistics of fit for unit quantile regression models \n",
+      sep = "")
 
-  cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
+  cat("\nCall:  ", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+      "\n\n", sep = "")
 
   # cat("Likelihood-based statistics: \n")
   print(cr, quote = FALSE)

@@ -75,7 +75,8 @@
 #' @rdname vuong.test
 #' @export
 
-vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "greater")) {
+vuong.test <- function(object1, object2, alternative = c("two.sided", "less",
+                                                         "greater")) {
 
   alternative <- match.arg(alternative)
 
@@ -95,9 +96,9 @@ vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "g
     warning("Comparison is done between fitted models for different quantiles!")
 
   # Get pdf of models
-  dfun_1 <- match.fun(paste0("d", .get_abbrev(object1$family, fname = FALSE)))
+  dfun_1 <- match.fun(paste0("d", object1$bounded_family$family))
   parms_1 <- list(x = y, mu = mu_1, theta = theta_1, tau = tau_1, log = TRUE)
-  dfun_2 <- match.fun(paste0("d", .get_abbrev(object2$family, fname = FALSE)))
+  dfun_2 <- match.fun(paste0("d", object2$bounded_family$family))
   parms_2 <- list(x = y, mu = mu_2, theta = theta_2, tau = tau_2, log = TRUE)
 
   # Compute log-pdfs
@@ -169,7 +170,8 @@ vuong.test <- function(object1, object2, alternative = c("two.sided", "less", "g
 
 
 pairwise.vuong.test <- function(..., lt, p.adjust.method = p.adjust.methods,
-                                alternative = c("two.sided", "less", "greater")) {
+                                alternative = c("two.sided", "less",
+                                                "greater")) {
 
   if (is.null(lt)) lt <-  list(...)
 

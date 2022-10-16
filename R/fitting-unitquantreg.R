@@ -108,25 +108,24 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #' or \code{y ~ x | z}. See below for details.
 #' @param tau numeric vector. The quantile(s) to be estimated, i.e.,
 #' number between 0 and 1. If just one quantile is specified an object of class
-#' \code{unitquantreg} is returned. If a numeric vector of values between 0 and 1
-#' is specified an object of class \code{unitquantregs} is returned. See below for
-#' details.
+#' \code{unitquantreg} is returned. If a numeric vector of values between 0
+#' and 1 is specified an object of class \code{unitquantregs} is returned.
+#' See below for details.
 #' @param data data.frame contain the variables in the model.
 #' @param subset an optional vector specifying a subset of observations to
 #' be used in the fitting process.
 #' @param na.action a function which indicates what should happen when the
 #' data contain \code{NA}s.
-#' @param family character. Specify the distribution family.
-#' @param link character. Specify the link function in the quantile model.
-#' Currently supported are \code{logit}, \code{probit}, \code{cloglog} and
-#' \code{cauchit}. Default is \code{logit}.
-#' @param link.theta character. Specify the link function in the shape model.
-#' Currently supported are \code{identity}, \code{log} and \code{sqrt}.
-#' Default is \code{log}.
-#' @param start numeric vector. An optional vector with starting values for all parameters.
-#' @param control list. Control arguments specified via \code{\link{unitquantreg.control}}.
+#' @param family a specification of the family of bounded distribution and
+#' their link functions to be used in the model. See \code{bounded_family} for
+#' details of families of distributions available.
+#' @param start numeric vector. An optional vector with starting values for
+#' all parameters.
+#' @param control list. Control arguments specified via
+#' \code{\link{unitquantreg.control}}.
 #' @param x,y logical. If \code{TRUE} the corresponding components of the fit
-#' (model frame, response, model matrix) are returned. For \code{\link{unitquantreg.fit}}
+#' (model frame, response, model matrix) are returned. For
+#' \code{\link{unitquantreg.fit}}
 #' \code{y} should be the numeric response vector with values in (0,1).
 #' @param X,Z numeric matrix. Regressor matrix for the quantile and shape model,
 #' respectively. Default is constant shape model, i.e., \code{Z} is matrix with
@@ -136,25 +135,28 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #'
 #'
 #' @details
-#' The parameter estimation and inference are performed under the frequentist paradigm.
-#' The \code{\link[optimx]{optimx}} R package is use, since allows different optimization
-#' technique to maximize the log-likelihood function.  The analytical score function are
-#' use in the maximization and the standard errors are computed using the
-#' analytical hessian matrix, both are implemented in efficient away using \code{C++}.
+#' The parameter estimation and inference are performed under the frequentist
+#' paradigm. The \code{\link[optimx]{optimx}} R package is use, since allows
+#' different optimization technique to maximize the log-likelihood function.
+#' The analytical score function are use in the maximization and the standard
+#' errors are computed using the analytical hessian matrix, both are
+#' implemented in efficient away using \code{C++}.
 #'
 #'
 #' @return \code{\link{unitquantreg}} can return an object of
 #' class \code{unitquantreg} if \code{tau} is a scalar, i.e., a list with
 #' the following components.
-#' \item{family}{the distribution family name.}
-#' \item{coefficients}{a list with elements \code{"quantile"} and \code{"shape"}
+#' \item{family}{the family of distribution name.}
+#' \item{bounded_family}{an object of \code{bounded_family} class.}
+#' \item{coefficients}{a list with elements \code{"quantile"} and
+#' \code{"shape"}
 #' containing the coefficients from the respective models.}
-#' \item{fitted.values}{a list with elements \code{"quantile"} and \code{"shape"}
+#' \item{fitted.values}{a list with elements \code{"quantile"} and
+#' \code{"shape"}
 #' containing the fitted parameters from the respective models.}
-#' \item{linear.predictors}{a list with elements \code{"quantile"} and \code{"shape"}
+#' \item{linear.predictors}{a list with elements \code{"quantile"} and
+#' \code{"shape"}
 #' containing the fitted linear predictors from the respective models.}
-#' \item{link}{a list with elements \code{"quantile"} and \code{"shape"}
-#' containing the link objects from the respective models.}
 #' \item{tau}{the quantile specify.}
 #' \item{loglik}{log-likelihood of the fitted model.}
 #' \item{gradient}{gradient evaluate at maximum likelihood estimates.}
@@ -162,7 +164,8 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #' \item{nobs}{number of observations.}
 #' \item{npar}{number of parameters.}
 #' \item{df.residual}{residual degrees of freedom in the fitted model.}
-#' \item{theta_const}{logical indicating if the \eqn{\theta} parameter was treated as nuisance parameter.}
+#' \item{theta_const}{logical indicating if the \eqn{\theta} parameter was
+#' treated as nuisance parameter.}
 #' \item{control}{the control parameters used to fit the model.}
 #' \item{iterations}{number of iterations of optimization method.}
 #' \item{converged}{logical, if \code{TRUE} indicates successful convergence.}
@@ -175,11 +178,13 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #' \item{call}{the original function call.}
 #' \item{formula}{the original model formula.}
 #' \item{terms}{a list with elements \code{"quantile"}, \code{"shape"} and
-#' \code{"full"} containing the \code{terms} objects for the respective models.}
+#' \code{"full"} containing the \code{terms} objects for the respective
+#' models.}
 #' \item{model}{the full model frame, if \code{model = TRUE}.}
 #' \item{y}{the response vector, if \code{y = TRUE}.}
 #' \item{x}{a list with elements \code{"quantile"} and \code{"shape"}
-#' containing the model matrices from the respective models, if \code{x = TRUE}.}
+#' containing the model matrices from the respective models, if
+#' \code{x = TRUE}.}
 #'
 #' While \code{\link{unitquantreg.fit}} returns an unclassed list with
 #' components up to \code{elapsed_time}.
@@ -190,7 +195,8 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #'
 #' @author André F. B. Menezes
 #'
-#' @importFrom stats make.link model.frame model.matrix model.response na.omit delete.response terms
+#' @importFrom stats make.link model.frame model.matrix model.response na.omit
+#' delete.response terms
 #' @importFrom Formula as.Formula Formula
 #' @importFrom utils capture.output
 NULL
@@ -198,8 +204,6 @@ NULL
 #' @rdname unitquantreg
 #' @export
 unitquantreg <- function(formula, data, subset, na.action, tau, family,
-                         link = c("logit", "probit", "cloglog", "cauchit"),
-                         link.theta = c("identity", "log", "sqrt"),
                          start = NULL, control = unitquantreg.control(),
                          model = TRUE, x = FALSE, y = TRUE) {
 
@@ -242,26 +246,13 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
     stop("invalid dependent variable, all observations must be in (0, 1)")
   }
 
-  # Get family name
-  family <- match.arg(family, .families)
-
-  # Link functions
-  link <- match.arg(link)
-
-  if (is.null(link.theta)) {
-    link.theta <- if (simple_formula) "identity" else "log"
-  } else {
-    link.theta <- match.arg(link.theta)
-  }
-
   # The workhorse: unitquantreg.fit()
 
   # Vectorizing in tau (quantile)
   names(tau) <- tau
   out <- lapply(tau, function(t) {
     fit <- unitquantreg.fit(y = Y, X = X, Z = Z, tau = t, family = family,
-                            link = link, link.theta = link.theta, start = start,
-                            control = control)
+                            start = start, control = control)
 
     # Output
     fit$call <- cl
@@ -284,17 +275,15 @@ unitquantreg <- function(formula, data, subset, na.action, tau, family,
 
 #' @rdname unitquantreg
 #' @export
-unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
+unitquantreg.fit <- function(y, X, Z = NULL, tau, family,
                              start = NULL, control = unitquantreg.control()) {
 
-  linkobj <- make.link(link)
-  linkobj.theta <- make.link(link.theta)
   ocontrol <- control
   method <- control$method
   hessian <- control$hessian
   gradient <- control$gradient
   control$method <- control$hessian <- control$gradient <- NULL
-  family_name <- .get_family_name(family)
+  # family_name <- .get_family_name(family)
 
   n <- length(y)
   if (is.null(Z)) {
@@ -304,20 +293,24 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   }
   p <- ncol(X)
   q <- ncol(Z)
-  theta_const <- (q == 1L) && isTRUE(all.equal(as.vector(Z[, 1L]), rep.int(1, n)))
+  theta_const <- (q == 1L) && isTRUE(all.equal(as.vector(Z[, 1L]),
+                                               rep.int(1, n)))
+
+  # Link function for shape parameter
+  link_theta <- family$linkobj.theta$name
 
   # Initial guess
-  if (length(start) != (p + q))
+  if (!is.null(start) & length(start) != (p + q))
     stop("You should include start values for all coefficients")
   if (is.null(start)) {
     # For beta
-    ystar <- linkobj$linkfun(y)
+    ystar <- family$linkobj.mu$linkfun(y)
     reg_ini <- suppressWarnings(quantreg::rq.fit(X, ystar, tau = tau))
     start <- reg_ini$coefficients
     names(start) <- colnames(X)
 
     # For theta/gamma
-    gs <- if (link.theta == "log") 0.1 else 1.1
+    gs <- if (link_theta == "log") 0.1 else 1.1
     gamma <- rep(gs, length.out = q)
     start <- c(start, gamma)
     names(start)[1:q + p] <- colnames(Z)
@@ -327,10 +320,8 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
 
   # Maximization
   opt <- optimx::optimx(par = start, fn = loglike_unitquantreg, gr = gradfun,
-                        method = method, hessian = hessian,
-                        control = control, X = X, Z = Z, y = y, tau = tau,
-                        family = family, linkobj = linkobj,
-                        linkobj.theta = linkobj.theta)
+                        method = method, hessian = hessian, control = control,
+                        X = X, Z = Z, y = y, tau = tau, family = family)
   par <- stats::coef(opt)
 
   # Check if the optimization converged
@@ -342,8 +333,6 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   }
 
   # Get number of iterations
-  # it <- na.omit(opt$count)
-  # it <- it[length(it)]
   it <- opt$fevals
 
   # Estimated coefficients
@@ -353,13 +342,11 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   # Fitted values
   linear.predictors.mu <- drop(X %*% mu.coefficients)
   linear.predictors.theta <- drop(Z %*% theta.coefficients)
-  fitted.mu <- linkobj$linkinv(linear.predictors.mu)
-  fitted.theta <- linkobj.theta$linkinv(linear.predictors.theta)
+  fitted.mu <- family$linkobj.mu$linkinv(linear.predictors.mu)
+  fitted.theta <- family$linkobj.theta$linkinv(linear.predictors.theta)
 
   # Parms
-  parms <- list(par = par, tau = tau, family = family,
-                linkobj = linkobj, linkobj.theta = linkobj.theta,
-                X = X, Z = Z, y = y)
+  parms <- list(par = par, tau = tau, family = family, X = X, Z = Z, y = y)
 
   # Get the hessian matrix
   if (!hessian) {
@@ -368,8 +355,7 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
     output <- capture.output(
       he <- suppressWarnings(
         optimx::gHgen(par = par, fn = loglike_unitquantreg, gr = gradfun,
-                      tau = tau, family = family, linkobj = linkobj,
-                      linkobj.theta = linkobj.theta, X = X, Z = Z, y = y,
+                      tau = tau, family = family, X = X, Z = Z, y = y,
                       control = list(ktrace = FALSE))[["Hn"]]
         )
     )
@@ -393,25 +379,26 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
 
   # Names
   if (theta_const) {
-    if (link.theta == "identity") theta_name <- "theta"
-    else theta_name <- paste0(link.theta, "(theta)")
+    if (link_theta == "identity") theta_name <- "theta"
+    else theta_name <- paste0(link_theta, "(theta)")
   } else {
     theta_name <- paste0("(theta)", "_", colnames(Z))
   }
   names(mu.coefficients) <- colnames(X)
   names(theta.coefficients) <- theta_name
   rownames(vcov) <- colnames(vcov) <- c(colnames(X), theta_name)
-  if (!is.null(gradfun)) names(grad) <- c(names(mu.coefficients), names(theta.coefficients))
+  if (!is.null(gradfun)) names(grad) <- c(names(mu.coefficients),
+                                          names(theta.coefficients))
 
 
   # Output
   out <- list(
-    family = family_name,
+    family = as.character(.mapped_families[family$family][1L]),
+    bounded_family = family,
     coefficients = list(mu = mu.coefficients, theta = theta.coefficients),
     fitted.values = list(mu = drop(fitted.mu), theta = drop(fitted.theta)),
     linear.predictors = list(mu = drop(linear.predictors.mu),
                              theta = drop(linear.predictors.theta)),
-    link = list(mu = linkobj, theta = linkobj.theta),
     tau = tau,
     loglik = ll,
     gradient = grad,

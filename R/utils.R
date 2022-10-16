@@ -1,88 +1,20 @@
-# Possible family names ---------------------------------------------------
+# Mapped families of distributions name -----------------------------------
 
-.families <- c("uweibull", "unitweibull",
-               "kum", "kumaraswamy",
-               "ulogistic", "unitlogistic",
-               "uchen", "unitchen",
-               "ubs", "unitbs",
-               "leeg", "logexpgeom",
-               "ughne", "unitghne",
-               "ughnx", "unitghnx",
-               "ugompertz", "unitgompertz",
-               "uburrxii", "unitburrxii",
-               "jsb", "johnsonsb",
-               "ashw", "arcsechwei",
-               "ugumbel", "unitgumbel")
-
-# Get family names --------------------------------------------------------
-
-.get_family_name <- function(family) {
-
-  if (family %in% c("uweibull", "unitweibull")) {
-    "unit-Weibull"
-  }
-  else if (family %in% c("kum", "kumaraswamy")) {
-    "Kumaraswamy"
-  }
-  else if (family %in% c("ulogistic", "unitlogistic")) {
-    "unit-Logistic"
-  }
-  else if (family %in% c("uchen", "unitchen")) {
-    "unit-Chen"
-  }
-  else if (family %in% c("ubs", "unitbs")) {
-    "unit-Birnbaum-Saunders"
-  }
-  else if (family %in% c("leeg", "logexpgeom")) {
-    "log-extended Exponential-Geometric"
-  }
-  else if (family %in% c("ughne", "unitghne")) {
-    "unit-Generalized Half-Normal-E"
-  }
-  else if (family %in% c("ughnx", "unitghnx")) {
-    "unit-Generalized Half-Normal-X"
-  }
-  else if (family %in% c("ugompertz", "unitgompertz")) {
-    "unit-Gompertz"
-  }
-  else if (family %in% c("uburrxii", "unitburrxii")) {
-    "unit-Burr-XII"
-  }
-  else if (family %in% c("johnsonsb", "jsb")) {
-    "Johnson-SB"
-  }
-  else if (family %in% c("ashw", "arcsechwei")) {
-    "arc-secant hyperbolic Weibull"
-  }
-  else if (family %in% c("ugumbel", "unitgumbel")) {
-    "unit-Gumbel"
-  }
-  else {
-    NULL
-  }
-}
-
-
-# Get abbreviation for d,p,q,r --------------------------------------------
-
-.get_abbrev <- function(family, fname = TRUE) {
-  if (fname) family <- .get_family_name(family)
-  out <- switch(family,
-                "unit-Weibull" = "uweibull",
-                "Kumaraswamy" = "kum",
-                "unit-Logistic" = "ulogistic",
-                "unit-Chen" = "uchen",
-                "unit-Birnbaum-Saunders" = "ubs",
-                "log-extended Exponential-Geometric" = "leeg",
-                "unit-Generalized Half-Normal-E" = "ughne",
-                "unit-Generalized Half-Normal-X" = "ughnx",
-                "unit-Gompertz" = "ugompertz",
-                "unit-Burr-XII" = "uburrxii",
-                "Johnson-SB" = "johnsonsb",
-                "arc-secant hyperbolic Weibull" = "ashw",
-                "unit-Gumbel" = "ugumbel")
-  out
-}
+.mapped_families <- list(
+  "uweibull" = "unit-Weibull",
+  "kum" = "Kumaraswamy",
+  "ulogistic" = "unit-Logistic",
+  "uchen" = "unit-Chen",
+  "ubs" = "unit-Birnbaum-Saunders",
+  "leeg" = "log-extended Exponential-Geometric",
+  "ughne" = "unit-Generalized Half-Normal-E",
+  "ughnx" = "unit-Generalized Half-Normal-X",
+  "ugompertz" = "unit-Gompertz",
+  "uburrxii" = "unit-Burr-XII",
+  "johnsonsb" = "Johnson-SB",
+  "ashw" = "arc-secant hyperbolic Weibull",
+  "ugumbel" = "unit-Gumbel"
+)
 
 # Format output ------------------------------------------------------------
 .format_perc <- function(probs, digits) {
@@ -90,7 +22,7 @@
         "%")
 }
 
-.FF <- function(x,Digits = 4, Width = 4){
+.FF <- function(x,Digits = 4, Width = 4) {
   formatC(x, digits = Digits, width = Width, format = "f")
 }
 
@@ -102,9 +34,10 @@
 #' @importFrom stats predict coef confint median
 
 .plot_coef <- function(x, output_df = FALSE, parm = NULL, level = 0.95,
-                       mean_effect = FALSE, mfrow = NULL, mar = NULL, ylim = NULL,
-                       main = NULL, col = gray(c(0, 0.75)), border = NULL, cex = 1,
-                       pch = 20, type = "b", xlab = bquote("Quantile level ("*tau*")"),
+                       mean_effect = FALSE, mfrow = NULL, mar = NULL,
+                       ylim = NULL, main = NULL, col = gray(c(0, 0.75)),
+                       border = NULL, cex = 1, pch = 20, type = "b",
+                       xlab = bquote("Quantile level ("*tau*")"),
                        ylab = "Estimate effect", ...) {
 
   # Get point and interval estimates
@@ -171,12 +104,12 @@
            type = type, col = col[1L], ...)
     abline(h = 0, col = gray(0.3), lty = 2)
     if (mean_effect) {
-      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 1], col = "red",
-             lty = 1)
-      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 2], col = "red",
-             lty = 2)
-      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 3], col = "red",
-             lty = 2)
+      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 1],
+             col = "red", lty = 1)
+      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 2],
+             col = "red", lty = 2)
+      abline(h = mat_mean_effect[rownames(mat_mean_effect) == parm[i], 3],
+             col = "red", lty = 2)
     }
     grid()
   }
@@ -198,7 +131,7 @@
 
   # Distribution arguments
   type <- match.arg(dist_type)
-  distr_name <- .get_abbrev(x[[1L]]$family, fname = FALSE)
+  distr_name <- x[[1L]]$family
 
   # Useful objects
   p <- length(x[[1L]]$coefficients$mu)
@@ -218,7 +151,8 @@
   } else newdata <- data.frame()
   if (at_avg) {
     df_avg <- as.data.frame(
-        t(colMeans(model.matrix(x[[1L]], type = "quantile"))))[, -1, drop = FALSE]
+        t(colMeans(model.matrix(x[[1L]],
+                                type = "quantile"))))[, -1, drop = FALSE]
     df_avg$avg <- TRUE
     newdata <- rbind(newdata, df_avg)
   }
@@ -239,7 +173,8 @@
   newdata <- newdata[, -which(colnames(newdata) %in% id_nm)]
 
   # Create the data.frame with observed value of covariates for Z matrix
-  newdata_Z <- if (theta_const) newdata else model.matrix(x[[1L]], type = "shape")
+  newdata_Z <- if (theta_const) newdata else model.matrix(x[[1L]],
+                                                          type = "shape")
   which_intercept <- which(colnames(newdata_Z) == "(Intercept)")
   newdata_Z <- as.data.frame(newdata_Z[, -which_intercept, drop = FALSE])
 

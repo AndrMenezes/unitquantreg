@@ -71,7 +71,7 @@ predict.unitquantreg <- function(object, newdata,
 
   if (type %in% c("link", "quantile")) {
     beta <- object$coefficients$mu
-    linkobj.mu <- object$link$mu
+    linkobj.mu <- object$bounded_family$linkobj.mu
     vcov.beta <- vcov[1:p, 1:p]
     g.mu.hat <- drop(X %*% beta)
     if (type == "link") {
@@ -96,7 +96,7 @@ predict.unitquantreg <- function(object, newdata,
 
   if (type == "shape") {
     gamma <- object$coefficients$theta
-    linkobj.theta <- object$link$theta
+    linkobj.theta <- object$bounded_family$linkobj.theta
     vcov.gamma <- vcov[1:p + q, 1:p + q]
     g.theta.hat <- drop(Z %*% gamma)
     theta.hat <- linkobj.theta$linkinv(g.theta.hat)
