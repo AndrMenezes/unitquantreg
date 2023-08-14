@@ -64,17 +64,15 @@
 #' @rdname ubs
 #' @export
 #
-dubs <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_dubs(x, mu, theta, tau, log[1L]);
+dubs <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_dubs(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname ubs
 #' @export
 #'
-pubs <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pubs <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pubs(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -82,8 +80,7 @@ pubs <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname ubs
 #' @export
 #'
-qubs <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qubs <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qubs(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -91,8 +88,7 @@ qubs <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname ubs
 #' @export
 #'
-rubs <- function(n, mu, theta, tau = 0.5)
-{
+rubs <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qubs(runif(n), mu, theta, tau, TRUE, FALSE)
 }

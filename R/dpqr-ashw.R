@@ -61,8 +61,8 @@
 #' @export
 #
 
-dashw <- function (x, mu, theta, tau = 0.5, log = FALSE) {
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1);
+dashw <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1)
   cpp_dashw(x, mu, theta, tau, log[1L]);
 }
 ##################################################
@@ -70,9 +70,8 @@ dashw <- function (x, mu, theta, tau = 0.5, log = FALSE) {
 #' @export
 #'
 
-pashw <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
-  stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1);
+pashw <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
+  stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1)
   cpp_pashw(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
 ##################################################
@@ -81,15 +80,14 @@ pashw <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #'
 
 qashw <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
-  stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1);
+  stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1)
   cpp_qashw(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
 ##################################################
 #' @rdname ashw
 #' @export
 #'
-rashw <- function(n, mu, theta, tau = 0.5)
-{
-  stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1);
+rashw <- function(n, mu, theta, tau = 0.5) {
+  stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1)
   cpp_qashw(runif(n), mu, theta, tau, TRUE, FALSE)
 }

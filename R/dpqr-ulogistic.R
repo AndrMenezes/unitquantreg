@@ -57,8 +57,7 @@
 #' @rdname ulogistic
 #' @export
 #
-dulogistic <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
+dulogistic <- function(x, mu, theta, tau = 0.5, log = FALSE) {
   stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
   cpp_dulogistic(x, mu, theta, tau, log[1L]);
 }
@@ -66,8 +65,7 @@ dulogistic <- function (x, mu, theta, tau = 0.5, log = FALSE)
 #' @rdname ulogistic
 #' @export
 #'
-pulogistic <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pulogistic <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pulogistic(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -75,8 +73,7 @@ pulogistic <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALS
 #' @rdname ulogistic
 #' @export
 #'
-qulogistic <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qulogistic <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qulogistic(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -84,8 +81,7 @@ qulogistic <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE
 #' @rdname ulogistic
 #' @export
 #'
-rulogistic <- function(n, mu, theta, tau = 0.5)
-{
+rulogistic <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qulogistic(runif(n), mu, theta, tau, TRUE, FALSE)
 }

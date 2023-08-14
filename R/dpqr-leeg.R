@@ -56,17 +56,15 @@
 #' @rdname leeg
 #' @export
 #
-dleeg <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_dleeg(x, mu, theta, tau, log[1L]);
+dleeg <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_dleeg(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname leeg
 #' @export
 #'
-pleeg <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pleeg <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pleeg(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -74,8 +72,7 @@ pleeg <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname leeg
 #' @export
 #'
-qleeg <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qleeg <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qleeg(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -83,8 +80,7 @@ qleeg <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname leeg
 #' @export
 #'
-rleeg <- function(n, mu, theta, tau = 0.5)
-{
+rleeg <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qleeg(runif(n), mu, theta, tau, TRUE, FALSE)
 }
