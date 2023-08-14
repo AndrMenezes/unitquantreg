@@ -283,7 +283,6 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family,
   hessian <- control$hessian
   gradient <- control$gradient
   control$method <- control$hessian <- control$gradient <- NULL
-  # family_name <- .get_family_name(family)
 
   n <- length(y)
   if (is.null(Z)) {
