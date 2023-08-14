@@ -192,7 +192,7 @@ unitquantreg.control <- function(method = "BFGS", hessian = FALSE,
 #'
 #' @importFrom stats make.link model.frame model.matrix model.response na.omit delete.response terms
 #' @importFrom Formula as.Formula Formula
-#' @importFrom utils capture.output
+#' @importFrom numDeriv jacobian
 NULL
 
 #' @rdname unitquantreg
@@ -367,14 +367,14 @@ unitquantreg.fit <- function(y, X, Z = NULL, tau, family, link, link.theta,
   if (!hessian) {
     he <- do.call(hessian_unitquantreg, parms)
   } else {
-    output <- capture.output(
-      he <- suppressWarnings(
-        optimx::gHgen(par = par, fn = loglike_unitquantreg, gr = gradfun,
-                      tau = tau, family = family, linkobj = linkobj,
-                      linkobj.theta = linkobj.theta, X = X, Z = Z, y = y,
-                      control = list(ktrace = FALSE))[["Hn"]]
-        )
-    )
+    he <- try(numDeriv::jacobian(func = gradfun, x = par,
+                                 tau = tau, family = family,
+                                 linkobj = linkobj,
+                                 linkobj.theta = linkobj.theta,
+                                 X = X, Z = Z, y = y), silent = TRUE)
+    if (inherits(he, "try-error"))
+      stop("Unable to compute Hessian using numDeriv::jacobin")
+
   }
 
   # Check hessian matrix to compute vcov (Observed Fisher Information) matrix
