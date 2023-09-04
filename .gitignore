@@ -12,3 +12,6 @@ inst/doc
 /doc/
 /Meta/
 docs
+VERSION
+bump_version.sh
+template
