@@ -1,9 +1,9 @@
 Package: unitquantreg
 Title: Parametric Quantile Regression Models for Bounded Data
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: c(person(given = "André F. B.", family = "Menezes", role = c("aut", "cre"), email = "andrefelipemaringa@gmail.com", comment = c(ORCID = "0000-0002-3320-9834")),
     person(given = "Josmar", family = "Mazucheli", role = c("aut"), comment = c(ORCID = "0000-0001-6740-0445")))
-Maintainer: André F. B. Menezes <andrefelipemaringa@gmail.com> 
+Maintainer: André F. B. Menezes <andrefelipemaringa@gmail.com>
 Description: A collection of parametric quantile regression models for bounded data. At present, the package provides 13 parametric quantile regression models. It can specify regression structure for any quantile and shape parameters. It also provides several S3 methods to extract information from fitted model, such as residual analysis, prediction, plotting, and model comparison. For more computation efficient the [dpqr]'s, likelihood, score and hessian functions are written in C++. For further details see Mazucheli et. al (2022) <doi:10.1016/j.cmpb.2022.106816>.
 License: Apache License (>= 2)
 Encoding: UTF-8
@@ -18,7 +18,7 @@ Suggests:
     lmtest,
     ggplot2,
     covr
-Depends: 
+Depends:
     R (>= 3.5.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1

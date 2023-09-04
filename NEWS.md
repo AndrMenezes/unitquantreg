@@ -1,3 +1,7 @@
+# `unitquantreg` 0.0.6
+
+- Removed dependence of `optimx::gHgen()` for calculate the numeric Hessian matrix in the `unitquantreg.fit()` function.
+
 # `unitquantreg` 0.0.5
 
 - Reduced unit testing timings.
