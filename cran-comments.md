@@ -1,4 +1,4 @@
-## `unitquantreg` 0.0.5
+## `unitquantreg` 0.0.6
 
 - The dependence on `optimx::gHgen()` was removed because the function will be removed from `optimx` in its major revision.
 
