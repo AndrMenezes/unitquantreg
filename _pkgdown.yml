@@ -63,5 +63,6 @@ reference:
 
 - title: Datasets
   contents:
+  - sim_bounded
   - bodyfat
   - water
