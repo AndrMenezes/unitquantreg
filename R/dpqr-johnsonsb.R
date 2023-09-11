@@ -62,17 +62,16 @@
 #' @rdname johnsonsb
 #' @export
 #
-djohnsonsb <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_djohnsonsb(x, mu, theta, tau, log[1L]);
+djohnsonsb <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_djohnsonsb(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname johnsonsb
 #' @export
 #'
-pjohnsonsb <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pjohnsonsb <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE,
+                       log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pjohnsonsb(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -80,8 +79,8 @@ pjohnsonsb <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALS
 #' @rdname johnsonsb
 #' @export
 #'
-qjohnsonsb <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qjohnsonsb <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE,
+                       log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qjohnsonsb(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -89,8 +88,7 @@ qjohnsonsb <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE
 #' @rdname johnsonsb
 #' @export
 #'
-rjohnsonsb <- function(n, mu, theta, tau = 0.5)
-{
+rjohnsonsb <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qjohnsonsb(runif(n), mu, theta, tau, TRUE, FALSE)
 }

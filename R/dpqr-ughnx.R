@@ -60,17 +60,15 @@
 #' @rdname ughnx
 #' @export
 #
-dughnx <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_dughnx(x, mu, theta, tau, log[1L]);
+dughnx <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_dughnx(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname ughnx
 #' @export
 #'
-pughnx <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pughnx <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pughnx(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -78,8 +76,7 @@ pughnx <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname ughnx
 #' @export
 #'
-qughnx <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qughnx <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qughnx(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -87,8 +84,7 @@ qughnx <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
 #' @rdname ughnx
 #' @export
 #'
-rughnx <- function(n, mu, theta, tau = 0.5)
-{
+rughnx <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qughnx(runif(n), mu, theta, tau, TRUE, FALSE)
 }

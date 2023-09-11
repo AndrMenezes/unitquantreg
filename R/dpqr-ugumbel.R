@@ -63,18 +63,16 @@
 #' @rdname ugumbel
 #' @export
 #
-
-dugumbel <- function (x, mu, theta, tau = 0.5, log = FALSE) {
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_dugumbel(x, mu, theta, tau, log[1L]);
+dugumbel <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_dugumbel(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname ugumbel
 #' @export
 #'
 
-pugumbel <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pugumbel <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pugumbel(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -91,8 +89,7 @@ qugumbel <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) 
 #' @rdname ugumbel
 #' @export
 #'
-rugumbel <- function(n, mu, theta, tau = 0.5)
-{
+rugumbel <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qugumbel(runif(n), mu, theta, tau, TRUE, FALSE)
 }

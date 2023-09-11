@@ -1,3 +1,7 @@
+## `unitquantreg` 0.0.6
+
+- The dependence on `optimx::gHgen()` was removed because the function will be removed from `optimx` in its major revision.
+
 ## `unitquantreg` 0.0.5
 
 - Used `tryCatch()` to handle when `chol()` fails in the hessian matrix.
@@ -23,7 +27,7 @@ Fixed.
 methods in your Description text. If there are references describing the
 methods in your package, please add these.
 
-The DESCRIPTION file was re-written and a reference was included following the 
+The DESCRIPTION file was re-written and a reference was included following the
 specified format.
 
 > Please add \value to .Rd files regarding exported methods and explain
@@ -52,13 +56,13 @@ Corrected, please see the following lines:
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs. 
+There were no ERRORs or WARNINGs.
 
 There was 1 NOTE:
 
 * checking installed package size ... NOTE
-    installed size is 10.1Mb
+    installed size is 10.5Mb
     sub-directories of 1Mb or more:
-      libs   9.0Mb
-
+      libs   9.4Mb
+      
 The NOTE refers to large size of `C++` codes.

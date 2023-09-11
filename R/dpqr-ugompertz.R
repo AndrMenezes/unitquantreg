@@ -56,17 +56,15 @@
 #' @rdname ugompertz
 #' @export
 #
-dugompertz <- function (x, mu, theta, tau = 0.5, log = FALSE)
-{
-  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0);
-  cpp_dugompertz(x, mu, theta, tau, log[1L]);
+dugompertz <- function(x, mu, theta, tau = 0.5, log = FALSE) {
+  stopifnot(x > 0, x < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
+  cpp_dugompertz(x, mu, theta, tau, log[1L])
 }
 ##################################################
 #' @rdname ugompertz
 #' @export
 #'
-pugompertz <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+pugompertz <- function(q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(q > 0, q < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_pugompertz(q, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -74,8 +72,7 @@ pugompertz <- function (q, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALS
 #' @rdname ugompertz
 #' @export
 #'
-qugompertz <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE)
-{
+qugompertz <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE) {
   stopifnot(p > 0, p < 1, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qugompertz(p, mu, theta, tau, lower.tail[1L], log.p[1L])
 }
@@ -83,8 +80,7 @@ qugompertz <- function(p, mu, theta, tau = 0.5, lower.tail = TRUE, log.p = FALSE
 #' @rdname ugompertz
 #' @export
 #'
-rugompertz <- function(n, mu, theta, tau = 0.5)
-{
+rugompertz <- function(n, mu, theta, tau = 0.5) {
   stopifnot(n > 0, mu > 0, mu < 1, tau > 0, tau < 1, theta > 0)
   cpp_qugompertz(runif(n), mu, theta, tau, TRUE, FALSE)
 }
